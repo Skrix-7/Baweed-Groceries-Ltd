@@ -245,6 +245,7 @@ include "../dbConnector.local.php";
 
     <script>
 
+        //This binds the enter key to the search bar for easier searching
         var input = document.getElementById("searchInput");
         input.addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
@@ -253,7 +254,7 @@ include "../dbConnector.local.php";
         }
         });
 
-        /* To Do After DB Integration*/
+        //This is where the database is searched for the users food item
         function preformSeach() {
         }
 

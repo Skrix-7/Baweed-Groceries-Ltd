@@ -2,45 +2,44 @@
 session_start();
 include "../dbConnector.local.php";
 
-// Only allow POST
+//Only allow POST requests
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     echo "not_post";
     exit;
 }
 
-// Grab POST data
+//Retrieve username and password from POST data, or set to null if not provided
 $username = $_POST['username'] ?? null;
 $password = $_POST['password'] ?? null;
 
-if (!$username || !$password) {
-    echo "empty_fields";
-    exit;
-}
-
-// Query database for username only
+//Query database for username only
 $stmt = $conn->prepare("SELECT customerID, FullName, Password FROM customers WHERE FullName=? LIMIT 1");
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
 
+//If the search finds no users with the username it responds with userNotFound and exits
 if ($result->num_rows === 0) {
-    echo "user_not_found";
+    echo "userNotFound";
     exit;
 }
 
+//Fetch the user data from the result
 $user = $result->fetch_assoc();
 
-// Check password (plain text for now)
+//Compares the password entered to the password of the user in the database.
 if ($user['Password'] !== $password) {
-    echo "wrong_password";
+    echo "incorrectPassword";
     exit;
 }
 
-// Login successful, store session
+//Login successful, store session
 $_SESSION['customerID'] = $user['customerID'];
 $_SESSION['FullName'] = $user['FullName'];
 
+//Tells the login page it was successful so it can redirect the user to the store home page
 echo "success";
 
+//Close the database connection
 $stmt->close();
 $conn->close();

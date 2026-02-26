@@ -179,58 +179,83 @@ include "../dbConnector.local.php";
     </div>
 
     <script>
+
+        //This toggles the password field between text and password for users to see what they typed
         function togglePassword() {
+
+            //Creating the variables for the password field and the button that was clicked to toggle the password
             const passwordInput = document.getElementById('password');
             const toggleButton = event.currentTarget;
 
+            //If the password field is a password type it changes it to text, revealing the password
             if (passwordInput.type === "password") {
                 passwordInput.type = "text";
                 toggleButton.textContent = "Hide Password";
-            } else {
+            } 
+            
+            //If the password field is a text type it changes it to password, hiding the password
+            else {
                 passwordInput.type = "password";
                 toggleButton.textContent = "Show Password";
             }
         }
 
+        //This checks the users details to ensure they are able to log in
         function checkDetails() {
+
+            //Gets the inputs in the username and password field.
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
+
+            //This is the response variable where the system responds to the user.
             const responseEl = document.getElementById("response");
 
+            //Ensures the user has entered information in both fields
             if (!username || !password) {
                 responseEl.textContent = "All fields are required.";
                 responseEl.classList.add("show");
                 return;
             }
 
+            //This accesses logUserIn.php to POST the data entered to it for log in
             fetch("/LogUserIn.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
             })
+
+            //This attempts to log them in 
             .then(res => res.text())
             .then(data => {
+
+                //This checks the response from logUserIn.php and responds accordingly, either logging them in or giving them an error message
                 switch(data) {
+
+                    //If the response is success, the user is redirected to the store home page
                     case "success":
                         window.location.href = "/StoreHomePage.php";
                         break;
-                    case "empty_fields":
-                        responseEl.textContent = "All fields are required.";
-                        responseEl.classList.add("show");
-                        break;
-                    case "user_not_found":
+
+                    //If the response is userNotFound, the user is informed that no account was found with that username
+                    case "userNotFound":
                         responseEl.textContent = "No account found with that username.";
                         responseEl.classList.add("show");
                         break;
-                    case "wrong_password":
+
+                    //If the response is incorrectPassword, the user is informed that the password they entered was incorrect
+                    case "incorrectPassword":
                         responseEl.textContent = "Incorrect password.";
                         responseEl.classList.add("show");
                         break;
+
+                    //This is the default response if the response is anything not recognised
                     default:
                         responseEl.textContent = "Server error: " + data;
                         responseEl.classList.add("show");
                 }
             })
+
+            //This catches any errors during the fetch request
             .catch(err => {
                 responseEl.textContent = "Server connection error.";
                 responseEl.classList.add("show");

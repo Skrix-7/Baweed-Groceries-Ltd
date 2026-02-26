@@ -165,25 +165,64 @@
         filter: brightness(1.05);
     }
 
-    .bottomInfoBar {
-        margin-top: 70px;
+        .bottomInfoBar {
+        width: 100%;
+        background-color: #1e1e1e;
+        padding: 20px 0;
+        display: flex;
+        justify-content: center;
     }
 
     .bottomBox {
-        background-color: #1e1e1e;
-        color: #ccc;
-        height: 80px;
-
+        width: 90%;
+        max-width: 1100px;
         display: flex;
-        align-items: center;
-        justify-content: center;
         flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .bottomLinks {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 25px; 
+        opacity: 0.85;
+    }
+
+    .footerLink {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        position: relative;
+    }
+
+    .footerLink::after {
+        content: "";
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        bottom: -3px;
+        left: 0;
+        background-color: #18b650; 
+        transition: width 0.25s ease;
+    }
+
+    .footerLink:hover::after {
+        width: 100%;
+    }
+
+    .footerLink:hover {
+        color: #18b650; 
     }
 
     .bottomInfoText {
+        color: #ccc;
         font-size: 13px;
-        letter-spacing: 0.5px;
         text-align: center;
+        letter-spacing: 0.5px;
     }
 
     .infoSection {
@@ -313,10 +352,21 @@
 
     <div class="bottomInfoBar">
         <div class="bottomBox">
+
+            <div class="bottomLinks">
+                <a href="/StoreHomePage.php" class="footerLink">StorePage</a>
+                <a href="../Customers/SignUp.php" class="footerLink">Customer Sign Up</a>
+                <a href="../Customers/LogIn.php" class="footerLink">Customer Login</a>
+                <a href="../Suppliers/SupplierSignUpPage.php" class="footerLink">Supplier Sign Up</a>
+                <a href="../Suppliers/supplierLogInPage.php" class="footerLink">Supplier Login</a>
+                <a href="../Admins/adminLogInPage.php" class="footerLink">Admin Login</a>
+            </div>
+
             <div class="bottomInfoText">
                 <p>Baweed Groceries Ltd.</p>
                 <p>Established 2026 </p>
             </div>
+
         </div>
     </div>
 
