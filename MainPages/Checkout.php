@@ -55,9 +55,15 @@ include("../dbConnector.local.php");
             position: absolute;
             left: 40px;
         }
-
+        
         .linkImage img {
-            width: 150px;
+                width: 150px;
+            transition: 0.3s ease;
+        }
+
+        .linkImage img:hover {
+            transform: scale(1.08);
+            filter: brightness(1.08);
         }
 
         .content {
@@ -217,18 +223,12 @@ include("../dbConnector.local.php");
                         <div class="sectionTitle">Payment Method</div>
 
                         <label class="payOption">
-                            <input type="radio" name="payment" value="in_person" required>
-                            Pay In Person (at collection)
-                        </label>
+                            <input type="radio" name="payment" value="in_person" required>Pay In Person</label>
 
                         <label class="payOption">
-                            <input type="radio" name="payment" value="online">
-                            Pay Online (card)
-                        </label>
+                            <input type="radio" name="payment" value="online">Pay Online</label>
 
-                        <button type="submit" class="confirmBtn">
-                            Confirm Order
-                        </button>
+                        <button type="submit" class="confirmBtn" onclick="confirmPurchase()">Confirm Order</button>
                     </form>
 
                 </div>
@@ -240,5 +240,39 @@ include("../dbConnector.local.php");
         </div>
 
     </div>
+
+    <script>
+
+        //This checks if their paying by card or in person
+        function confirmPurchase() {
+
+            //Gets which payment option the user selected
+            const form = document.querySelector('form.paymentBox');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+
+                //Get the selected payment option
+                const selectedPayment = document.querySelector('input[name="payment"]:checked');
+
+                //If the user is paying online they must enter their pin otherwise the order is confirmed.
+                if (selectedPayment) {
+                    console.log('Selected payment method:', selectedPayment.value);
+                    
+                } else {
+                    alert('Please select a payment method.');
+                }
+            });
+
+        }
+
+        //This completes the transaction
+        function completeTransaction() {
+
+        }
+
+
+    </script>
+
 </body>
 </html>
