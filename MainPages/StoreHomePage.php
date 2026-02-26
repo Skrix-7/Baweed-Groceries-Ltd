@@ -15,7 +15,7 @@ include "../dbConnector.local.php";
             margin: 0;
             font-family: "Segoe UI", Arial, sans-serif;
 
-            background: linear-gradient(135deg, #2c2c2c, #1b1b1b);
+            background: linear-gradient(135deg, #555555, #474747, #292929);
 
             display: flex;
             justify-content: center;
@@ -180,18 +180,25 @@ include "../dbConnector.local.php";
         .footer {
             margin-top: auto;
 
-            background: #4a4a4a;      
+            background-color: #1e1e1e;    
             color: #e4e4e4;
 
             text-align: center;
-            padding: 16px;
+            padding: 20px 0;
             font-size: 13px;
             letter-spacing: 0.3px;
 
             border-top: 1px solid #3d3d3d; 
-            box-shadow: 0 -2px 8px rgba(0,0,0,0.25); 
+            box-shadow: 0 -3px 10px rgba(0,0,0,0.25); 
         }
-        
+
+        .footer p {
+            color: #ccc;                     
+            font-size: 13px;
+            text-align: center;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
     </style>
 
 </head>
