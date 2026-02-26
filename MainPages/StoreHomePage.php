@@ -1,13 +1,13 @@
 <?php
 session_start();
-include "databaseConnector.php";
+include "../dbConnector.local.php";
 ?>
 
 <!DOCTYPE html>
 
 <head>
     <title>Shop</title>
-    <link rel='icon' type='image/x-icon' href='/LogoImages/favicon.ico'>
+    <link rel='icon' type='image/x-icon' href='../Images/LogoImages/favicon.ico'>
 
     <style>
 
@@ -202,7 +202,7 @@ include "databaseConnector.php";
             <div class="bannerLeft">
 
                 <a href="WelcomePage.html">
-                    <img src="/LogoImages/baweedGroceriesLogo.png" width="180">
+                    <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="180">
                 </a>
                 <h1>Store</h1>
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "dbConnector.local.php";
+include "../dbConnector.local.php";
 
 //This ensures it will only act if it is a POST request
 if ($_SERVER["REQUEST_METHOD"] != "POST") {

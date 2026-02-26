@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "dbConnector.local.php";
+include "../dbConnector.local.php";
 ?>
 
 <!DOCTYPE html>
