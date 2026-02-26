@@ -243,17 +243,17 @@ include("../dbConnector.local.php");
                 <div class="sectionTitle">Items In Your Basket</div>
 
                 <div class="basketItem">
-                    <span class="itemName">Apples × 2</span>
+                    <span class="itemName">Apples x 2</span>
                     <span class="itemPrice">£4.80</span>
                 </div>
 
                 <div class="basketItem">
-                    <span class="itemName">Milk × 1</span>
+                    <span class="itemName">Milk x 1</span>
                     <span class="itemPrice">£1.30</span>
                 </div>
 
                 <div class="basketItem">
-                    <span class="itemName">Bread × 3</span>
+                    <span class="itemName">Bread x 3</span>
                     <span class="itemPrice">£3.60</span>
                 </div>
             </div>
@@ -263,9 +263,9 @@ include("../dbConnector.local.php");
                 <div class="summaryTitle">Price Summary</div>
 
                 <div class="priceBox">
-                    <div class="priceRow"><span>Apples (2 × £2.40)</span><span>£4.80</span></div>
-                    <div class="priceRow"><span>Milk (1 × £1.30)</span><span>£1.30</span></div>
-                    <div class="priceRow"><span>Bread (3 × £1.20)</span><span>£3.60</span></div>
+                    <div class="priceRow"><span>Apples (2 x £2.40)</span><span>£4.80</span></div>
+                    <div class="priceRow"><span>Milk (1 x £1.30)</span><span>£1.30</span></div>
+                    <div class="priceRow"><span>Bread (3 x £1.20)</span><span>£3.60</span></div>
 
                     <div class="priceRow totalPrice">
                         <span>Total</span>
@@ -274,7 +274,7 @@ include("../dbConnector.local.php");
                 </div>
 
                 <a href="./StoreHomePage.php" class="keepShoppingButton">Keep Shopping</a>
-                <a href="#" class="checkoutButton">Checkout</a>
+                <a href="./Checkout.php" class="checkoutButton">Checkout</a>
 
             </div>
 
