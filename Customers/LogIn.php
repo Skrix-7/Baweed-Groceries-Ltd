@@ -146,7 +146,6 @@ include "../dbConnector.local.php";
         }
 
     </style>
-
 </head>
 
 <body>

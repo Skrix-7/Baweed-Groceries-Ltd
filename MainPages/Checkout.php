@@ -190,36 +190,40 @@ include("../dbConnector.local.php");
             <a href="./WelcomePage.html" class="linkImage">
                 <img src="../Images/LogoImages/baweedGroceriesLogo.png" alt="Logo">
             </a>
+
             <div class="headersDiv">
                 <h1>Checkout</h1>
             </div>
+
         </div>
 
         <div class="content">
-
             <div class="checkoutContainer">
-
                 <div class="basketItems">
+
                     <div class="sectionTitle">Your Basket</div>
 
                     <div class="basketItem">
                         <span>Item Example x 1</span>
                         <span>£0.00</span>
                     </div>
+
                 </div>
 
                 <div class="rightSide">
-
                     <div class="priceBox">
+
                         <div class="sectionTitle">Order Summary</div>
 
                         <div class="priceRow totalPrice">
                             <span>Total</span>
                             <span>£0.00</span>
                         </div>
+
                     </div>
 
                     <form method="post" action="processCheckout.php" class="paymentBox">
+
                         <div class="sectionTitle">Payment Method</div>
 
                         <label class="payOption">
@@ -229,8 +233,8 @@ include("../dbConnector.local.php");
                             <input type="radio" name="payment" value="online">Pay Online</label>
 
                         <button type="submit" class="confirmBtn" onclick="confirmPurchase()">Confirm Order</button>
-                    </form>
 
+                    </form>
                 </div>
             </div>
         </div>
@@ -259,7 +263,10 @@ include("../dbConnector.local.php");
                 if (selectedPayment) {
                     console.log('Selected payment method:', selectedPayment.value);
                     
-                } else {
+                } 
+                
+                //If they click confirm purchase without selecting a payment method, it shows an alert
+                else {
                     alert('Please select a payment method.');
                 }
             });
@@ -270,7 +277,6 @@ include("../dbConnector.local.php");
         function completeTransaction() {
 
         }
-
 
     </script>
 

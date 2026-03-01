@@ -146,7 +146,6 @@ include "../dbConnector.local.php";
         }
 
     </style>
-
 </head>
 
 <body>
@@ -299,10 +298,12 @@ include "../dbConnector.local.php";
             //Checks if the email has a space, @ and a correct domain name
             if (email.includes(" ")) return false;
 
+            //Ensures the email contains the @ symbol and a valid domain
             if (email.includes("@") && (email.includes(".com") || email.includes(".co.uk") || email.includes(".org"))) {
                 return true;
             }
 
+            //If it fails the above checks then it is invalid
             else {
                 return false;
             }
@@ -313,39 +314,46 @@ include "../dbConnector.local.php";
 
             cardPin = Number(cardPin);
 
-            console.log(username, password, email, phoneNum, cardNum, cardPin, address);
-
+            //Fetch request to send the user details to the server for processing and database storage
             fetch("StoreUser.php", {
                 method: "POST",
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
                 body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&email=${encodeURIComponent(email)}&phoneNumber=${encodeURIComponent(phoneNum)}&cardNumber=${encodeURIComponent(cardNum)}&cardPin=${encodeURIComponent(cardPin)}&address=${encodeURIComponent(address)}`
             })
-            .then(response => {
-                console.log("Fetch status:", response.status);
-                console.log("Content-Type:", response.headers.get("content-type"));
-                return response.text();
-            })
+
+            //Gets the response from the server and checks if it is a success or an error message, then acts accordingly
+            .then(response => response.text())
             .then(data => {
-                console.log("Raw response from server:", data);
                 
                 const trimmed = (data || "").trim();
                 
+                //If it was succeful then they are logged into the home page
                 if (trimmed === "success") {
-                    console.log("Success detected – redirecting");
-                    window.location.href = "/MainPages/StoreHomePage.php";   // make sure this path is correct!
-                } else {
+                    window.location.href = "/MainPages/StoreHomePage.php";  
+                } 
+                
+                //If not then the message is empty
+                else {
                     let displayMsg = trimmed;
+
+                    //Checks if the response looks like an entire webpage, which likely means a wrong URL or a PHP error causing a redirect to an error page
                     if (trimmed.includes("<!DOCTYPE") || trimmed.includes("<html")) {
                         displayMsg = "Server sent back a whole webpage instead of 'success' → likely wrong URL or PHP redirect leak";
-                    } else if (!trimmed) {
+                    } 
+                    
+                    //If it is empty
+                    else if (!trimmed) {
                         displayMsg = "Empty response (possible silent redirect or no output)";
                     }
+
+                    //Displays the error message to the user
                     document.getElementById("response").textContent = displayMsg;
                     document.getElementById("response").classList.add("show");
                 }
             })
+
+            //Catches any errors that occur during the fetch and displays them to the user
             .catch(err => {
-                console.error("Fetch error:", err);
                 document.getElementById("response").textContent = "Fetch failed: " + err.message;
                 document.getElementById("response").classList.add("show");
             });

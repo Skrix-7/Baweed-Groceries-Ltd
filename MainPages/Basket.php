@@ -224,72 +224,76 @@ include("../dbConnector.local.php");
 
 <body>
 
-<div class="pageWrapper">
-    <div class="homePageBanner">
-        <a href="./WelcomePage.html" class="linkImage">
-            <img src="../Images/LogoImages/baweedGroceriesLogo.png">
-        </a>
+    <div class="pageWrapper">
+        
+        <div class="homePageBanner">
+            <a href="./WelcomePage.html" class="linkImage">
+                <img src="../Images/LogoImages/baweedGroceriesLogo.png">
+            </a>
 
-        <div class="headersDiv">
-            <h1>My Basket</h1>
-        </div>
-
-    </div>
-
-    <div class="content">
-        <div class="basketContainer">
-
-            <div class="basketItems">
-                <div class="sectionTitle">Items In Your Basket</div>
-
-                <div class="basketItem">
-                    <span class="itemName">Apples x 2</span>
-                    <span class="itemPrice">£4.80</span>
-                </div>
-
-                <div class="basketItem">
-                    <span class="itemName">Milk x 1</span>
-                    <span class="itemPrice">£1.30</span>
-                </div>
-
-                <div class="basketItem">
-                    <span class="itemName">Bread x 3</span>
-                    <span class="itemPrice">£3.60</span>
-                </div>
+            <div class="headersDiv">
+                <h1>My Basket</h1>
             </div>
 
-            <div class="priceSummary">
+        </div>
 
-                <div class="summaryTitle">Price Summary</div>
+        <div class="content">
+            <div class="basketContainer">
+                <div class="basketItems">
 
-                <div class="priceBox">
-                    <div class="priceRow"><span>Apples (2 x £2.40)</span><span>£4.80</span></div>
-                    <div class="priceRow"><span>Milk (1 x £1.30)</span><span>£1.30</span></div>
-                    <div class="priceRow"><span>Bread (3 x £1.20)</span><span>£3.60</span></div>
+                    <div class="sectionTitle">Items In Your Basket</div>
 
-                    <div class="priceRow totalPrice">
-                        <span>Total</span>
-                        <span>£9.70</span>
+                    <div class="basketItem">
+                        <span class="itemName">Apples x 2</span>
+                        <span class="itemPrice">£4.80</span>
                     </div>
+
+                    <div class="basketItem">
+                        <span class="itemName">Milk x 1</span>
+                        <span class="itemPrice">£1.30</span>
+                    </div>
+
+                    <div class="basketItem">
+                        <span class="itemName">Bread x 3</span>
+                        <span class="itemPrice">£3.60</span>
+                    </div>
+
                 </div>
 
-                <a href="./StoreHomePage.php" class="keepShoppingButton">Keep Shopping</a>
-                <a href="./Checkout.php" class="checkoutButton">Checkout</a>
+                <div class="priceSummary">
 
+                    <div class="summaryTitle">Price Summary</div>
+
+                    <div class="priceBox">
+                        <div class="priceRow"><span>Apples (2 x £2.40)</span><span>£4.80</span></div>
+                        <div class="priceRow"><span>Milk (1 x £1.30)</span><span>£1.30</span></div>
+                        <div class="priceRow"><span>Bread (3 x £1.20)</span><span>£3.60</span></div>
+
+                        <div class="priceRow totalPrice">
+                            <span>Total</span>
+                            <span>£9.70</span>
+                        </div>
+
+                    </div>
+
+                    <a href="./StoreHomePage.php" class="keepShoppingButton">Keep Shopping</a>
+                    <a href="./Checkout.php" class="checkoutButton">Checkout</a>
+                
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+
+            <div class="footerLinks">
+                <a href="./WelcomePage.html">Welcome Page</a>
+                <a href="./StoreHomePage.php">Store Page</a>
             </div>
 
+            <p>© 2026 Baweed Groceries Ltd. All Rights Reserved.</p>
+
         </div>
     </div>
-
-    <div class="footer">
-        <div class="footerLinks">
-            <a href="./WelcomePage.html">Welcome Page</a>
-            <a href="./StoreHomePage.php">Store Page</a>
-        </div>
-        <p>© 2026 Baweed Groceries Ltd. All Rights Reserved.</p>
-    </div>
-
-</div>
 
 </body>
 </html>

@@ -8,7 +8,7 @@ ini_set('display_errors', 1);
 
 //This ensures it will only act if it is a POST request
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
-    echo "not_post";
+    echo "notPost";
     exit;
 }
 
@@ -31,7 +31,7 @@ $stmt = $conn->prepare("INSERT INTO customers (FullName, Password, Email, PhoneN
 
 //Ensures the statement was prepared correctly
 if (!$stmt) {
-    echo "prepare_failed: {$conn->error}";
+    echo "preparationError: {$conn->error}";
     exit;
 }
 
@@ -50,24 +50,41 @@ $stmt->bind_param(
 //Executing query
 if ($stmt->execute()) {
 
-    // Get the newly created user ID
+    //Get the newly created user ID
     $sql = "SELECT customerID FROM customers WHERE FullName = ? LIMIT 1";
+
+    //Prepares a second statment
     $stmt2 = $conn->prepare($sql);
+
+    //Sets the users username as the parameter then executes query
     $stmt2->bind_param("s", $username);
     $stmt2->execute();
+
+    //Gets the result of the query
     $result = $stmt2->get_result();
 
+    //If the result exists then the user is logged in
     if ($row = $result->fetch_assoc()) {
+
+        //Regenerates the session id 
         session_regenerate_id(true);
+
+        //Sets the users id in the session then echos success to the javascript
         $_SESSION['customerID'] = $row['customerID'];
-        // Tell JavaScript: success!
         echo "success";
-    } else {
-        echo "user_not_found_after_insert";
+    } 
+    
+    //If the user is not found then an error message is sent back
+    else {
+        echo "userNotFound";
     }
 
+    //Closes the statement
     $stmt2->close();
-} else {
+} 
+
+//If the query fails then an error message is sent back
+else {
     echo "execute_failed: " . $stmt->error;
 }
 

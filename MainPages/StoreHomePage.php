@@ -270,13 +270,12 @@ include "../dbConnector.local.php";
 
     <div class="mainDiv">
         <div class="shopBanner">
-            <div class="bannerLeft">
 
+            <div class="bannerLeft">
                 <a href="WelcomePage.html">
                     <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="180">
                 </a>
                 <h1>Store</h1>
-
             </div>
 
             <div class="bannerRight">
@@ -304,15 +303,16 @@ include "../dbConnector.local.php";
 
                 </div>
 
-            <div class="logOutDiv">
-            </div>
+            <div class="logOutDiv"></div>
         </div>
 
         <div class="search">
+
             <div class="searchDiv">
                 <input type="text" placeholder="Search..." id="searchInput">
                 <button type="button" onclick="performSearch()" id="searchButton">🔍</button>
             </div>
+
         </div>
 
         <div class="productMainDiv">
@@ -338,15 +338,16 @@ include "../dbConnector.local.php";
 
         //This binds the enter key to the search bar for easier searching
         var input = document.getElementById("searchInput");
+
         input.addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            preformSearch
-        }
+            if (event.key === "Enter") {
+                event.preventDefault();
+                performSearch();
+            }
         });
 
         //This is where the database is searched for the users food item
-        function preformSeach() {
+        function performSearch() {
         }
 
         //This logs the user in
@@ -359,24 +360,34 @@ include "../dbConnector.local.php";
             window.location.href="../Customers/SignUp.php";
         }
 
+        //This logs the user out
         function logOut() {
-            // Clear browser storage
+
+            //Clears browser and local storage
             sessionStorage.clear();
             localStorage.clear();
 
-            // Send POST request to logout.php
+            //Send POST request to LogOut.php
             fetch("../Customers/LogOut.php", {
                 method: "POST"
             })
+
+            //Gets the response and checks its status
             .then(response => response.json())
             .then(data => {
+
+                //If logout was successful, refresh the page to update the UI
                 if (data.status === "success") {
-                    // Refresh the page to update PHP UI
                     window.location.reload();
-                } else {
+                } 
+                
+                //If there was an error, log it to the console
+                else {
                     console.error("Logout failed:", data.message);
                 }
             })
+
+            //Catches any errors
             .catch(err => console.error("Error logging out:", err));
         }
 
