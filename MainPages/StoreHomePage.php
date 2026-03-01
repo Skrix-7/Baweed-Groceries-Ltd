@@ -71,8 +71,19 @@ include "../dbConnector.local.php";
         }
 
         .bannerRight {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+            gap: 6px;
+        }
+
+        .bannerRight p {
+            margin: 0;
             font-size: 14px;
-            opacity: 0.9;
+            font-weight: 500;
         }
 
         .search {
@@ -199,6 +210,59 @@ include "../dbConnector.local.php";
             letter-spacing: 0.5px;
             margin: 0;
         }
+
+        .logOutDiv {
+            position: absolute;
+            top: 18px;
+            right: 28px;
+        }
+
+        .bannerButtons {
+            margin-top: 5px;
+            display: flex;
+            gap: 14px;             
+            justify-content: center;
+            align-items: center;
+        }
+
+        .shopButton {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(to right, #21f367, #17b851);
+            border-radius: 8px;
+            border: none;
+            height: 30px;
+            width: 100px;
+
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+
+            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+            transition: all 0.25s ease;
+        }
+
+        .logInButton {
+            background: linear-gradient(to right, #2d7ef7, #1c5ed6);
+        }
+
+        .signUpButton {
+            background: linear-gradient(to right, #21f367, #17b851);
+        }
+
+        .logOutButton {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+        }
+
+        .shopButton:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.08);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+        }
+
     </style>
 
 </head>
@@ -216,12 +280,32 @@ include "../dbConnector.local.php";
             </div>
 
             <div class="bannerRight">
-                Welcome to Baweed Groceries
-            </div>
-        </div>
 
-        <div class="dealBanner">
-        
+                <?php if (isset($_SESSION['customerName'])) { ?>
+
+                    <p>Status: Logged In</p>
+                    <p>Welcome to Baweed Groceries</p>
+
+                    <div class="bannerButtons">
+                        <button onclick="window.location.href='LogOut.php'" class="shopButton logOutButton">Log Out</button>
+                    </div>
+
+                <?php } else { ?>
+
+                    <p>Status: Logged Out</p>
+                    <p>Welcome to Baweed Groceries</p>
+
+                    <div class="bannerButtons">
+                        <button onclick="signUp()" class="shopButton signUpButton">Sign Up</button>
+                        <button onclick="logIn()" class="shopButton logInButton">Log In</button>
+                    </div>
+
+                <?php } ?>
+
+                </div>
+
+            <div class="logOutDiv">
+            </div>
         </div>
 
         <div class="search">
@@ -248,7 +332,7 @@ include "../dbConnector.local.php";
         </div>
 
         </div>
-    </div>
+    </div> 
 
     <script>
 
@@ -263,6 +347,21 @@ include "../dbConnector.local.php";
 
         //This is where the database is searched for the users food item
         function preformSeach() {
+        }
+
+        //This logs the user out
+        function logOut() {
+
+        }
+
+        //This logs the user in
+        function logIn() {
+           window.location.href="../Customers/LogIn.php";
+        }
+
+        //This signs the user up
+        function signUp() {
+            window.location.href="../Customers/SignUp.php";
         }
 
     </script>

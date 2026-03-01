@@ -218,7 +218,7 @@ include "../dbConnector.local.php";
             }
 
             //This accesses logUserIn.php to POST the data entered to it for log in
-            fetch("/LogUserIn.php", {
+            fetch("LogUserIn.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
@@ -233,7 +233,7 @@ include "../dbConnector.local.php";
 
                     //If the response is success, the user is redirected to the store home page
                     case "success":
-                        window.location.href = "/StoreHomePage.php";
+                        window.location.href = "../MainPages/StoreHomePage.php";
                         break;
 
                     //If the response is userNotFound, the user is informed that no account was found with that username

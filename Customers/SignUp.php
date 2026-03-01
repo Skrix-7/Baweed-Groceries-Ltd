@@ -218,10 +218,6 @@ include "../dbConnector.local.php";
         //Handles entry validation and database management
         function signUp() {
 
-            function signUp() {
-                alert("signup clicked");
-            }
-
             //Tests if all fields are valid
             var isValid=true;
             const response = document.getElementById("response");
@@ -319,44 +315,40 @@ include "../dbConnector.local.php";
 
             console.log(username, password, email, phoneNum, cardNum, cardPin, address);
 
-            //This fetches the store user php file 
-            fetch("/StoreUser.php", {
-
-            //This is describing the format of the data sent
+            fetch("StoreUser.php", {
                 method: "POST",
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
-
-                //This is setting the parameters to the data being sent
-                body:
-                    "username=" + encodeURIComponent(username) +
-                    "&password=" + encodeURIComponent(password) +
-                    "&email=" + encodeURIComponent(email) +
-                    "&phoneNumber=" + encodeURIComponent(phoneNum) +
-                    "&cardNumber=" + encodeURIComponent(cardNum) +
-                    "&cardPin=" + encodeURIComponent(cardPin) +
-                    "&address=" + encodeURIComponent(address)
+                body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&email=${encodeURIComponent(email)}&phoneNumber=${encodeURIComponent(phoneNum)}&cardNumber=${encodeURIComponent(cardNum)}&cardPin=${encodeURIComponent(cardPin)}&address=${encodeURIComponent(address)}`
             })
-
-            //This sends the data to the store user file
-            .then(response => response.text())
+            .then(response => {
+                console.log("Fetch status:", response.status);
+                console.log("Content-Type:", response.headers.get("content-type"));
+                return response.text();
+            })
             .then(data => {
-
-                //If it was successful then they are logged in and sent to the home screen
-                if (data==="success") {
-                    window.location.href="/StoreHomePage.php";
-                } 
+                console.log("Raw response from server:", data);
                 
-                //If the database addition failed then they are informed
-                else {
-                    document.getElementById("response").textContent=data;
-                    document.getElementById("response").classList.add();
+                const trimmed = (data || "").trim();
+                
+                if (trimmed === "success") {
+                    console.log("Success detected – redirecting");
+                    window.location.href = "/MainPages/StoreHomePage.php";   // make sure this path is correct!
+                } else {
+                    let displayMsg = trimmed;
+                    if (trimmed.includes("<!DOCTYPE") || trimmed.includes("<html")) {
+                        displayMsg = "Server sent back a whole webpage instead of 'success' → likely wrong URL or PHP redirect leak";
+                    } else if (!trimmed) {
+                        displayMsg = "Empty response (possible silent redirect or no output)";
+                    }
+                    document.getElementById("response").textContent = displayMsg;
+                    document.getElementById("response").classList.add("show");
                 }
             })
-
-            //This catches any server connection error
-            .catch(error=> {
-                document.getElementById("response").textContent = "Server connection error.";
-            })
+            .catch(err => {
+                console.error("Fetch error:", err);
+                document.getElementById("response").textContent = "Fetch failed: " + err.message;
+                document.getElementById("response").classList.add("show");
+            });
         }
 
     </script>

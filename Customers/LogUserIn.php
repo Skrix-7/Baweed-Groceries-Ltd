@@ -2,44 +2,61 @@
 session_start();
 include "../dbConnector.local.php";
 
-//Only allow POST requests
-if ($_SERVER["REQUEST_METHOD"] != "POST") {
-    echo "not_post";
+header('Content-Type: text/plain; charset=utf-8');
+
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    http_response_code(405);
+    echo "Method Not Allowed";
     exit;
 }
 
-//Retrieve username and password from POST data, or set to null if not provided
-$username = $_POST['username'] ?? null;
-$password = $_POST['password'] ?? null;
+$username = trim($_POST['username'] ?? '');
+$password = $_POST['password'] ?? '';
 
-//Query database for username only
-$stmt = $conn->prepare("SELECT customerID, FullName, Password FROM customers WHERE FullName=? LIMIT 1");
+if ($username === '' || $password === '') {
+    http_response_code(400);
+    echo "missing_fields";
+    exit;
+}
+
+$stmt = $conn->prepare(
+    "SELECT customerID, FullName, Password 
+     FROM customers 
+     WHERE FullName = ? 
+     LIMIT 1"
+);
+
+if (!$stmt) {
+    http_response_code(500);
+    echo "prepare_failed";
+    exit;
+}
+
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
 
-//If the search finds no users with the username it responds with userNotFound and exits
 if ($result->num_rows === 0) {
+    http_response_code(401);
     echo "userNotFound";
     exit;
 }
 
-//Fetch the user data from the result
 $user = $result->fetch_assoc();
 
-//Compares the password entered to the password of the user in the database.
+// TODO: use password_verify() — plain text passwords are dangerous
 if ($user['Password'] !== $password) {
+    http_response_code(401);
     echo "incorrectPassword";
     exit;
 }
 
-//Login successful, store session
-$_SESSION['customerID'] = $user['customerID'];
-$_SESSION['FullName'] = $user['FullName'];
+// Login success
+session_regenerate_id(true);
+$_SESSION['customerID']   = $user['customerID'];
+$_SESSION['customerName'] = $user['FullName'];
 
-//Tells the login page it was successful so it can redirect the user to the store home page
+http_response_code(200);
 echo "success";
-
-//Close the database connection
-$stmt->close();
-$conn->close();
+// You can also do: header("Location: /BaweedGroceries/MainPages/StoreHomePage.php");
+exit;
