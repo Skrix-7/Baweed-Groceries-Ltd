@@ -7,7 +7,7 @@ include "../dbConnector.local.php";
 
 <head>
     <title>Sign Up</title>
-    <link rel='icon' type='image/x-icon' href='/LogoImages/favicon.ico'>
+    <link rel='icon' type='image/x-icon' href='../Images/LogoImages/favicon.ico'>
 
     <style>
 
@@ -184,7 +184,7 @@ include "../dbConnector.local.php";
             <button type="button" class="formButton secondaryButton" onclick="togglePassword()">Show Password</button>
             <button class="formButton signUpButton" onclick="signUp()">Sign Up</button>
 
-            <a href="/StoreHomePage.php" class="skipLink">Skip</a>
+            <a href="../MainPages/StoreHomePage.php" class="skipLink">Skip</a>
 
             <div class="responseMessage">
                 <p id="response"> </p>

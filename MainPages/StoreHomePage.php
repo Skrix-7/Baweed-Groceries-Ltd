@@ -287,7 +287,7 @@ include "../dbConnector.local.php";
                     <p>Welcome to Baweed Groceries</p>
 
                     <div class="bannerButtons">
-                        <button onclick="window.location.href='LogOut.php'" class="shopButton logOutButton">Log Out</button>
+                        <button onclick="logOut()" class="shopButton logOutButton">Log Out</button>
                     </div>
 
                 <?php } else { ?>
@@ -349,11 +349,6 @@ include "../dbConnector.local.php";
         function preformSeach() {
         }
 
-        //This logs the user out
-        function logOut() {
-
-        }
-
         //This logs the user in
         function logIn() {
            window.location.href="../Customers/LogIn.php";
@@ -362,6 +357,27 @@ include "../dbConnector.local.php";
         //This signs the user up
         function signUp() {
             window.location.href="../Customers/SignUp.php";
+        }
+
+        function logOut() {
+            // Clear browser storage
+            sessionStorage.clear();
+            localStorage.clear();
+
+            // Send POST request to logout.php
+            fetch("../Customers/LogOut.php", {
+                method: "POST"
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    // Refresh the page to update PHP UI
+                    window.location.reload();
+                } else {
+                    console.error("Logout failed:", data.message);
+                }
+            })
+            .catch(err => console.error("Error logging out:", err));
         }
 
     </script>
