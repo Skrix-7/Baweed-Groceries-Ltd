@@ -381,47 +381,47 @@ include "../dbConnector.local.php";
             {
                 name: "Broccoli",
                 image: "../Images/ProductImages/broccoli.avif",
-                link: "ProductPages/broccoli.php"
+                link: "../Listings/Broccoli.php"
             },
             {
                 name: "Carrots",
                 image: "../Images/ProductImages/carrot.avif",
-                link: "ProductPages/carrot.php"
+                link: "../Listings/Carrots.php"
             },
             {
                 name: "Cucumbers",
                 image: "../Images/ProductImages/cucumber.avif",
-                link: "ProductPages/cucumber.php"
+                link: "../Listings/Cucumbers.php"
             },
             {
                 name: "Garlic",
                 image: "../Images/ProductImages/garlic.avif",
-                link: "ProductPages/garlic.php"
+                link: "../Listings/Garlic.php"
             },
             {
                 name: "Onions",
                 image: "../Images/ProductImages/onion.avif",
-                link: "ProductPages/onion.php"
+                link: "../Listings/Onions.php"
             },
             {
                 name: "Lettuce",
                 image: "../Images/ProductImages/lettuce.avif",
-                link: "ProductPages/lettuce.php"
+                link: "../Listings/Lettuce.php"
             },
             {
                 name: "Peppers",
                 image: "../Images/ProductImages/pepper.avif",
-                link: "ProductPages/pepper.php"
+                link: "../Listings/Peppers.php"
             },
             {
                 name: "Tomatoes",
                 image: "../Images/ProductImages/tomato.avif",
-                link: "ProductPages/tomato.php"
+                link: "../Listings/Tomatoes.php"
             },
             {
                 name: "Potatoes",
                 image: "../Images/ProductImages/potato.avif",
-                link: "ProductPages/potato.php"
+                link: "../Listings/Potatoes.php"
             }
         ];
 
