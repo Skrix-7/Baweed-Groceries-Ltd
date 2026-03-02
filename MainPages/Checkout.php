@@ -156,9 +156,10 @@ include("../dbConnector.local.php");
 
         .returnBtn {
             position: absolute;
-            right: 40px;
+            left: 210px; 
             top: 50%;
             transform: translateY(-50%);
+
             padding: 10px 16px;
             background-color: #2d7ef7;
             color: white;
@@ -179,6 +180,83 @@ include("../dbConnector.local.php");
             text-align: center;
             padding: 18px 10px;
         }
+
+        .detailsEntryField {
+           width:100%; 
+           padding:10px; 
+           margin:8px 0; 
+           border-radius:6px; 
+           border:1px solid #ccc;
+        }
+
+        .orderDetails {
+            margin-top: 20px; 
+            display: none;
+        }
+
+        .bannerRight {
+            position: absolute;
+            right: 40px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+            gap: 4px;
+        }
+
+        .bannerRight p {
+            margin: 0;
+            color: white;
+            font-size: 14px;
+        }
+
+        .bannerButtons {
+            margin-top: 5px;
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .shopButton {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 8px;
+            border: none;
+            height: 30px;
+            width: 100px;
+
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+
+            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+            transition: all 0.25s ease;
+        }
+
+        .logInButton {
+            background: linear-gradient(to right, #2d7ef7, #1c5ed6);
+        }
+
+        .signUpButton {
+            background: linear-gradient(to right, #21f367, #17b851);
+        }
+
+        .logOutButton {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+        }
+
+        .shopButton:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.08);
+        }
+
     </style>
 </head>
 
@@ -186,15 +264,37 @@ include("../dbConnector.local.php");
     <div class="pageWrapper">
 
         <div class="homePageBanner">
+
             <a href="StoreHomePage.php" class="returnBtn">← Return to Store</a>
-            <a href="./WelcomePage.html" class="linkImage">
-                <img src="../Images/LogoImages/baweedGroceriesLogo.png" alt="Logo">
-            </a>
+            <a href="./WelcomePage.html" class="linkImage"><img src="../Images/LogoImages/baweedGroceriesLogo.png" alt="Logo"></a>
 
             <div class="headersDiv">
                 <h1>Checkout</h1>
             </div>
 
+            <div class="bannerRight">
+
+                <?php if (isset($_SESSION['customerID'])) { ?>
+
+                    <p>Status: Logged In</p>
+                    <p>Welcome to Baweed Groceries</p>
+
+                    <div class="bannerButtons">
+                        <button onclick="logOut()" class="shopButton logOutButton">Log Out</button>
+                    </div>
+
+                <?php } else { ?>
+
+                    <p>Status: Logged Out</p>
+                    <p>Welcome to Baweed Groceries</p>
+
+                    <div class="bannerButtons">
+                        <button onclick="signUp()" class="shopButton signUpButton">Sign Up</button>
+                        <button onclick="logIn()" class="shopButton logInButton">Log In</button>
+                    </div>
+
+                <?php } ?>
+            </div>
         </div>
 
         <div class="content">
@@ -222,17 +322,49 @@ include("../dbConnector.local.php");
 
                     </div>
 
-                    <form method="post" action="processCheckout.php" class="paymentBox">
+                    <form id="checkoutForm" method="post" action="processCheckout.php" class="paymentBox">
 
                         <div class="sectionTitle">Payment Method</div>
 
                         <label class="payOption">
-                            <input type="radio" name="payment" value="in_person" required>Pay In Person</label>
+                            <input type="radio" name="payment" value="in_person" required> Pay In Person
+                        </label>
 
                         <label class="payOption">
-                            <input type="radio" name="payment" value="online">Pay Online</label>
+                            <input type="radio" name="payment" value="online"> Pay Online
+                        </label>
 
-                        <button type="submit" class="confirmBtn" onclick="confirmPurchase()">Confirm Order</button>
+                        <!-- Guest Account Fields -->
+                        <?php if (!isset($_SESSION['customerID'])): ?>
+
+                            <div id="guestFields" class="orderDetails guestFields">
+
+                                <div class="sectionTitle">Your Details</div>
+                                
+                                <input type="email" name="guestEmail" placeholder="Enter Your Email Address" required class="detailsEntryField">
+                                <input type="text" name="guestAddress" placeholder="Enter Your Delivery Address" required class="detailsEntryField">
+                                
+                                <div id="onlineExtraFields" style="display:none;">
+
+                                    <input type="text" name="guestCardNumber" placeholder="Enter Your Card Number" pattern="\d{16}" maxlength="16" class="detailsEntryField">
+                                    <input type="text" name="guestPin" placeholder="Enter Your PIN Number" pattern="\d{4}" maxlength="4" class="detailsEntryField">
+
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Logged In Fields -->
+                        <?php if (isset($_SESSION['customerID'])): ?>
+
+                            <div id="loggedInPinField" class="orderDetails loggedInFields">
+
+                                <div class="sectionTitle">Enter your PIN to confirm payment</div>
+                                <input type="text" name="pin" placeholder="4-digit PIN" pattern="\d{4}" maxlength="4" required class="detailsEntryField">
+                                
+                            </div>
+                        <?php endif; ?>
+
+                        <button type="submit" class="confirmBtn">Confirm Order</button>
 
                     </form>
                 </div>
@@ -276,6 +408,44 @@ include("../dbConnector.local.php");
         //This completes the transaction
         function completeTransaction() {
 
+        }
+
+        //This logs the user out
+        function logOut() {
+
+            //Clears browser and local storage
+            sessionStorage.clear();
+            localStorage.clear();
+
+            //Send POST request to LogOut.php
+            fetch("../Customers/LogOut.php", {
+                method: "POST"
+            })
+
+            //Gets the response and checks its status
+            .then(response => response.json())
+            .then(data => {
+
+                //If logout was successful, refresh the page to update the UI
+                if (data.status === "success") {
+                    window.location.reload();
+                } 
+                
+                //If there was an error, log it to the console
+                else {
+                    console.error("Logout failed:", data.message);
+                }
+            })
+        }
+
+        //This logs the user in
+        function logIn() {
+           window.location.href="../Customers/LogIn.php";
+        }
+
+        //This signs the user up
+        function signUp() {
+            window.location.href="../Customers/SignUp.php";
         }
 
     </script>

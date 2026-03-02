@@ -263,6 +263,34 @@ include "../dbConnector.local.php";
             box-shadow: 0 8px 18px rgba(0,0,0,0.35);
         }
 
+        .basketButtonDiv {
+            margin-right:-700px;
+        }
+
+        .basketButton {
+            gap:8px;
+
+            padding:8px 16px;
+
+            background:linear-gradient(135deg,#ffb347,#ff7b00);
+            border:none;
+            border-radius:10px;
+
+            color:white;
+            font-size:15px;
+            font-weight:600;
+            cursor:pointer;
+
+            box-shadow:0 6px 14px rgba(0,0,0,0.25);
+            transition:all 0.25s ease;
+        }
+
+        .basketButton:hover {
+            transform:translateY(-3px);
+            filter:brightness(1.1);
+            box-shadow:0 10px 20px rgba(0,0,0,0.35);
+        }
+
     </style>
 
 </head>
@@ -278,9 +306,13 @@ include "../dbConnector.local.php";
                 <h1>Store</h1>
             </div>
 
+            <div class="basketButtonDiv">
+                <button class="basketButton" onclick="window.location.href='Basket.php'">Basket</button>
+            </div>
+
             <div class="bannerRight">
 
-                <?php if (isset($_SESSION['customerName'])) { ?>
+                <?php if (isset($_SESSION['customerID'])) { ?>
 
                     <p>Status: Logged In</p>
                     <p>Welcome to Baweed Groceries</p>
