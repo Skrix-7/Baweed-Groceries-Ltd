@@ -151,7 +151,7 @@ include "../dbConnector.local.php";
 
         .products {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(3, 1fr); 
             gap: 18px;
         }
 
@@ -291,6 +291,14 @@ include "../dbConnector.local.php";
             box-shadow:0 10px 20px rgba(0,0,0,0.35);
         }
 
+        .productImg {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
     </style>
 
 </head>
@@ -368,6 +376,55 @@ include "../dbConnector.local.php";
 
     <script>
 
+        //This is a list of all product types with their corresponding image and webpage links.
+        const products = [
+            {
+                name: "Broccoli",
+                image: "../Images/ProductImages/broccoli.avif",
+                link: "ProductPages/broccoli.php"
+            },
+            {
+                name: "Carrots",
+                image: "../Images/ProductImages/carrot.avif",
+                link: "ProductPages/carrot.php"
+            },
+            {
+                name: "Cucumbers",
+                image: "../Images/ProductImages/cucumber.avif",
+                link: "ProductPages/cucumber.php"
+            },
+            {
+                name: "Garlic",
+                image: "../Images/ProductImages/garlic.avif",
+                link: "ProductPages/garlic.php"
+            },
+            {
+                name: "Onions",
+                image: "../Images/ProductImages/onion.avif",
+                link: "ProductPages/onion.php"
+            },
+            {
+                name: "Lettuce",
+                image: "../Images/ProductImages/lettuce.avif",
+                link: "ProductPages/lettuce.php"
+            },
+            {
+                name: "Peppers",
+                image: "../Images/ProductImages/pepper.avif",
+                link: "ProductPages/pepper.php"
+            },
+            {
+                name: "Tomatoes",
+                image: "../Images/ProductImages/tomato.avif",
+                link: "ProductPages/tomato.php"
+            },
+            {
+                name: "Potatoes",
+                image: "../Images/ProductImages/potato.avif",
+                link: "ProductPages/potato.php"
+            }
+        ];
+
         //This binds the enter key to the search bar for easier searching
         var input = document.getElementById("searchInput");
 
@@ -377,6 +434,36 @@ include "../dbConnector.local.php";
                 performSearch();
             }
         });
+
+        //This displays all the products onto the page
+        function displayProducts(productList) {
+
+            //This clears the products container before displaying the new products to prevent duplicates when searching
+            const container = document.querySelector(".products");
+            container.innerHTML = "";
+
+            //This for loops through each product
+            productList.forEach(product => {
+
+                //Creating a new card icon for each product
+                const card = document.createElement("div");
+                card.className = "productCard";
+
+                //This adds the product image and name to the card
+                card.innerHTML = `
+                    <img class="productImg" src="${product.image}" alt="${product.name}">
+                    <div class="productName">${product.name}</div>
+                `;
+
+                //This adds a click event listener to the card that redirects the user to the product's webpage when clicked
+                card.addEventListener("click", () => {
+                    window.location.href = product.link;
+                });
+
+                //This adds the card to the products container
+                container.appendChild(card);
+            });
+        }
 
         //This is where the database is searched for the users food item
         function performSearch() {
@@ -422,6 +509,9 @@ include "../dbConnector.local.php";
             //Catches any errors
             .catch(err => console.error("Error logging out:", err));
         }
+
+        //This runs the display products function on page load to show all products by default
+        displayProducts(products);
 
     </script>
 
