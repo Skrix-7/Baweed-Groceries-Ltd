@@ -89,7 +89,7 @@ include "../dbConnector.local.php";
         .search {
             display: flex;
             justify-content: center;
-            margin: 18px 0 12px 0; 
+            margin: 10px 0 8px 0; 
         }
 
         .searchDiv {
@@ -132,7 +132,8 @@ include "../dbConnector.local.php";
         .productMainDiv {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            margin-bottom: 25px;
+            margin-top: 10px;
         }
 
         .productsDiv {
@@ -140,6 +141,9 @@ include "../dbConnector.local.php";
             border-radius: 14px;
             padding: 25px;
             box-shadow: 0 5px 14px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 1200px; 
+            box-sizing: border-box;
         }
 
         .mainText {
@@ -151,7 +155,7 @@ include "../dbConnector.local.php";
 
         .products {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); 
+            grid-template-columns: repeat(3, 1fr);
             gap: 18px;
         }
 
