@@ -7,7 +7,7 @@ if (isset($_SESSION['customerID'])) {
 
     //This is the query to get the users basket contents
     $query = "
-        SELECT b.basketID, b.quantity, l.listingID, l.Price, p.Name
+        SELECT b.basketID, b.quantity, l.listingID, l.Price, p.Name, l.Quantity AS stock
         FROM basket b
         INNER JOIN listings l ON b.listingID = l.listingID
         INNER JOIN products p ON l.productID = p.productID
@@ -23,7 +23,7 @@ else {
 
     //Here is the query to get the users basket contents using session id
     $query = "
-        SELECT b.basketID, b.quantity, l.listingID, l.Price, p.Name
+        SELECT b.basketID, b.quantity, l.listingID, l.Price, p.Name, l.Quantity AS stock
         FROM basket b
         INNER JOIN listings l ON b.listingID = l.listingID
         INNER JOIN products p ON l.productID = p.productID
@@ -140,27 +140,6 @@ foreach ($basketItems as $item) {
             align-items: flex-start;
             gap: 30px;
         }
-
-        .basketItems {
-            width: 520px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            min-width: 420px;
-            transform: translateX(25px); 
-        }
-
-        .basketItem {
-            background: #f7f7f7;
-            border-radius: 10px;
-            padding: 14px 18px;
-            display: flex;
-            justify-content: space-between;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-        }
-
-        .itemName { font-size: 15px; }
-        .itemPrice { font-weight: 600; }
 
         .priceSummary {
             width: 260px;
@@ -361,6 +340,80 @@ foreach ($basketItems as $item) {
             padding: 20px 0;
         }
 
+        .basketItem {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f7f7f7;
+            border-radius: 10px;
+            padding: 14px 18px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+        }
+
+        .itemName {
+            flex: 2;
+            font-size: 15px;
+            font-weight: 500;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .basketItems {
+            width: 520px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            min-width: 420px;
+            transform: translateX(25px); 
+        }
+
+        .quantityControl {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .quantityControl button {
+            width: 28px;
+            height: 28px;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: white;
+        }
+
+        .quantityControl .increaseBtn {
+            background-color: #28a745; 
+        }
+
+        .quantityControl .decreaseBtn {
+            background-color: #dc3545;
+        }
+
+        .quantityControl button:hover {
+            filter: brightness(1.1);
+        }
+
+        .itemQuantity {
+            width: 28px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .itemPrice {
+            flex: 1;
+            text-align: right;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
     </style>
 </head>
 
@@ -413,13 +466,15 @@ foreach ($basketItems as $item) {
 
                             <div class="basketItem">
 
-                                <span class="itemName">
-                                    <?= htmlspecialchars($item['Name']) ?> x <?= $item['quantity'] ?>
-                                </span>
+                                <div class="itemName"><?= htmlspecialchars($item['Name']) ?></div>
 
-                                <span class="itemPrice">
-                                    £<?= number_format($item['Price'] * $item['quantity'], 2) ?>
-                                </span>
+                                <div class="quantityControl" data-listing-id="<?= $item['listingID'] ?>" data-price="<?= $item['Price'] ?>" data-stock="<?= $item['stock'] ?>">
+                                    <button class="decreaseBtn">-</button>
+                                    <span class="itemQuantity"><?= $item['stock'] ?></span>
+                                    <button class="increaseBtn">+</button>
+                                </div>
+
+                                <div class="itemPrice">£<span class="itemTotalPrice"><?= number_format($item['Price'] * $item['quantity'], 2) ?></span></div>
 
                             </div>
 
@@ -435,7 +490,7 @@ foreach ($basketItems as $item) {
 
                     <div class="summaryTitle">Price Summary</div>
 
-                    <div class="priceBox">
+                    <div class="priceBox" id="priceSummaryBox">
 
                         <?php if (!empty($basketItems)): ?>
                                 <?php foreach ($basketItems as $item): ?>
@@ -455,7 +510,7 @@ foreach ($basketItems as $item) {
 
                         <?php else: ?>
 
-                            <p>Your basket is empty.</p>#
+                            <p>Your basket is empty.</p>
 
                         <?php endif; ?>
                     </div>
@@ -517,6 +572,139 @@ foreach ($basketItems as $item) {
         //This signs the user up
         function signUp() {
             window.location.href="../Customers/SignUp.php";
+        }
+
+        //This adds event listeners to the quantity control buttons for each item in the basket
+        document.querySelectorAll('.quantityControl').forEach(control => {
+
+            //This manages the quantity changes and updates the basket accordingly when the increase or decrease buttons are clicked
+            const listingID = control.dataset.listingId;
+            const price = parseFloat(control.dataset.price);
+            const stock = parseInt(control.dataset.stock);
+
+            //Get references to the quantity display and total price elements for this item
+            const qtyDisplay = control.querySelector('.itemQuantity');
+            const decreaseBtn = control.querySelector('.decreaseBtn');
+            const increaseBtn = control.querySelector('.increaseBtn');
+            const totalPriceElem = control.closest('.basketItem').querySelector('.itemTotalPrice');
+
+            //Decrease quantity or remove item if quantity reaches 0
+            decreaseBtn.addEventListener('click', () => {
+
+                let qty = parseInt(qtyDisplay.textContent);
+
+                //If quantity is greater than 1, decrease it
+                if (qty > 1) {
+                    qty--;
+                    updateBasket(listingID, qty);
+                } 
+                
+                //If quantity is 1, remove the item from the basket
+                else if (qty === 1) {
+                    qty = 0;
+                    updateBasket(listingID, qty, true);
+                }
+            });
+
+            //Increase quantity, but not beyond available stock
+            increaseBtn.addEventListener('click', () => {
+
+                //Get current quantity and check if it can be increased without exceeding stock
+                let qty = parseInt(qtyDisplay.textContent);
+
+                //If current quantity is less than stock, increase it
+                if (qty < stock) {
+                    qty++;
+                    updateBasket(listingID, qty);
+                } 
+                
+                //If increasing would exceed stock, show an alert
+                else {
+                    alert("Cannot exceed available stock!");
+                }
+            });
+
+            //This updates the users basket in the database
+            function updateBasket(listingID, qty, remove = false) {
+            
+                //This sends a POST request to update basket.php with the listing ID and new quantity
+                fetch("UpdateBasket.php", {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ listingID, quantity: qty })
+                })
+
+                //This gets and analyzes the response from update basket
+                .then(res => res.json())
+                .then(data => {
+
+                    //If the update was successful, update the UI accordingly
+                    if (data.status === 'success') {
+                        if (remove) {
+                            control.closest('.basketItem').remove();
+                        } 
+                        
+                        //If the item was just updated, change the quantity and total price display
+                        else {
+                            qtyDisplay.textContent = qty;
+                            totalPriceElem.textContent = (qty * price).toFixed(2);
+                        }
+
+                        //This calls the function to update the total price display in the price summary
+                        updateTotalPrice(data.totalPrice);
+
+                        //This updates the list of items in basket at the price summary part
+                        updatePriceSummary(data.basketItems);
+                    } 
+                    
+                    //If there was an error updating the basket, show an alert with the error message
+                    else {
+                        alert("Error updating basket: " + data.message);
+                    }
+                });
+            }
+        });
+
+        //This function updates the total price display in the price summary section
+        function updateTotalPrice(newTotal) {
+            document.querySelector('.totalPrice span:last-child').textContent = '£' + parseFloat(newTotal).toFixed(2);
+        }
+
+        //This updates the price summary section of the page
+        function updatePriceSummary(basketItems) {
+
+            //This is where the price summary contents are
+            const summaryBox = document.getElementById('priceSummaryBox');
+            summaryBox.innerHTML = ''; 
+
+            //If the basket is empty they are told so
+            if (basketItems.length === 0) {
+                summaryBox.innerHTML = '<p>Your basket is empty.</p>';
+                return;
+            }
+
+            //Otherwise the contents of the basket are added to the price summary section
+            basketItems.forEach(item => {
+
+                const row = document.createElement('div');
+
+                row.className = 'priceRow';
+                row.innerHTML = `
+                    <span>${item.Name} (${item.quantity} x £${parseFloat(item.Price).toFixed(2)})</span>
+                    <span>£${(item.Price * item.quantity).toFixed(2)}</span>
+                `;
+
+                //Adds the item to the summary box
+                summaryBox.appendChild(row);
+            });
+
+            //Add total row at the end
+            const totalRow = document.createElement('div');
+
+            totalRow.className = 'priceRow totalPrice';
+            totalRow.innerHTML = `<span>Total:</span><span>£${parseFloat(basketItems.reduce((acc, i) => acc + i.Price*i.quantity, 0)).toFixed(2)}</span>`;
+
+            summaryBox.appendChild(totalRow);
         }
 
     </script>
