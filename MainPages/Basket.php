@@ -1,6 +1,65 @@
 <?php
 session_start();
 include("../dbConnector.local.php");
+
+//If the user is logged in use customer id
+if (isset($_SESSION['customerID'])) {
+
+    //This is the query to get the users basket contents
+    $query = "
+        SELECT b.basketID, b.quantity, l.listingID, l.Price, p.Name
+        FROM basket b
+        INNER JOIN listings l ON b.listingID = l.listingID
+        INNER JOIN products p ON l.productID = p.productID
+        WHERE b.customerID = ?
+    ";
+
+    //Use customer ID as the identifier
+    $identifier = $_SESSION['customerID'];
+} 
+
+//If they arent logged in use session id to track their baskets contents
+else {
+
+    //Here is the query to get the users basket contents using session id
+    $query = "
+        SELECT b.basketID, b.quantity, l.listingID, l.Price, p.Name
+        FROM basket b
+        INNER JOIN listings l ON b.listingID = l.listingID
+        INNER JOIN products p ON l.productID = p.productID
+        WHERE b.sessionID = ?
+    ";
+
+    //Use session ID as the identifier
+    $identifier = session_id();
+}
+
+//Creates an array to hold the contents
+$basketItems = [];
+
+//Prepaes the statement
+if ($stmt = $conn->prepare($query)) {
+
+    //Binds the identifier parameter and executes the query
+    $stmt->bind_param("s", $identifier);
+    $stmt->execute();
+
+    //Gets the result and fetches the data into the basketItems array
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $basketItems[] = $row;
+    }
+
+    //Closes the statement
+    $stmt->close();
+}
+
+//Calculates total price
+$totalPrice = 0;
+foreach ($basketItems as $item) {
+    $totalPrice += $item['Price'] * $item['quantity'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -290,6 +349,18 @@ include("../dbConnector.local.php");
             box-shadow: 0 8px 18px rgba(0,0,0,0.35);
         }
 
+        .basketItems p {
+            color:#777; 
+            font-style:italic; 
+            padding: 20px 0;
+        }
+
+        .priceBox p {
+            color:#777; 
+            font-style:italic; 
+            padding: 20px 0;
+        }
+
     </style>
 </head>
 
@@ -337,21 +408,27 @@ include("../dbConnector.local.php");
 
                     <div class="sectionTitle">Items In Your Basket</div>
 
-                    <div class="basketItem">
-                        <span class="itemName">Apples x 2</span>
-                        <span class="itemPrice">£4.80</span>
-                    </div>
+                    <?php if (!empty($basketItems)): ?>
+                        <?php foreach ($basketItems as $item): ?>
 
-                    <div class="basketItem">
-                        <span class="itemName">Milk x 1</span>
-                        <span class="itemPrice">£1.30</span>
-                    </div>
+                            <div class="basketItem">
 
-                    <div class="basketItem">
-                        <span class="itemName">Bread x 3</span>
-                        <span class="itemPrice">£3.60</span>
-                    </div>
+                                <span class="itemName">
+                                    <?= htmlspecialchars($item['Name']) ?> x <?= $item['quantity'] ?>
+                                </span>
 
+                                <span class="itemPrice">
+                                    £<?= number_format($item['Price'] * $item['quantity'], 2) ?>
+                                </span>
+
+                            </div>
+
+                        <?php endforeach; ?>
+                    <?php else: ?>
+
+                        <p>Your basket is empty.</p>
+
+                    <?php endif; ?>
                 </div>
 
                 <div class="priceSummary">
@@ -359,15 +436,28 @@ include("../dbConnector.local.php");
                     <div class="summaryTitle">Price Summary</div>
 
                     <div class="priceBox">
-                        <div class="priceRow"><span>Apples (2 x £2.40)</span><span>£4.80</span></div>
-                        <div class="priceRow"><span>Milk (1 x £1.30)</span><span>£1.30</span></div>
-                        <div class="priceRow"><span>Bread (3 x £1.20)</span><span>£3.60</span></div>
+
+                        <?php if (!empty($basketItems)): ?>
+                                <?php foreach ($basketItems as $item): ?>
+
+                                    <div class="priceRow">
+
+                                        <span><?= htmlspecialchars($item['Name']) ?> (<?= $item['quantity'] ?> x £<?= number_format($item['Price'], 2) ?>)</span>
+                                        <span>£<?= number_format($item['Price'] * $item['quantity'], 2) ?></span>
+
+                                    </div>
+                                <?php endforeach; ?>
 
                         <div class="priceRow totalPrice">
-                            <span>Total</span>
-                            <span>£9.70</span>
+                            <span>Total:</span>
+                            <span>£<?= number_format($totalPrice, 2) ?></span>
                         </div>
 
+                        <?php else: ?>
+
+                            <p>Your basket is empty.</p>#
+
+                        <?php endif; ?>
                     </div>
 
                     <a href="./StoreHomePage.php" class="keepShoppingButton">Keep Shopping</a>
