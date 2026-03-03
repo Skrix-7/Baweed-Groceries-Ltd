@@ -327,6 +327,35 @@ else {
             }
         }
 
+        .toast {
+            background-color: #2a2a2a;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateX(100%);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toastContainer .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
     </style>
 </head>
 
@@ -425,6 +454,8 @@ else {
 
     </div>
 
+    <div id="toastContainer" class="toastContainer"></div>
+
     <script>
 
         //Redirected to the login page
@@ -469,6 +500,61 @@ else {
         //Redirects the user back to the main store page
         function returnToStore() {
             window.location.href = "../MainPages/StoreHomePage.php";
+        }
+
+        //This is where the item is added to the users basket
+        function addToBasket(listingID) {
+
+            //Sends a fetch request to add to basket.php
+            fetch("AddToBasket.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "listingID=" + listingID
+            })
+
+            //Checks the response for if it was a success or not
+            .then(response => response.json())
+            .then(data => {
+
+                //If was succsessful it alerts the user that the item was added to the basket
+                if (data.status === "success") {
+                    showToast("Item added to basket!");
+                } 
+                
+                //If there was an error it alerts the user that there was an error adding the item
+                else {
+                    showToast("Error adding item to basket.");
+                }
+            })
+
+            //This catches any errors that occur
+            .catch(error => console.error(error));
+        }
+
+        //This is where the user is alerted that the item was added to the basket
+        function showToast(message) {
+
+            //This creates a notification
+            const container = document.getElementById('toastContainer');
+
+            //This creates a toast element with the message
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+
+            //Adds the toast to the container
+            container.appendChild(toast);
+
+            //Show the toast
+            setTimeout(() => toast.classList.add('show'), 10);
+
+            //Hide after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => container.removeChild(toast), 300);
+            }, 3000);
         }
 
     </script>
