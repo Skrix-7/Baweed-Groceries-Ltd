@@ -390,12 +390,12 @@ include "../dbConnector.local.php";
             {
                 name: "Carrots",
                 image: "../Images/ProductImages/carrot.avif",
-                link: "../Listings/Carrots.php"
+                link: "../Listings/Carrot.php"
             },
             {
                 name: "Cucumbers",
                 image: "../Images/ProductImages/cucumber.avif",
-                link: "../Listings/Cucumbers.php"
+                link: "../Listings/Cucumber.php"
             },
             {
                 name: "Garlic",
@@ -405,7 +405,7 @@ include "../dbConnector.local.php";
             {
                 name: "Onions",
                 image: "../Images/ProductImages/onion.avif",
-                link: "../Listings/Onions.php"
+                link: "../Listings/Onion.php"
             },
             {
                 name: "Lettuce",
@@ -415,17 +415,17 @@ include "../dbConnector.local.php";
             {
                 name: "Peppers",
                 image: "../Images/ProductImages/pepper.avif",
-                link: "../Listings/Peppers.php"
+                link: "../Listings/Pepper.php"
             },
             {
                 name: "Tomatoes",
                 image: "../Images/ProductImages/tomato.avif",
-                link: "../Listings/Tomatoes.php"
+                link: "../Listings/Tomato.php"
             },
             {
                 name: "Potatoes",
                 image: "../Images/ProductImages/potato.avif",
-                link: "../Listings/Potatoes.php"
+                link: "../Listings/Potato.php"
             }
         ];
 
