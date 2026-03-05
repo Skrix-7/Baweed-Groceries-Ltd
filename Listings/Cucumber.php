@@ -371,7 +371,7 @@ else {
             </div>
 
             <div class="basketButtonDiv">
-                <button class="basketButton" onclick="window.location.href='../Basket/Basket.php'">Basket</button>
+                <button class="basketButton" onclick="window.location.href='../MainPages/Basket.php'">Basket</button>
             </div>
 
             <div class="bannerRight">
