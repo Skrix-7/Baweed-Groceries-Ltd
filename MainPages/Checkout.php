@@ -1,6 +1,51 @@
 <?php
 session_start();
 include("../dbConnector.local.php");
+
+//If the user is logged in use customer id
+if (isset($_SESSION['customerID'])) {
+    $identifierField = "customerID";
+    $identifierValue = $_SESSION['customerID'];
+} 
+
+//If the user isnt logged in it uses the session id
+else {
+    $identifierField = "sessionID";
+    $identifierValue = session_id();
+}
+
+//This is the query to get the items in the users basket
+$query = "
+    SELECT b.quantity, l.Price, p.Name, l.Quantity AS stock FROM basket b
+    INNER JOIN listings l ON b.listingID = l.listingID
+    INNER JOIN products p ON l.productID = p.productID
+    WHERE b.$identifierField = ?
+";
+
+//These are the variables for the users basket
+$basketItems = [];
+$totalPrice  = 0.00;
+
+//This prepares the statement
+if ($stmt = $conn->prepare($query)) {
+    $stmt->bind_param("s", $identifierValue);
+
+    //This executes the query and gets the results
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    //It then adds the items to the array and calculates the total price
+    while ($row = $result->fetch_assoc()) {
+        $basketItems[] = $row;
+        $totalPrice += $row['Price'] * $row['quantity'];
+    }
+
+    //Closes the statement
+    $stmt->close();
+}
+//This is here incase of an empty basket
+$basketIsEmpty = empty($basketItems);
+
 ?>
 
 <!DOCTYPE html>
@@ -303,11 +348,22 @@ include("../dbConnector.local.php");
 
                     <div class="sectionTitle">Your Basket</div>
 
-                    <div class="basketItem">
-                        <span>Item Example x 1</span>
-                        <span>£0.00</span>
-                    </div>
+                    <?php if ($basketIsEmpty): ?>
 
+                        <p style="color:#777; font-style:italic; padding: 20px 0;">
+                            Your basket is empty. Please add items before checking out.
+                        </p>
+
+                    <?php else: ?>
+                        <?php foreach ($basketItems as $item): ?>
+
+                            <div class="basketItem">
+                                <span><?= htmlspecialchars($item['Name']) ?> x <?= $item['quantity'] ?> </span>
+                                <span>£<?= number_format($item['Price'] * $item['quantity'], 2) ?></span>
+                            </div>
+
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
 
                 <div class="rightSide">
@@ -315,54 +371,35 @@ include("../dbConnector.local.php");
 
                         <div class="sectionTitle">Order Summary</div>
 
+                        <?php if (!$basketIsEmpty): ?>
+                            <?php foreach ($basketItems as $item): ?>
+
+                                <div class="priceRow">
+                                    <span><?= htmlspecialchars($item['Name']) ?> x <?= $item['quantity'] ?></span>
+                                    <span>£<?= number_format($item['Price'] * $item['quantity'], 2) ?></span>
+                                </div>
+
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+
                         <div class="priceRow totalPrice">
                             <span>Total</span>
-                            <span>£0.00</span>
+                            <span>£<?= number_format($totalPrice, 2) ?></span>
                         </div>
 
                     </div>
 
-                    <form id="checkoutForm" method="post" action="processCheckout.php" class="paymentBox">
+                    <form id="checkoutForm" class="paymentBox" onsubmit="completeTransaction(event)">
 
                         <div class="sectionTitle">Payment Method</div>
 
                         <label class="payOption">
-                            <input type="radio" name="payment" value="in_person" required> Pay In Person
+                            <input type="radio" name="payment" value="in_person"> Pay In Person
                         </label>
 
                         <label class="payOption">
-                            <input type="radio" name="payment" value="online"> Pay Online
+                            <input type="radio" name="payment" value="online" required> Pay Online
                         </label>
-
-                        <!-- Guest Account Fields -->
-                        <?php if (!isset($_SESSION['customerID'])): ?>
-
-                            <div id="guestFields" class="orderDetails guestFields">
-
-                                <div class="sectionTitle">Your Details</div>
-                                
-                                <input type="email" name="guestEmail" placeholder="Enter Your Email Address" required class="detailsEntryField">
-                                <input type="text" name="guestAddress" placeholder="Enter Your Delivery Address" required class="detailsEntryField">
-                                
-                                <div id="onlineExtraFields" style="display:none;">
-
-                                    <input type="text" name="guestCardNumber" placeholder="Enter Your Card Number" pattern="\d{16}" maxlength="16" class="detailsEntryField">
-                                    <input type="text" name="guestPin" placeholder="Enter Your PIN Number" pattern="\d{4}" maxlength="4" class="detailsEntryField">
-
-                                </div>
-                            </div>
-                        <?php endif; ?>
-
-                        <!-- Logged In Fields -->
-                        <?php if (isset($_SESSION['customerID'])): ?>
-
-                            <div id="loggedInPinField" class="orderDetails loggedInFields">
-
-                                <div class="sectionTitle">Enter your PIN to confirm payment</div>
-                                <input type="text" name="pin" placeholder="4-digit PIN" pattern="\d{4}" maxlength="4" required class="detailsEntryField">
-                                
-                            </div>
-                        <?php endif; ?>
 
                         <button type="submit" class="confirmBtn">Confirm Order</button>
 
@@ -379,35 +416,43 @@ include("../dbConnector.local.php");
 
     <script>
 
-        //This checks if their paying by card or in person
-        function confirmPurchase() {
+        //This takes the user to their webpage based on payment method
+        function completeTransaction(event) {
 
-            //Gets which payment option the user selected
-            const form = document.querySelector('form.paymentBox');
+            //This prevents a refresh handling errors better
+            event.preventDefault();
 
-            form.addEventListener('submit', function(event) {
-                event.preventDefault(); 
+            //This gets the payment method of the user
+            const selected = document.querySelector('input[name="payment"]:checked');
 
-                //Get the selected payment option
-                const selectedPayment = document.querySelector('input[name="payment"]:checked');
+            //Alert the user if no payment method is selected
+            if (!selected) {
+                alert("Please select a payment method.");
+                return;
+            }
 
-                //If the user is paying online they must enter their pin otherwise the order is confirmed.
-                if (selectedPayment) {
-                    console.log('Selected payment method:', selectedPayment.value);
-                    
-                } 
-                
-                //If they click confirm purchase without selecting a payment method, it shows an alert
-                else {
-                    alert('Please select a payment method.');
-                }
-            });
+            //This returns the value
+            const method = selected.value;
 
-        }
+            //Takes the user to payInPerson if they choose to pay in person
+            let target = "";
+            if (method === "in_person") {
+                target = "payInPerson.php";
+            } 
+            
+            //This takes them to payOnline if they choose to pay online
+            else if (method === "online") {
+                target = "payOnline.php";
+            } 
+            
+            //This is here for unexpected errors
+            else {
+                alert("Unknown payment method.");
+                return;
+            }
 
-        //This completes the transaction
-        function completeTransaction() {
-
+            //Navigate to the correct payment page
+            window.location.href = target;
         }
 
         //This logs the user out
