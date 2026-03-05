@@ -420,8 +420,8 @@ foreach ($basketItems as $item) {
 <body>
 
     <div class="pageWrapper">
-        
         <div class="homePageBanner">
+
             <a href="./WelcomePage.html" class="linkImage">
                 <img src="../Images/LogoImages/baweedGroceriesLogo.png">
             </a>
@@ -469,9 +469,11 @@ foreach ($basketItems as $item) {
                                 <div class="itemName"><?= htmlspecialchars($item['Name']) ?></div>
 
                                 <div class="quantityControl" data-listing-id="<?= $item['listingID'] ?>" data-price="<?= $item['Price'] ?>" data-stock="<?= $item['stock'] ?>">
+
                                     <button class="decreaseBtn">-</button>
-                                    <span class="itemQuantity"><?= $item['stock'] ?></span>
+                                    <span class="itemQuantity"><?= $item['quantity'] ?></span>
                                     <button class="increaseBtn">+</button>
+                                    
                                 </div>
 
                                 <div class="itemPrice">£<span class="itemTotalPrice"><?= number_format($item['Price'] * $item['quantity'], 2) ?></span></div>

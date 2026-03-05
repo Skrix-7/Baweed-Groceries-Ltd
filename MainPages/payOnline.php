@@ -2,7 +2,7 @@
 session_start();
 include "../dbConnector.local.php";
 
-// If the user is logged in use customerID, if not use sessionID
+//If the user is logged in use customerID, if not use sessionID
 $isLoggedIn   = isset($_SESSION['customerID']);
 $customerID   = $isLoggedIn ? $_SESSION['customerID'] : null;
 $identifierField = $isLoggedIn ? "customerID" : "sessionID";
@@ -11,52 +11,68 @@ $identifierValue = $isLoggedIn ? $customerID : session_id();
 $showSuccess  = false;
 $errorMessage = "";
 
-// Only process on POST
+//Only process on POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($isLoggedIn) {
 
-        // Logged-in users only need to supply their PIN
+        //Logged-in users only need to supply their PIN
         $enteredPin = trim($_POST['userPin'] ?? '');
 
+        //Entry Validation
         if (!preg_match('/^\d{4}$/', $enteredPin)) {
             $errorMessage = "Please enter a valid 4-digit PIN.";
         } else {
 
-            // Verify the PIN against the stored value
+            // erify the PIN against the stored value
             $stmt = $conn->prepare("SELECT Pin FROM customers WHERE customerID = ?");
             $stmt->bind_param("i", $customerID);
+
+            //Executes and gets the result
             $stmt->execute();
             $stmt->bind_result($storedPin);
+
+            //Finishing comparison
             $stmt->fetch();
             $stmt->close();
 
+            //Compares stored pin to entered pin
             if ((string)$enteredPin !== (string)$storedPin) {
                 $errorMessage = "Incorrect PIN. Please try again.";
-            } else {
+            } 
+            
+            //If they entered the right pin processing begins
+            else {
                 $showSuccess = true;
             }
         }
 
-    } else {
+    } 
+    
+    //If they are guest users then different entry fields are displayed
+    else {
 
-        // Guest users must supply address, card number and PIN
+        //Guest users must supply address, card number and PIN
         $guestAddress = trim($_POST['guestAddress']     ?? '');
         $guestCard    = trim($_POST['guestCardNumber']  ?? '');
         $guestPin     = trim($_POST['guestPin']         ?? '');
 
+        //Entry validation
         if (strlen($guestAddress) < 5 || !preg_match('/^\d{16}$/', $guestCard) || !preg_match('/^\d{4}$/', $guestPin)) {
             $errorMessage = "Please fill all fields correctly.";
-        } else {
+        } 
+        
+        //If they enter valid details payment is processed
+        else {
             $showSuccess = true;
         }
     }
 }
 
-// Process the order if validation passed
+//Process the order if validation passed
 if ($showSuccess) {
 
-    // Fetch basket contents with stock levels
+    //Fetch basket contents with stock levels
     $stmt = $conn->prepare("
         SELECT b.quantity, b.listingID, l.Price, l.Quantity AS stock
         FROM basket b
@@ -64,33 +80,38 @@ if ($showSuccess) {
         WHERE b.$identifierField = ?
     ");
     $stmt->bind_param("s", $identifierValue);
+
+    //Executing query and getting the results
     $stmt->execute();
     $result = $stmt->get_result();
 
     $basketItems = [];
     $totalPrice  = 0;
 
+    //Ensuring there are no errors while it loops through the results
     while ($row = $result->fetch_assoc()) {
 
+        //If quantity exceeds max stock then it prevents further errors
         if ($row['quantity'] > $row['stock']) {
             $errorMessage = "Not enough stock available for one or more items.";
             $showSuccess  = false;
             break;
         }
 
+        //Adds valid rows to the array and calculates total price
         $basketItems[] = $row;
         $totalPrice   += $row['Price'] * $row['quantity'];
     }
 
     $stmt->close();
 
-    // Catch empty basket
+    //Catch empty basket
     if ($showSuccess && empty($basketItems)) {
         $errorMessage = "Your basket is empty.";
         $showSuccess  = false;
     }
 
-    // Commit the order inside a transaction
+    //Commit the order inside a transaction
     if ($showSuccess) {
 
         $conn->begin_transaction();
@@ -121,7 +142,7 @@ if ($showSuccess) {
 
             $stmt->close();
 
-            // Decrement stock
+            //Updates stock
             $stmt = $conn->prepare("UPDATE listings SET Quantity = Quantity - ? WHERE listingID = ?");
             foreach ($basketItems as $item) {
                 $stmt->bind_param("ii", $item['quantity'], $item['listingID']);
@@ -129,7 +150,7 @@ if ($showSuccess) {
             }
             $stmt->close();
 
-            // Clear basket
+            //Clears basket
             $stmt = $conn->prepare("DELETE FROM basket WHERE $identifierField = ?");
             $stmt->bind_param("s", $identifierValue);
             $stmt->execute();
@@ -138,7 +159,10 @@ if ($showSuccess) {
             $conn->commit();
             $showSuccess = true;
 
-        } catch (Exception $e) {
+        } 
+        
+        //Catches any errors
+        catch (Exception $e) {
             $conn->rollback();
             $errorMessage = "Order could not be processed. Please try again.";
             $showSuccess  = false;
@@ -306,39 +330,45 @@ if ($showSuccess) {
         <?php else: ?>
 
             <?php if ($errorMessage): ?>
+
                 <div class="error-message">
                     <?= htmlspecialchars($errorMessage) ?>
                 </div>
+
             <?php endif; ?>
 
             <?php if ($isLoggedIn): ?>
 
-                <!-- Logged-in: PIN confirmation only -->
                 <p style="color:#555; margin-bottom: 10px;">Please confirm your card PIN to complete payment.</p>
 
                 <form method="post" action="">
+
                     <div class="entryFields">
                         <input type="password" name="userPin" placeholder="Enter Your PIN" pattern="\d{4}" maxlength="4" required>
                     </div>
+
                     <button type="submit" class="confirmBtn">Confirm &amp; Pay</button>
+
                 </form>
 
             <?php else: ?>
 
-                <!-- Guest: full details required -->
                 <form method="post" action="">
+
                     <div class="entryFields">
                         <input type="text"     name="guestAddress"    placeholder="Enter Your Delivery Address" required>
                         <input type="text"     name="guestCardNumber" placeholder="Enter Your Card Number" pattern="\d{16}" maxlength="16" required>
                         <input type="password" name="guestPin"        placeholder="Enter Your PIN Number" pattern="\d{4}" maxlength="4" required>
                     </div>
+
                     <button type="submit" class="confirmBtn">Confirm &amp; Pay</button>
+
                 </form>
 
             <?php endif; ?>
 
             <div class="backLink">
-                <a href="Checkout.php">← Back to Checkout</a>
+                <a href="Checkout.php">Return to Checkout</a>
             </div>
 
         <?php endif; ?>

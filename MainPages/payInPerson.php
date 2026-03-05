@@ -11,34 +11,37 @@ $identifierValue = $isLoggedIn ? $customerID : session_id();
 $showSuccess = false;
 $errorMessage = "";
 
-// Ensures only POST requests can happen for guest users
+//Ensures only POST requests can happen for guest users
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$isLoggedIn) {
 
-    // Initial guest variables
+    //Initial guest variables
     $guestAddress = trim($_POST['guestAddress'] ?? '');
 
-    // Entry validation - address only for in-person payment
+    //Entry validation
     if (strlen($guestAddress) < 5) {
         $errorMessage = "Please enter a valid delivery address.";
     } else {
         $showSuccess = true;
     }
+} 
 
-// Payment is automatically processed for logged-in users
-} elseif ($isLoggedIn) {
+//Payment is automatically processed for logged-in users
+elseif ($isLoggedIn) {
     $showSuccess = true;
 }
 
-// Processing orders
+//Processing orders
 if ($showSuccess) {
 
-    // Get the contents of the user's basket
+    //Get the contents of the user's basket
     $stmt = $conn->prepare("
         SELECT b.quantity, b.listingID, l.Price, l.Quantity AS stock
         FROM basket b
         INNER JOIN listings l ON b.listingID = l.listingID
         WHERE b.$identifierField = ?
     ");
+
+    //Binding paramters, executing statement and getting results
     $stmt->bind_param("s", $identifierValue);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -48,26 +51,27 @@ if ($showSuccess) {
 
     while ($row = $result->fetch_assoc()) {
 
-        // Check stock availability before processing
+        //Check stock availability before processing
         if ($row['quantity'] > $row['stock']) {
             $errorMessage  = "Not enough stock available for one or more items.";
             $showSuccess   = false;
             break;
         }
 
+        //Adds basket items to the array and calculates total price
         $basketItems[] = $row;
         $totalPrice   += $row['Price'] * $row['quantity'];
     }
 
     $stmt->close();
 
-    // Handle empty basket
+    //Handle empty basket
     if ($showSuccess && empty($basketItems)) {
         $errorMessage = "Your basket is empty.";
         $showSuccess  = false;
     }
 
-    // Process the order
+    //Process the order
     if ($showSuccess) {
 
         $conn->begin_transaction();
@@ -75,24 +79,26 @@ if ($showSuccess) {
 
             $now = date('Y-m-d H:i:s');
 
-            // INSERT uses all 6 columns: customerID, sessionID, listingID, Quantity, TotalPrice, PurchaseDate
-            // customerID is NULL for guests; sessionID is NULL for logged-in users
+            //Query to add the transactions to the database
             $stmt = $conn->prepare("
                 INSERT INTO transactions 
                 (customerID, sessionID, listingID, Quantity, TotalPrice, PurchaseDate, PaymentMethod)
                 VALUES (?, ?, ?, ?, ?, ?, 'in_person')
             ");
 
+            //Iterating through every item, to add them to the query
             foreach ($basketItems as $item) {
 
                 $lineTotal = $item['Price'] * $item['quantity'];
 
+                //Logged in binding
                 if ($isLoggedIn) {
-                    // customerID = int, sessionID = NULL (pass null string placeholder)
                     $nullSession = null;
                     $stmt->bind_param("isiids", $customerID, $nullSession, $item['listingID'], $item['quantity'], $lineTotal, $now);
-                } else {
-                    // customerID = NULL, sessionID = string
+                } 
+                
+                //Logged out binding
+                else {
                     $nullCustomer = null;
                     $stmt->bind_param("isiids", $nullCustomer, $identifierValue, $item['listingID'], $item['quantity'], $lineTotal, $now);
                 }
@@ -102,7 +108,7 @@ if ($showSuccess) {
 
             $stmt->close();
 
-            // Update stock levels
+            //Update stock levels
             $stmt = $conn->prepare("UPDATE listings SET Quantity = Quantity - ? WHERE listingID = ?");
             foreach ($basketItems as $item) {
                 $stmt->bind_param("ii", $item['quantity'], $item['listingID']);
@@ -110,7 +116,7 @@ if ($showSuccess) {
             }
             $stmt->close();
 
-            // Clear user's basket
+            //Clear user's basket
             $stmt = $conn->prepare("DELETE FROM basket WHERE $identifierField = ?");
             $stmt->bind_param("s", $identifierValue);
             $stmt->execute();
@@ -119,7 +125,10 @@ if ($showSuccess) {
             $conn->commit();
             $showSuccess = true;
 
-        } catch (Exception $e) {
+        } 
+        
+        //Catches any errors
+        catch (Exception $e) {
             $conn->rollback();
             $errorMessage = "Order could not be processed. Please try again.";
             $showSuccess  = false;
