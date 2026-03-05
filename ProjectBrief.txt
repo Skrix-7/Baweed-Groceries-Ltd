@@ -1,0 +1,83 @@
+*** NOTE THIS IS A TEST PAGE NOT A REAL GROCERY STORE, DO NOT ENTER ANY REAL INFORMATION ***
+
+Project Purpose:
+The purpose of this project is to design and develop an online grocery shopping platform that allows customers to purchase 
+fresh fruits and vegetables while enabling suppliers to list products and administrators to manage the system. 
+The system demonstrates the use of dynamic web technologies, database integration, and role-based access control.
+
+Features:
+- Online Grocery Shopping Website
+- Sells Fruits & Veg.
+- Handle different types of users.
+
+User Types:
+- Customers
+- Suppliers
+- Admin Staff
+
+Customers Can:
+- Create Accounts and shop logged in.
+- Shop as guests.
+- View Items in the store.
+- Add items to their basket.
+- Edit basket contents.
+- Choose to pay online or in person.
+
+Suppliers Can:
+- List their own types of products that the store sells.
+- Choose price & quantity of the product.
+- Sell product to customers.
+- Get monthly invoices based on their listing earnings.
+
+Admin Can:
+- View Monthly Reports of store earnings.
+- View Listings.
+- Moderate Shop Listings.
+
+Other Requirements:
+- Connect to a MySQL database using PHP.
+- Ensure design is modern and clean.
+- Error Free System.
+
+Future Changes:
+- Improved Security (SQL Injection Defence, Anti-Sniffing Measures, Sensitive Info Hashing)
+- Improved UI, ensure it is a modern & professional design.
+- Real Emailing functionality for invoices. 
+
+Security Considerations:
+- Password implementation to protect user data.
+- Role based access control.
+- Card Information verification to protect users money.
+
+Technologies Used:
+- HTML
+- CSS 
+- JavaScript
+- PHP
+- MySQLi
+- MySQL Database 
+- Apache Server
+
+Set Up Steps:
+1 - Download and setup a local apache server.
+2 - Download and setup MySQL
+2 - Create the MySQL Database
+3 - Change dbConnector.php to your MySQL info (database name, password etc...)
+4 - Place Project Files within the same folder
+5 - Visit the web page and see the results.
+
+Image References:
+Tomato - https://unsplash.com/photos/a-pile-of-tomatoes-M7Mb3hRvoh0
+Carrot - https://unsplash.com/photos/orange-carrots-on-human-hand-ZgDHMMd72I8
+Lettuce - https://unsplash.com/photos/green-vegetable-on-white-background-YLeRHRiRgts
+Broccoli - https://unsplash.com/photos/green-broccoli-on-white-ceramic-plate-jSQxj-Ug0H8
+Potato - https://unsplash.com/photos/yellow-round-fruits-on-white-surface-h3AkzboxK4Q
+Cucumber - https://unsplash.com/photos/sliced-cucumber-on-white-surface-L8GbxVUQ-f0
+Pepper - https://unsplash.com/photos/red-bell-pepper-A39EqNtDpZs
+Onion - https://unsplash.com/photos/red-onion-on-brown-wooden-table-D9h2-RxM1rE
+Garlic - https://unsplash.com/photos/lots-of-garlics-vIiye0QDryo
+Fruit & Veg Array - https://unsplash.com/photos/assorted-fruits-at-the-market--gOUx23DNks
+Web Page Favicon - ChatGPT Generate Prompt.
+
+Developed By: Skrix-7
+GitHub: https://github.com/Skrix-7
