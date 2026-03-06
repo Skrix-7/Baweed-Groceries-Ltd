@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <head>
     <title>Home Page</title>
     <link rel='icon' type='image/x-icon' href='../Images/LogoImages/favicon.ico'>
@@ -41,9 +40,12 @@
         align-items: center;
         padding: 0 50px;
         gap: 18px;
+        box-sizing: border-box;
 
         box-shadow: 0 4px 12px rgba(0,0,0,0.18);
         border-bottom: 3px solid rgba(0,0,0,0.15);
+
+        position: relative;
     }
 
     @keyframes bannerShift {
@@ -80,6 +82,65 @@
 
     .linkImage:hover img {
         transform: scale(1.05);
+    }
+
+    .bannerLoginButtons {
+        position: absolute;
+        top: 18px;
+        right: 36px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 6px;
+    }
+
+    .bannerLoginButtons p {
+        color: rgba(255,255,255,0.75);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+    }
+
+    .bannerBtnRow {
+        display: flex;
+        gap: 10px;
+    }
+
+    .logButton {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 8px;
+        border: none;
+        height: 34px;
+        padding: 0 16px;
+
+        font-size: 13px;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        white-space: nowrap;
+
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transition: all 0.25s ease;
+    }
+
+    .logButton:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.1);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.35);
+    }
+
+    .adminButton {
+        background: linear-gradient(to right, #f5a623, #c4841a);
+    }
+
+    .supplierButton {
+        background: linear-gradient(to right, #2d7ef7, #1c5ed6);
     }
 
     .businessInfoText {
@@ -165,7 +226,7 @@
         filter: brightness(1.05);
     }
 
-        .bottomInfoBar {
+    .bottomInfoBar {
         width: 100%;
         background-color: #1e1e1e;
         padding: 20px 0;
@@ -186,7 +247,7 @@
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 25px; 
+        gap: 25px;
         opacity: 0.85;
     }
 
@@ -206,7 +267,7 @@
         height: 2px;
         bottom: -3px;
         left: 0;
-        background-color: #18b650; 
+        background-color: #18b650;
         transition: width 0.25s ease;
     }
 
@@ -215,7 +276,7 @@
     }
 
     .footerLink:hover {
-        color: #18b650; 
+        color: #18b650;
     }
 
     .bottomInfoText {
@@ -227,14 +288,14 @@
 
     .infoSection {
         width: 100%;
-        min-height: 350px; 
-        max-height: 450px; 
-        
+        min-height: 350px;
+        max-height: 450px;
+
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        
+
         background-image: url("../Images/WebsiteImages/fruitVeg.avif");
         background-size: cover;
         background-position: center;
@@ -248,17 +309,13 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0,0,0,0.25); 
+        background: rgba(0,0,0,0.25);
         z-index: 1;
     }
 
     .welcomeText {
         position: relative;
-        top: 0;
-        left: 0;
-        transform: none;
-
-        background-color: rgba(255, 255, 255, 0.95); 
+        background-color: rgba(255, 255, 255, 0.95);
         color: #000000;
         font-weight: 600;
         font-size: 18px;
@@ -266,14 +323,14 @@
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.18);
         text-align: center;
-        margin-bottom: 25px; 
+        margin-bottom: 25px;
         z-index: 2;
         width: fit-content;
     }
 
     .infoContent {
         display: flex;
-        gap: 30px; 
+        gap: 30px;
         flex-wrap: wrap;
         justify-content: center;
         max-width: 900px;
@@ -290,7 +347,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        flex: 1 1 300px; 
+        flex: 1 1 300px;
         min-width: 280px;
     }
 
@@ -310,6 +367,14 @@
             <h2>Making your life better</h2>
         </div>
 
+        <div class="bannerLoginButtons">
+
+            <div class="bannerBtnRow">
+                <button class="logButton adminButton"    onclick="adminLogIn()">Admin Login</button>
+                <button class="logButton supplierButton" onclick="supplierLogIn()">Supplier Login</button>
+            </div>
+
+        </div>
     </div>
 
     <div class="infoSection">
@@ -322,10 +387,8 @@
             <div class="infoBox textBox"> 
 
                 <div class="businessInfoText">
-                    <p>
-                        Here at Baweed Groceries, we pride ourselves on delivering fresh, high quality groceries to our beloved customers. 
-                        Available on high streets near you and now online! To learn more and scroll down.
-                    </p>
+                    <p>Here at Baweed Groceries, we pride ourselves on delivering fresh, high quality groceries to our beloved customers. 
+                        Available on high streets near you and now online! To learn more, scroll down.</p>
                 </div>
 
             </div>
@@ -333,8 +396,8 @@
             <div class="infoBox textBox">
 
                 <div class="accountButtons">
-                    <a href="../Customers/SignUp.php" class="linkButton"> Sign Up</a>
-                    <a href="../Customers/LogIn.php" class="linkButton"> Log In</a>
+                    <a href="../Customers/SignUp.php" class="linkButton">Sign Up</a>
+                    <a href="../Customers/LogIn.php" class="linkButton">Log In</a>
                 </div>
 
             </div>
@@ -353,7 +416,7 @@
                 to guarantee convenience and customer satisfaction. Click here to begin shopping at Baweed and join the family!</p>
             </div>
 
-            <a href="StoreHomePage.php" class="shopButton"> Shop </a>
+            <a href="StoreHomePage.php" class="shopButton">Shop</a>
             
         </div>
     </div>
@@ -362,21 +425,34 @@
         <div class="bottomBox">
 
             <div class="bottomLinks">
-                <a href="/StoreHomePage.php" class="footerLink">StorePage</a>
+                <a href="/StoreHomePage.php" class="footerLink">Store Page</a>
                 <a href="../Customers/SignUp.php" class="footerLink">Customer Sign Up</a>
                 <a href="../Customers/LogIn.php" class="footerLink">Customer Login</a>
-                <a href="../Suppliers/SupplierSignUpPage.php" class="footerLink">Supplier Sign Up</a>
                 <a href="../Suppliers/supplierLogInPage.php" class="footerLink">Supplier Login</a>
-                <a href="../Admins/adminLogInPage.php" class="footerLink">Admin Login</a>
+                <a href="../Admin/adminLogInPage.php" class="footerLink">Admin Login</a>
             </div>
 
             <div class="bottomInfoText">
                 <p>Baweed Groceries Ltd.</p>
-                <p>Established 2026 </p>
+                <p>Established 2026</p>
             </div>
 
         </div>
     </div>
+
+    <script>
+
+        //This takes the user to the admin log in page
+        function adminLogIn() {
+            window.location.href = "/Admin/adminLogInPage.php";
+        }
+
+        //This takes the user to the supplier log in page
+        function supplierLogIn() {
+            window.location.href = "/Suppliers/supplierLogInPage.php";
+        }
+
+    </script>
 
 </body>
 </html>
