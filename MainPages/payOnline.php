@@ -74,7 +74,7 @@ if ($showSuccess) {
 
     //Fetch basket contents with stock levels
     $stmt = $conn->prepare("
-        SELECT b.quantity, b.listingID, l.Price, l.Quantity AS stock
+        SELECT b.quantity, b.listingID, l.Price, l.Quantity AS stock, l.productID
         FROM basket b
         INNER JOIN listings l ON b.listingID = l.listingID
         WHERE b.$identifierField = ?
@@ -121,8 +121,8 @@ if ($showSuccess) {
 
             $stmt = $conn->prepare("
                 INSERT INTO transactions
-                (customerID, sessionID, listingID, Quantity, TotalPrice, PurchaseDate, PaymentMethod)
-                VALUES (?, ?, ?, ?, ?, ?, 'online')
+                (customerID, sessionID, listingID, productID, Quantity, TotalPrice, PurchaseDate, PaymentMethod)
+                VALUES (?, ?, ?, ?, ?, ?, ?, 'online')
             ");
 
             foreach ($basketItems as $item) {
@@ -131,10 +131,10 @@ if ($showSuccess) {
 
                 if ($isLoggedIn) {
                     $nullSession = null;
-                    $stmt->bind_param("isiids", $customerID, $nullSession, $item['listingID'], $item['quantity'], $lineTotal, $now);
+                    $stmt->bind_param("isiidds", $customerID, $nullSession, $item['listingID'], $item['productID'], $item['quantity'], $lineTotal, $now);
                 } else {
                     $nullCustomer = null;
-                    $stmt->bind_param("isiids", $nullCustomer, $identifierValue, $item['listingID'], $item['quantity'], $lineTotal, $now);
+                    $stmt->bind_param("isiidds", $nullCustomer, $identifierValue, $item['listingID'], $item['productID'], $item['quantity'], $lineTotal, $now);
                 }
 
                 $stmt->execute();

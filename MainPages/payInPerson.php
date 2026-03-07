@@ -2,7 +2,7 @@
 session_start();
 include "../dbConnector.local.php";
 
-// If the user is logged in use customerID, if not use sessionID
+//If the user is logged in use customerID, if not use sessionID
 $isLoggedIn = isset($_SESSION['customerID']);
 $customerID = $isLoggedIn ? $_SESSION['customerID'] : null;
 $identifierField = $isLoggedIn ? "customerID" : "sessionID";
@@ -23,10 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$isLoggedIn) {
     } else {
         $showSuccess = true;
     }
-} 
 
 //Payment is automatically processed for logged-in users
-elseif ($isLoggedIn) {
+} elseif ($isLoggedIn) {
     $showSuccess = true;
 }
 
@@ -35,14 +34,14 @@ if ($showSuccess) {
 
     //Get the contents of the user's basket
     $stmt = $conn->prepare("
-        SELECT b.quantity, b.listingID, l.Price, l.Quantity AS stock
+        SELECT b.quantity, b.listingID, l.Price, l.Quantity AS stock, l.productID
         FROM basket b
         INNER JOIN listings l ON b.listingID = l.listingID
         WHERE b.$identifierField = ?
     ");
-
-    //Binding paramters, executing statement and getting results
     $stmt->bind_param("s", $identifierValue);
+    
+    //Executes query and gets the results
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -58,20 +57,20 @@ if ($showSuccess) {
             break;
         }
 
-        //Adds basket items to the array and calculates total price
+        //Adds basket contents to the array and updates the total price
         $basketItems[] = $row;
         $totalPrice   += $row['Price'] * $row['quantity'];
     }
 
     $stmt->close();
 
-    //Handle empty basket
+    //Handles empty baskets
     if ($showSuccess && empty($basketItems)) {
         $errorMessage = "Your basket is empty.";
         $showSuccess  = false;
     }
 
-    //Process the order
+    //Processes the order
     if ($showSuccess) {
 
         $conn->begin_transaction();
@@ -79,28 +78,27 @@ if ($showSuccess) {
 
             $now = date('Y-m-d H:i:s');
 
-            //Query to add the transactions to the database
+            //Creates the transactions
             $stmt = $conn->prepare("
                 INSERT INTO transactions 
-                (customerID, sessionID, listingID, Quantity, TotalPrice, PurchaseDate, PaymentMethod)
-                VALUES (?, ?, ?, ?, ?, ?, 'in_person')
+                (customerID, sessionID, listingID, productID, Quantity, TotalPrice, PurchaseDate, PaymentMethod)
+                VALUES (?, ?, ?, ?, ?, ?, ?, 'in_person')
             ");
 
-            //Iterating through every item, to add them to the query
             foreach ($basketItems as $item) {
 
                 $lineTotal = $item['Price'] * $item['quantity'];
 
-                //Logged in binding
+                //Binding parameters to the query for logged in users
                 if ($isLoggedIn) {
                     $nullSession = null;
-                    $stmt->bind_param("isiids", $customerID, $nullSession, $item['listingID'], $item['quantity'], $lineTotal, $now);
+                    $stmt->bind_param("isiidds", $customerID, $nullSession, $item['listingID'], $item['productID'], $item['quantity'], $lineTotal, $now);
                 } 
                 
-                //Logged out binding
+                //Binding parameters to the query for not logged in users
                 else {
                     $nullCustomer = null;
-                    $stmt->bind_param("isiids", $nullCustomer, $identifierValue, $item['listingID'], $item['quantity'], $lineTotal, $now);
+                    $stmt->bind_param("isiidds", $nullCustomer, $identifierValue, $item['listingID'], $item['productID'], $item['quantity'], $lineTotal, $now);
                 }
 
                 $stmt->execute();
@@ -114,6 +112,7 @@ if ($showSuccess) {
                 $stmt->bind_param("ii", $item['quantity'], $item['listingID']);
                 $stmt->execute();
             }
+
             $stmt->close();
 
             //Clear user's basket
@@ -124,10 +123,9 @@ if ($showSuccess) {
 
             $conn->commit();
             $showSuccess = true;
-
         } 
         
-        //Catches any errors
+        //This catches any errors
         catch (Exception $e) {
             $conn->rollback();
             $errorMessage = "Order could not be processed. Please try again.";
