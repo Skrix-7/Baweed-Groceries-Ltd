@@ -247,11 +247,6 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
                     Listing Management
                 </button>
 
-                <button class="featureBtn" onclick="window.location.href='addProductType.php'">
-                    <span class="featureIcon"></span>
-                    Add New Product Type
-                </button>
-
                 <button class="featureBtn" onclick="window.location.href='monthlySalesReport.php'">
                     <span class="featureIcon"></span>
                     Monthly Sales Report
