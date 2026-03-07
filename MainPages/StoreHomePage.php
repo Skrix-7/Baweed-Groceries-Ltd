@@ -471,6 +471,35 @@ include "../dbConnector.local.php";
 
         //This is where the database is searched for the users food item
         function performSearch() {
+
+            //Gets the search input
+            const query = document.getElementById("searchInput").value.trim().toLowerCase();
+
+            //If the search is empty, display all products and clear the heading
+            if (query === "") {
+                displayProducts(products);
+                document.querySelector(".mainText").textContent = "";
+                return;
+            }
+
+            //Filters the products array to only include products whose name contains the query
+            const filtered = products.filter(product =>
+                product.name.toLowerCase().includes(query)
+            );
+
+            //Displays the filtered products
+            displayProducts(filtered);
+
+            //Updates the heading to reflect the search results
+            const rawQuery = document.getElementById("searchInput").value.trim();
+            if (filtered.length === 0) {
+                document.querySelector(".mainText").textContent = `No results found for "${rawQuery}"`;
+            } 
+            
+            //If it finds results then it is displayed
+            else {
+                document.querySelector(".mainText").textContent = `Results for "${rawQuery}"`;
+            }
         }
 
         //This logs the user in
