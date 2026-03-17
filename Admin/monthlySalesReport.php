@@ -106,7 +106,7 @@ $totalProducts = count($productSales);
             align-items: center;
             justify-content: space-between;
             padding: 14px 28px;
-            background: linear-gradient(to right, #b37200, #8a5500);
+            background: linear-gradient(to right, #db8e08, #c77e09);
             color: white;
         }
 

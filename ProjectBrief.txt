@@ -69,11 +69,11 @@ Set Up Steps:
 Image References:
 Tomato - https://unsplash.com/photos/a-pile-of-tomatoes-M7Mb3hRvoh0
 Carrot - https://unsplash.com/photos/orange-carrots-on-human-hand-ZgDHMMd72I8
-Lettuce - https://unsplash.com/photos/green-vegetable-on-white-background-YLeRHRiRgts
-Broccoli - https://unsplash.com/photos/green-broccoli-on-white-ceramic-plate-jSQxj-Ug0H8
+Lettuce - https://unsplash.com/photos/a-pile-of-green-lettuce-sitting-on-top-of-a-table-Dthu0rFIp9s
+Broccoli - https://unsplash.com/photos/green-broccoli-in-close-up-photography-Dof-Xo3bHEA
 Potato - https://unsplash.com/photos/yellow-round-fruits-on-white-surface-h3AkzboxK4Q
-Cucumber - https://unsplash.com/photos/sliced-cucumber-on-white-surface-L8GbxVUQ-f0
-Pepper - https://unsplash.com/photos/red-bell-pepper-A39EqNtDpZs
+Cucumber - https://unsplash.com/photos/green-and-yellow-vegetable-leaves-hCJZwPFlk4E
+Pepper - https://unsplash.com/photos/orange-bell-peppers-on-white-ceramic-plate-gpP-OkJ5BbI
 Onion - https://unsplash.com/photos/red-onion-on-brown-wooden-table-D9h2-RxM1rE
 Garlic - https://unsplash.com/photos/lots-of-garlics-vIiye0QDryo
 Fruit & Veg Array - https://unsplash.com/photos/assorted-fruits-at-the-market--gOUx23DNks

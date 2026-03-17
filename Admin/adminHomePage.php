@@ -216,7 +216,6 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
 
             <div class="bannerRight">
 
-                <p>Status: Admin</p>
                 <p>Welcome: <?= $adminUsername ?></p>
 
                 <div class="bannerButtons">

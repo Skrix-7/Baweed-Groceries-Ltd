@@ -5,10 +5,6 @@ include("../dbConnector.local.php");
 //Get the JSON data from the request body
 $data = json_decode(file_get_contents('php://input'), true);
 
-//This is the listing ID and new quantity sent from the frontend
-$listingID = $data['listingID'];
-$quantity = intval($data['quantity']);
-
 //If the user is logged in uses customer id
 if (isset($_SESSION['customerID'])) {
     $identifierField = "customerID";
@@ -20,6 +16,26 @@ else {
     $identifierField = "sessionID";
     $identifierValue = session_id();
 }
+
+//If the request is to clear all basket items, delete them all and return success
+if (!empty($data['clearAll'])) {
+
+    $stmt = $conn->prepare("DELETE FROM basket WHERE $identifierField = ?");
+    $stmt->bind_param("s", $identifierValue);
+    $stmt->execute();
+    $stmt->close();
+
+    echo json_encode([
+        'status' => 'success',
+        'totalPrice' => 0,
+        'basketItems' => []
+    ]);
+    exit;
+}
+
+//This is the listing ID and new quantity sent from the frontend
+$listingID = $data['listingID'];
+$quantity = intval($data['quantity']);
 
 //This is the query to get the maximum available stock of the item
 $stmt = $conn->prepare("SELECT Quantity FROM listings WHERE listingID = ?");

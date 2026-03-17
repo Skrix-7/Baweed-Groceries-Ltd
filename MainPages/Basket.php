@@ -145,7 +145,7 @@ foreach ($basketItems as $item) {
             width: 260px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             margin-left: auto;
             transform: translateX(-40px);   
         }
@@ -170,49 +170,41 @@ foreach ($basketItems as $item) {
             font-size: 17px;
         }
 
-        .keepShoppingButton {
+        .summaryButton {
             display: block;
-            width: fit-content;
-            margin: 0 auto 8px auto;
-            padding: 10px 18px;
+            width: 100%;
+            padding: 10px 0;
+            box-sizing: border-box;
 
-            background-color: #2d7ef7;
             color: white;
             text-decoration: none;
             font-weight: 600;
             font-size: 14px;
+            text-align: center;
 
             border-radius: 8px;
-            transition: 0.25s ease;
+            border: none;
+            cursor: pointer;
             box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            transition: 0.25s ease;
         }
 
-        .keepShoppingButton:hover {
+        .summaryButton:hover {
             transform: translateY(-2px);
-            filter: brightness(1.05);
+            filter: brightness(1.07);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+
+        .keepShoppingButton {
+            background: linear-gradient(to right, #2d7ef7, #1c5ed6);
         }
 
         .checkoutButton {
-            display: block;
-            width: fit-content;
-            margin: 14px auto 0 auto;  
-            margin-top: -2px;
-            padding: 10px 18px;
-
-            background-color: #28a745;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-
-            border-radius: 8px;
-            transition: 0.25s ease;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            background: linear-gradient(to right, #21c55d, #17a34a);
         }
 
-        .checkoutButton:hover {
-            filter: brightness(1.05);
-            transform: translateY(-2px);
+        .clearBasketButton {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
         }
 
         .footer {
@@ -274,6 +266,7 @@ foreach ($basketItems as $item) {
             margin: 0;
             font-size: 14px;
             font-weight: 500;
+            color: #ffffff;
         }
         
         .logOutDiv {
@@ -517,8 +510,9 @@ foreach ($basketItems as $item) {
                         <?php endif; ?>
                     </div>
 
-                    <a href="./StoreHomePage.php" class="keepShoppingButton">Keep Shopping</a>
-                    <a href="./Checkout.php" class="checkoutButton">Checkout</a>
+                    <a href="./StoreHomePage.php" class="summaryButton keepShoppingButton">Keep Shopping</a>
+                    <a href="./Checkout.php" class="summaryButton checkoutButton">Checkout</a>
+                    <button onclick="clearBasket()" class="summaryButton clearBasketButton">Clear Basket</button>
                 
                 </div>
             </div>
@@ -574,6 +568,39 @@ foreach ($basketItems as $item) {
         //This signs the user up
         function signUp() {
             window.location.href="../Customers/SignUp.php";
+        }
+
+        //This clears all items from the basket
+        function clearBasket() {
+
+            fetch("UpdateBasket.php", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ clearAll: true })
+            })
+            .then(res => res.json())
+            .then(data => {
+
+                //If the clear was successful, update the UI immediately
+                if (data.status === 'success') {
+                    
+                    document.querySelectorAll('.basketItem').forEach(item => item.remove());
+                    updatePriceSummary([]);
+
+                    //Show empty message in basket items section
+                    const basketItems = document.querySelector('.basketItems');
+                    if (!basketItems.querySelector('p')) {
+                        const msg = document.createElement('p');
+                        msg.textContent = 'Your basket is empty.';
+                        basketItems.appendChild(msg);
+                    }
+                }
+                
+                //If there was an error, show an alert
+                else {
+                    alert("Error clearing basket: " + data.message);
+                }
+            });
         }
 
         //This adds event listeners to the quantity control buttons for each item in the basket

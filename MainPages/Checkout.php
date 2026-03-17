@@ -55,6 +55,7 @@ $basketIsEmpty = empty($basketItems);
     <link rel="icon" type="image/x-icon" href="/Images/LogoImages/favicon.ico">
 
     <style>
+
         html, body {
             height: 100%;
             margin: 0;
@@ -250,6 +251,9 @@ $basketIsEmpty = empty($basketItems);
 
             text-align: center;
             gap: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #ffffff;
         }
 
         .bannerRight p {
@@ -302,6 +306,11 @@ $basketIsEmpty = empty($basketItems);
             filter: brightness(1.08);
         }
 
+        .basketBtn {
+            left: 390px;
+            background-color: #f5a623;
+        }
+
     </style>
 </head>
 
@@ -310,7 +319,9 @@ $basketIsEmpty = empty($basketItems);
 
         <div class="homePageBanner">
 
-            <a href="StoreHomePage.php" class="returnBtn">← Return to Store</a>
+            <a href="StoreHomePage.php" class="returnBtn">Return to Store</a>
+            <a href="Basket.php" class="returnBtn basketBtn">Return to Basket</a>
+
             <a href="./WelcomePage.html" class="linkImage"><img src="../Images/LogoImages/baweedGroceriesLogo.png" alt="Logo"></a>
 
             <div class="headersDiv">

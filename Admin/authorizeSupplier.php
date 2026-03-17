@@ -128,13 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-bottom: 4px;
         }
 
-        .formSubtitle {
-            font-size: 12px;
-            color: #777;
-            text-align: center;
-            margin-bottom: 14px;
-        }
-
         .entryFields {
             display: flex;
             flex-direction: column;
@@ -277,7 +270,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php else: ?>
 
             <div class="formTitle"><p>Authorize New Supplier</p></div>
-            <div class="formSubtitle">Creates a supplier login account</div>
 
             <?php if ($errorMessage): ?>
 

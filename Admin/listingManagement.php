@@ -122,7 +122,7 @@ while ($row = $result->fetch_assoc()) {
             align-items: center;
             justify-content: space-between;
             padding: 14px 28px;
-            background: linear-gradient(to right, #b37200, #8a5500);
+            background: linear-gradient(to right, #db8e08, #c77e09);
             color: white;
         }
 
@@ -229,6 +229,7 @@ while ($row = $result->fetch_assoc()) {
             align-items: center;
             gap: 10px;
             padding: 11px 18px;
+
             border: none;
             background: none;
             font-family: "Segoe UI", Arial, sans-serif;
@@ -237,6 +238,7 @@ while ($row = $result->fetch_assoc()) {
             color: #333;
             cursor: pointer;
             text-align: left;
+
             transition: 0.15s ease;
             border-left: 3px solid transparent;
         }
@@ -256,6 +258,7 @@ while ($row = $result->fetch_assoc()) {
         .listingsPanel {
             flex: 1;
             padding: 28px 32px;
+
             display: flex;
             flex-direction: column;
             gap: 16px;
@@ -285,6 +288,7 @@ while ($row = $result->fetch_assoc()) {
             align-items: center;
             justify-content: center;
             flex: 1;
+
             color: #bbb;
             font-size: 15px;
             gap: 10px;
@@ -307,6 +311,7 @@ while ($row = $result->fetch_assoc()) {
             padding: 18px;
             border: 1px solid #e8e8e8;
             box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -347,6 +352,7 @@ while ($row = $result->fetch_assoc()) {
         .stockBadge {
             display: inline-block;
             padding: 3px 9px;
+
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
@@ -376,8 +382,10 @@ while ($row = $result->fetch_assoc()) {
             padding: 7px 10px;
             border: 1px solid #ddd;
             border-radius: 6px;
+
             font-size: 14px;
             font-family: "Segoe UI", Arial, sans-serif;
+
             transition: 0.2s ease;
             width: 0;
         }
@@ -390,12 +398,14 @@ while ($row = $result->fetch_assoc()) {
 
         .saveBtn {
             padding: 7px 14px;
+
             background: linear-gradient(to right, #f5a623, #c4841a);
             color: white;
             border: none;
             border-radius: 6px;
             font-size: 13px;
             font-weight: 600;
+
             cursor: pointer;
             transition: 0.2s ease;
             white-space: nowrap;
@@ -411,9 +421,11 @@ while ($row = $result->fetch_assoc()) {
             background: none;
             border: 1px solid #f5c6c6;
             border-radius: 6px;
+
             color: #c62828;
             font-size: 13px;
             font-weight: 600;
+
             cursor: pointer;
             transition: 0.2s ease;
         }
@@ -437,6 +449,7 @@ while ($row = $result->fetch_assoc()) {
             display: flex;
             justify-content: center;
             align-items: center;
+
             padding: 60px 0;
             color: #bbb;
             font-size: 14px;
@@ -447,6 +460,7 @@ while ($row = $result->fetch_assoc()) {
             background-color: #1e1e1e;
             color: #ccc;
             text-align: center;
+
             padding: 20px 0;
             font-size: 13px;
             border-top: 1px solid #3d3d3d;
@@ -460,284 +474,284 @@ while ($row = $result->fetch_assoc()) {
 
 <body>
 
-<div class="mainDiv">
+    <div class="mainDiv">
 
-    <div class="shopBanner">
+        <div class="shopBanner">
 
-        <div class="bannerLeft">
+            <div class="bannerLeft">
 
-            <a href="../MainPages/WelcomePage.html">
-                <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="180">
-            </a>
+                <a href="../MainPages/WelcomePage.html">
+                    <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="180">
+                </a>
 
-            <h1>Listing Management</h1>
+                <h1>Listing Management</h1>
 
-        </div>
-
-        <div class="bannerRight">
-
-            <p>Admin: <?= htmlspecialchars($_SESSION['adminUser'] ?? 'Admin') ?></p>
-
-            <div class="bannerButtons">
-                <button onclick="window.location.href='adminHomePage.php'" class="shopButton" style="background:linear-gradient(to right,#555,#333); width:120px;">← Dashboard</button>
-                <button onclick="logOut()" class="shopButton logOutButton">Log Out</button>
             </div>
 
-        </div>
-    </div>
+            <div class="bannerRight">
 
-    <div class="contentArea">
-        <div class="productPanel">
+                <p>Admin: <?= htmlspecialchars($_SESSION['adminUser'] ?? 'Admin') ?></p>
 
-            <div class="panelTitle">Product Types</div>
+                <div class="bannerButtons">
+                    <button onclick="window.location.href='adminHomePage.php'" class="shopButton" style="background:linear-gradient(to right,#555,#333); width:120px;">← Dashboard</button>
+                    <button onclick="logOut()" class="shopButton logOutButton">Log Out</button>
+                </div>
 
-            <?php foreach ($products as $product): ?>
-
-                <button class="productTypeBtn" data-id="<?= $product['productID'] ?>" data-name="<?= htmlspecialchars($product['Name']) ?>" onclick="loadListings(this)">
-                    <?= htmlspecialchars($product['Name']) ?>
-                </button>
-
-            <?php endforeach; ?>
+            </div>
         </div>
 
-        <div class="listingsPanel" id="listingsPanel">
+        <div class="contentArea">
+            <div class="productPanel">
 
-            <div class="emptyState">
-                <p>Select a product type to view its listings</p>
+                <div class="panelTitle">Product Types</div>
+
+                <?php foreach ($products as $product): ?>
+
+                    <button class="productTypeBtn" data-id="<?= $product['productID'] ?>" data-name="<?= htmlspecialchars($product['Name']) ?>" onclick="loadListings(this)">
+                        <?= htmlspecialchars($product['Name']) ?>
+                    </button>
+
+                <?php endforeach; ?>
             </div>
 
-        </div>
-    </div>
+            <div class="listingsPanel" id="listingsPanel">
 
-    <div class="footer">
-        <p>© 2026 Baweed Groceries Ltd. All Rights Reserved.</p>
-    </div>
+                <div class="emptyState">
+                    <p>Select a product type to view its listings</p>
+                </div>
 
-</div>
-
-<script>
-
-    let activeProductID   = null;
-    let activeProductName = null;
-
-    //Load listings for the clicked product type
-    function loadListings(btn) {
-
-        //Update active state on sidebar
-        document.querySelectorAll('.productTypeBtn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        activeProductID   = btn.dataset.id;
-        activeProductName = btn.dataset.name;
-
-        const panel = document.getElementById('listingsPanel');
-        panel.innerHTML = '<div class="spinner">Loading listings…</div>';
-
-        fetch(`listingManagement.php?getListings=${activeProductID}`)
-            .then(r => r.json())
-            .then(listings => renderListings(listings))
-            .catch(() => {
-                panel.innerHTML = '<div class="emptyState"><span></span><p>Failed to load listings.</p></div>';
-            });
-    }
-
-    //Render listing cards into the right panel
-    function renderListings(listings) {
-
-        const panel = document.getElementById('listingsPanel');
-        panel.innerHTML = '';
-
-        const header = document.createElement('div');
-        header.className = 'listingsHeader';
-        header.innerHTML = `
-            <div>
-                <div class="listingsTitle">${activeProductName}</div>
-                <div class="listingsSubtitle">${listings.length} listing${listings.length !== 1 ? 's' : ''} found</div>
             </div>
-        `;
-        panel.appendChild(header);
+        </div>
 
-        if (listings.length === 0) {
-            const empty = document.createElement('div');
-            empty.className = 'emptyState';
-            empty.innerHTML = '<span></span><p>No listings for this product type.</p>';
-            panel.appendChild(empty);
-            return;
+        <div class="footer">
+            <p>© 2026 Baweed Groceries Ltd. All Rights Reserved.</p>
+        </div>
+
+    </div>
+
+    <script>
+
+        let activeProductID   = null;
+        let activeProductName = null;
+
+        //Load listings for the clicked product type
+        function loadListings(btn) {
+
+            //Update active state on sidebar
+            document.querySelectorAll('.productTypeBtn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            activeProductID   = btn.dataset.id;
+            activeProductName = btn.dataset.name;
+
+            const panel = document.getElementById('listingsPanel');
+            panel.innerHTML = '<div class="spinner">Loading listings…</div>';
+
+            fetch(`listingManagement.php?getListings=${activeProductID}`)
+                .then(r => r.json())
+                .then(listings => renderListings(listings))
+                .catch(() => {
+                    panel.innerHTML = '<div class="emptyState"><span></span><p>Failed to load listings.</p></div>';
+                });
         }
 
-        // Grid of cards
-        const grid = document.createElement('div');
-        grid.className = 'listingsGrid';
+        //Render listing cards into the right panel
+        function renderListings(listings) {
 
-        listings.forEach(listing => {
-            const stockNum = parseInt(listing.Quantity);
-            let stockClass = 'stockHigh';
-            if (stockNum === 0)      stockClass = 'stockLow';
-            else if (stockNum < 10)  stockClass = 'stockMed';
+            const panel = document.getElementById('listingsPanel');
+            panel.innerHTML = '';
 
-            const card = document.createElement('div');
-            card.className = 'listingCard';
-            card.id = `card-${listing.listingID}`;
-            card.innerHTML = `
-                <div class="listingCardTop">
-                    <div>
-                        <div class="listingId">Listing #${listing.listingID}</div>
-                        <div class="listingSupplier">${listing.supplier ?? 'Unknown Supplier'}</div>
-                    </div>
-                    <span class="stockBadge ${stockClass}">${stockNum} in stock</span>
+            const header = document.createElement('div');
+            header.className = 'listingsHeader';
+            header.innerHTML = `
+                <div>
+                    <div class="listingsTitle">${activeProductName}</div>
+                    <div class="listingsSubtitle">${listings.length} listing${listings.length !== 1 ? 's' : ''} found</div>
                 </div>
-
-                <div class="priceRow">
-                    <span class="priceLabel">Price £</span>
-                    <input
-                        class="priceInput"
-                        type="number"
-                        step="0.01"
-                        min="0.01"
-                        value="${parseFloat(listing.Price).toFixed(2)}"
-                        id="price-${listing.listingID}"
-                    >
-                    <button class="saveBtn" onclick="savePrice(${listing.listingID})">Save</button>
-                </div>
-
-                <button class="deleteBtn" onclick="deleteListing(${listing.listingID}, '${activeProductID}')">
-                    Remove Listing
-                </button>
-
-                <div class="cardFeedback" id="feedback-${listing.listingID}"></div>
             `;
+            panel.appendChild(header);
 
-            grid.appendChild(card);
-        });
+            if (listings.length === 0) {
+                const empty = document.createElement('div');
+                empty.className = 'emptyState';
+                empty.innerHTML = '<span></span><p>No listings for this product type.</p>';
+                panel.appendChild(empty);
+                return;
+            }
 
-        panel.appendChild(grid);
-    }
+            // Grid of cards
+            const grid = document.createElement('div');
+            grid.className = 'listingsGrid';
 
-    // Save updated price for a listing
-    function savePrice(listingID) {
+            listings.forEach(listing => {
+                const stockNum = parseInt(listing.Quantity);
+                let stockClass = 'stockHigh';
+                if (stockNum === 0)      stockClass = 'stockLow';
+                else if (stockNum < 10)  stockClass = 'stockMed';
 
-        //Accessing elements to be edited
-        const input    = document.getElementById(`price-${listingID}`);
-        const feedback = document.getElementById(`feedback-${listingID}`);
-        const newPrice = parseFloat(input.value);
+                const card = document.createElement('div');
+                card.className = 'listingCard';
+                card.id = `card-${listing.listingID}`;
+                card.innerHTML = `
+                    <div class="listingCardTop">
+                        <div>
+                            <div class="listingId">Listing #${listing.listingID}</div>
+                            <div class="listingSupplier">${listing.supplier ?? 'Unknown Supplier'}</div>
+                        </div>
+                        <span class="stockBadge ${stockClass}">${stockNum} in stock</span>
+                    </div>
 
-        //Client side price validation
-        if (isNaN(newPrice) || newPrice <= 0) {
-            showFeedback(feedback, 'Price must be greater than £0.00', false);
-            return;
-        }
+                    <div class="priceRow">
+                        <span class="priceLabel">Price £</span>
+                        <input
+                            class="priceInput"
+                            type="number"
+                            step="0.01"
+                            min="0.01"
+                            value="${parseFloat(listing.Price).toFixed(2)}"
+                            id="price-${listing.listingID}"
+                        >
+                        <button class="saveBtn" onclick="savePrice(${listing.listingID})">Save</button>
+                    </div>
 
-        const body = new URLSearchParams({ action: 'updatePrice', listingID, price: newPrice.toFixed(2) });
+                    <button class="deleteBtn" onclick="deleteListing(${listing.listingID}, '${activeProductID}')">
+                        Remove Listing
+                    </button>
 
-        //Sends POST request to the php server
-        fetch('listingManagement.php', { method: 'POST', body })
+                    <div class="cardFeedback" id="feedback-${listing.listingID}"></div>
+                `;
 
-            //Gets the response and analyses it
-            .then(r => r.json())
-            .then(data => {
-
-                //If update was successful then the user is told so
-                if (data.status === 'success') {
-                    showFeedback(feedback, 'Price updated', true);
-                    input.value = newPrice.toFixed(2);
-                } 
-                
-                //Otherwise they are told it failed
-                else {
-                    showFeedback(feedback, data.message || 'Update failed', false);
-                }
-            })
-
-            //Catches any errors
-            .catch(() => showFeedback(feedback, 'Network error', false));
-    }
-
-    //Delete a listing and remove its card
-    function deleteListing(listingID, productID) {
-
-        if (!confirm(`Remove listing #${listingID}? This cannot be undone.`)) return;
-
-        const body = new URLSearchParams({ action: 'deleteListing', listingID });
-
-        //Sends a POST request to the php server
-        fetch('listingManagement.php', { method: 'POST', body })
-
-            //Gets the response and analyses it
-            .then(r => r.json())
-            .then(data => {
-
-                //If the deletion was successful then the user is told so and the card is removed
-                if (data.status === 'success') {
-                    const card = document.getElementById(`card-${listingID}`);
-
-                    //Card styling
-                    card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                    card.style.opacity    = '0';
-                    card.style.transform  = 'scale(0.95)';
-
-                    //This changes the css/html for it after removal
-                    setTimeout(() => {
-
-                        card.remove();
-
-                        //Accesses the elements
-                        const remaining = document.querySelectorAll('.listingCard').length;
-                        const sub = document.querySelector('.listingsSubtitle');
-
-                        //If the subtitles exist then it displays the remaining
-                        if (sub) sub.textContent = `${remaining} listing${remaining !== 1 ? 's' : ''} found`;
-
-                        //If remmaining is 0 than the grid is completely removed
-                        if (remaining === 0) {
-
-                            //This accesses the grid and removes it
-                            const grid = document.querySelector('.listingsGrid');
-                            if (grid) grid.remove();
-
-                            //Creating a new div for the empty page
-                            const empty = document.createElement('div');
-                            empty.className = 'emptyState';
-                            empty.innerHTML = '<span></span><p>No listings for this product type.</p>';
-
-                            document.getElementById('listingsPanel').appendChild(empty);
-                        }
-                    }, 300);
-                }
-            })
-
-            //This catches any errors
-            .catch(() => alert('Failed to delete listing.'));
-    }
-
-    //Show feedback message on a card, fades after 3s
-    function showFeedback(el, msg, success) {
-        el.textContent  = msg;
-        el.className    = `cardFeedback ${success ? 'feedbackOk' : 'feedbackErr'}`;
-        if (success) {
-            setTimeout(() => { el.textContent = ''; }, 3000);
-        }
-    }
-
-    //Logs out admin
-    function logOut() {
-
-        //Clears server and client side storage
-        sessionStorage.clear();
-        localStorage.clear();
-
-        //Sends a POST request to log the admin out
-        fetch("adminLogOut.php", { method: "POST" })
-
-            //Gets the response and then redireccts the user if it was successful
-            .then(r => r.json())
-            .then(data => {
-                if (data.status === "success") {
-                    window.location.href = "../MainPages/WelcomePage.html";
-                }
+                grid.appendChild(card);
             });
-    }
 
-</script>
+            panel.appendChild(grid);
+        }
 
-</body>
+        // Save updated price for a listing
+        function savePrice(listingID) {
+
+            //Accessing elements to be edited
+            const input    = document.getElementById(`price-${listingID}`);
+            const feedback = document.getElementById(`feedback-${listingID}`);
+            const newPrice = parseFloat(input.value);
+
+            //Client side price validation
+            if (isNaN(newPrice) || newPrice <= 0) {
+                showFeedback(feedback, 'Price must be greater than £0.00', false);
+                return;
+            }
+
+            const body = new URLSearchParams({ action: 'updatePrice', listingID, price: newPrice.toFixed(2) });
+
+            //Sends POST request to the php server
+            fetch('listingManagement.php', { method: 'POST', body })
+
+                //Gets the response and analyses it
+                .then(r => r.json())
+                .then(data => {
+
+                    //If update was successful then the user is told so
+                    if (data.status === 'success') {
+                        showFeedback(feedback, 'Price updated', true);
+                        input.value = newPrice.toFixed(2);
+                    } 
+                    
+                    //Otherwise they are told it failed
+                    else {
+                        showFeedback(feedback, data.message || 'Update failed', false);
+                    }
+                })
+
+                //Catches any errors
+                .catch(() => showFeedback(feedback, 'Network error', false));
+        }
+
+        //Delete a listing and remove its card
+        function deleteListing(listingID, productID) {
+
+            if (!confirm(`Remove listing #${listingID}? This cannot be undone.`)) return;
+
+            const body = new URLSearchParams({ action: 'deleteListing', listingID });
+
+            //Sends a POST request to the php server
+            fetch('listingManagement.php', { method: 'POST', body })
+
+                //Gets the response and analyses it
+                .then(r => r.json())
+                .then(data => {
+
+                    //If the deletion was successful then the user is told so and the card is removed
+                    if (data.status === 'success') {
+                        const card = document.getElementById(`card-${listingID}`);
+
+                        //Card styling
+                        card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                        card.style.opacity    = '0';
+                        card.style.transform  = 'scale(0.95)';
+
+                        //This changes the css/html for it after removal
+                        setTimeout(() => {
+
+                            card.remove();
+
+                            //Accesses the elements
+                            const remaining = document.querySelectorAll('.listingCard').length;
+                            const sub = document.querySelector('.listingsSubtitle');
+
+                            //If the subtitles exist then it displays the remaining
+                            if (sub) sub.textContent = `${remaining} listing${remaining !== 1 ? 's' : ''} found`;
+
+                            //If remmaining is 0 than the grid is completely removed
+                            if (remaining === 0) {
+
+                                //This accesses the grid and removes it
+                                const grid = document.querySelector('.listingsGrid');
+                                if (grid) grid.remove();
+
+                                //Creating a new div for the empty page
+                                const empty = document.createElement('div');
+                                empty.className = 'emptyState';
+                                empty.innerHTML = '<span></span><p>No listings for this product type.</p>';
+
+                                document.getElementById('listingsPanel').appendChild(empty);
+                            }
+                        }, 300);
+                    }
+                })
+
+                //This catches any errors
+                .catch(() => alert('Failed to delete listing.'));
+        }
+
+        //Show feedback message on a card, fades after 3s
+        function showFeedback(el, msg, success) {
+            el.textContent  = msg;
+            el.className    = `cardFeedback ${success ? 'feedbackOk' : 'feedbackErr'}`;
+            if (success) {
+                setTimeout(() => { el.textContent = ''; }, 3000);
+            }
+        }
+
+        //Logs out admin
+        function logOut() {
+
+            //Clears server and client side storage
+            sessionStorage.clear();
+            localStorage.clear();
+
+            //Sends a POST request to log the admin out
+            fetch("adminLogOut.php", { method: "POST" })
+
+                //Gets the response and then redireccts the user if it was successful
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        window.location.href = "../MainPages/WelcomePage.html";
+                    }
+                });
+        }
+
+    </script>
+
+    </body>
 </html>
