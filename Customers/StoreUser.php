@@ -26,6 +26,19 @@ $pinNum = intval($pin);
 $phoneNum = $phone;
 $cardNum = $card;
 
+//Checks for any duplicate accounts before inserting
+$dupStmt = $conn->prepare("SELECT customerID FROM customers WHERE FullName = ? OR Email = ? OR PhoneNumber = ? OR CardNumber = ? LIMIT 1");
+$dupStmt->bind_param("ssss", $username, $email, $phoneNum, $cardNum);
+$dupStmt->execute();
+$dupStmt->store_result();
+if ($dupStmt->num_rows > 0) {
+    echo "duplicate";
+    $dupStmt->close();
+    $conn->close();
+    exit;
+}
+$dupStmt->close();
+
 //Prepare SQL query
 $stmt = $conn->prepare("INSERT INTO customers (FullName, Password, Email, PhoneNumber, CardNumber, Pin, Address) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
@@ -53,7 +66,7 @@ if ($stmt->execute()) {
     //Get the newly created user ID
     $sql = "SELECT customerID FROM customers WHERE FullName = ? LIMIT 1";
 
-    //Prepares a second statment
+    //Prepares a second statment 
     $stmt2 = $conn->prepare($sql);
 
     //Sets the users username as the parameter then executes query

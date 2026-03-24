@@ -166,30 +166,12 @@ include "../dbConnector.local.php";
             text-align: center;
             border: 1px solid #e2e2e2;
             transition: 0.2s ease;
+            overflow: hidden;
         }
 
         .productCard:hover {
             transform: translateY(-3px);
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        .productImg {
-            width: 100%;
-            height: 110px;
-            background: #e6e6e6;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .productName {
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-
-        .productPrice {
-            font-size: 13px;
-            font-weight: bold;
-            color: #1c4693;
         }
 
         .footer {
@@ -213,12 +195,6 @@ include "../dbConnector.local.php";
             text-align: center;
             letter-spacing: 0.5px;
             margin: 0;
-        }
-
-        .logOutDiv {
-            position: absolute;
-            top: 18px;
-            right: 28px;
         }
 
         .bannerButtons {
@@ -303,6 +279,12 @@ include "../dbConnector.local.php";
             margin-bottom: 10px;
         }
 
+        .logOutDiv {
+            position: absolute;
+            top: 18px;
+            right: 28px;
+        }
+
     </style>
 
 </head>
@@ -380,7 +362,7 @@ include "../dbConnector.local.php";
 
     <script>
 
-        //This is a list of all product types with their corresponding image and webpage links.
+        //This is a list of all product types with their corresponding image and webpage links. 
         const products = [
             {
                 name: "Broccoli",

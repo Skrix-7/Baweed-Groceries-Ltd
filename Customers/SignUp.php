@@ -331,8 +331,14 @@ include "../dbConnector.local.php";
                 if (trimmed === "success") {
                     window.location.href = "/MainPages/StoreHomePage.php";  
                 } 
+
+                //This is the message displayed if the user tried to create an account that already exists
+                else if (trimmed === "duplicate") {
+                        document.getElementById("response").textContent = "Account details in use, please try again.";
+                        document.getElementById("response").classList.add("show");
+                }
                 
-                //If not then the message is empty
+                //If not then the message is empty 
                 else {
                     let displayMsg = trimmed;
 
