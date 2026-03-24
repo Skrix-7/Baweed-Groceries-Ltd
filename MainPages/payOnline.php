@@ -185,6 +185,7 @@ if ($showSuccess) {
             align-items: center;
             background: linear-gradient(to right, #363333, #2f2b2b);
             height: 100vh;
+            max-width: 1600px;
             margin: 0;
             font-family: Arial, sans-serif;
         }

@@ -61,6 +61,7 @@ $basketIsEmpty = empty($basketItems);
             margin: 0;
             font-family: "Segoe UI", Arial, sans-serif;
             background: #eceaea;
+            max-width: 1600px;
         }
 
         .pageWrapper {

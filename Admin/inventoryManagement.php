@@ -99,6 +99,7 @@ $totalNet = $totalIn - $totalOut;
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
+            max-width: 1600px;
         }
 
         .mainDiv {

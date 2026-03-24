@@ -20,6 +20,7 @@ include "../dbConnector.local.php";
             height: 100vh;
 
             font-family: Arial, sans-serif;
+            max-width: 1600px;
         }
 
         .signUpBar {

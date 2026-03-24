@@ -26,6 +26,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
+            max-width: 1600px;
         }
 
         .mainDiv {

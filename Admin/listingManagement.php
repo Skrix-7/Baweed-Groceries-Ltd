@@ -103,6 +103,7 @@ while ($row = $result->fetch_assoc()) {
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
+            max-width: 1600px;
         }
 
         .mainDiv {

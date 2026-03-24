@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             background: linear-gradient(to right, #363333, #2f2b2b);
             height: 100vh;
+            max-width: 1600px;
 
             font-family: Arial, sans-serif;
         }
