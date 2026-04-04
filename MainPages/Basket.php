@@ -105,7 +105,7 @@ foreach ($basketItems as $item) {
         .headersDiv h1 {
             color: white;
             margin: 0;
-            font-size: 26px;
+            font-size: 32px;
             letter-spacing: 0.5px;
         }
 
@@ -121,7 +121,7 @@ foreach ($basketItems as $item) {
         }
 
         .linkImage img {
-            width: 150px;
+            width: 180px;
             transition: 0.3s ease;
         }
 
@@ -142,10 +142,10 @@ foreach ($basketItems as $item) {
         }
 
         .priceSummary {
-            width: 260px;
+            width: 340px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             margin-left: auto;
             transform: translateX(-40px);   
         }
@@ -153,33 +153,34 @@ foreach ($basketItems as $item) {
         .priceBox {
             background: #f7f7f7;
             border-radius: 10px;
-            padding: 16px;
+            padding: 20px;
             box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+            font-size: 17px;
         }
 
         .priceRow {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .totalPrice {
             border-top: 1px solid #ccc;
-            padding-top: 8px;
+            padding-top: 10px;
             font-weight: bold;
-            font-size: 17px;
+            font-size: 20px;
         }
 
         .summaryButton {
             display: block;
             width: 100%;
-            padding: 10px 0;
+            padding: 14px 0;
             box-sizing: border-box;
 
             color: white;
             text-decoration: none;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 18px;
             text-align: center;
 
             border-radius: 8px;
@@ -211,7 +212,7 @@ foreach ($basketItems as $item) {
             background-color: #1e1e1e;
             color: #ccc;
             text-align: center;
-            padding: 18px 10px;
+            padding: 22px 10px;
         }
 
         .footerLinks {
@@ -222,7 +223,7 @@ foreach ($basketItems as $item) {
             color: #e6e6e6;
             text-decoration: none;
             margin: 0 14px;
-            font-size: 14px;
+            font-size: 17px;
         }
 
         .footerLinks a:hover {
@@ -231,18 +232,18 @@ foreach ($basketItems as $item) {
 
         .footer p {
             margin: 0;
-            font-size: 12px;
+            font-size: 15px;
         }
 
         .sectionTitle {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             color: #333;
         }
 
         .summaryTitle {
-            font-size: 18px;
+            font-size: 22px;
             font-weight: 700;
             margin-bottom: 10px;
             color: #333;
@@ -264,7 +265,7 @@ foreach ($basketItems as $item) {
 
         .bannerRight p {
             margin: 0;
-            font-size: 14px;
+            font-size: 17px;
             font-weight: 500;
             color: #ffffff;
         }
@@ -291,10 +292,10 @@ foreach ($basketItems as $item) {
             background: linear-gradient(to right, #21f367, #17b851);
             border-radius: 8px;
             border: none;
-            height: 30px;
-            width: 100px;
+            height: 38px;
+            width: 120px;
 
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 600;
             color: white;
             cursor: pointer;
@@ -325,12 +326,14 @@ foreach ($basketItems as $item) {
             color:#777; 
             font-style:italic; 
             padding: 20px 0;
+            font-size: 18px;
         }
 
         .priceBox p {
             color:#777; 
             font-style:italic; 
             padding: 20px 0;
+            font-size: 17px;
         }
 
         .basketItem {
@@ -339,13 +342,13 @@ foreach ($basketItems as $item) {
             justify-content: space-between;
             background: #f7f7f7;
             border-radius: 10px;
-            padding: 14px 18px;
+            padding: 18px 22px;
             box-shadow: 0 3px 8px rgba(0,0,0,0.08);
         }
 
         .itemName {
             flex: 2;
-            font-size: 15px;
+            font-size: 19px;
             font-weight: 500;
             color: #333;
             overflow: hidden;
@@ -354,11 +357,11 @@ foreach ($basketItems as $item) {
         }
 
         .basketItems {
-            width: 520px;
+            width: 680px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            min-width: 420px;
+            gap: 16px;
+            min-width: 480px;
             transform: translateX(25px); 
         }
 
@@ -367,14 +370,14 @@ foreach ($basketItems as $item) {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .quantityControl button {
-            width: 28px;
-            height: 28px;
+            width: 36px;
+            height: 36px;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 20px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -395,29 +398,17 @@ foreach ($basketItems as $item) {
         }
 
         .itemQuantity {
-            width: 28px;
+            width: 34px;
             text-align: center;
             font-weight: 500;
+            font-size: 18px;
         }
 
         .itemPrice {
             flex: 1;
             text-align: right;
             font-weight: 600;
-            font-size: 15px;
-        }
-
-        /* ── Responsive styles ── */
-
-        /* Large monitors and whiteboards: widen the basket layout to use available space */
-        @media (min-width: 1440px) {
-            .basketItems {
-                width: 700px;
-            }
-
-            .priceSummary {
-                width: 320px;
-            }
+            font-size: 19px;
         }
 
     </style>
@@ -525,6 +516,7 @@ foreach ($basketItems as $item) {
 
                     <a href="./StoreHomePage.php" class="summaryButton keepShoppingButton">Keep Shopping</a>
                     <a href="./Checkout.php" class="summaryButton checkoutButton">Checkout</a>
+                    
                     <button onclick="clearBasket()" class="summaryButton clearBasketButton">Clear Basket</button>
                 
                 </div>

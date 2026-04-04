@@ -77,7 +77,7 @@ $basketIsEmpty = empty($basketItems);
                 #19a34a,
                 #0d7f36
             );
-            height: 110px;
+            height: 160px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -94,7 +94,7 @@ $basketIsEmpty = empty($basketItems);
         .headersDiv h1 {
             color: white;
             margin: 0;
-            font-size: 26px;
+            font-size: 44px;
         }
 
         .linkImage {
@@ -103,7 +103,7 @@ $basketIsEmpty = empty($basketItems);
         }
         
         .linkImage img {
-                width: 150px;
+            width: 240px;
             transition: 0.3s ease;
         }
 
@@ -125,30 +125,31 @@ $basketIsEmpty = empty($basketItems);
         }
 
         .basketItems {
-            width: 520px;
+            width: 680px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
         }
 
         .basketItem {
             background: #f7f7f7;
             border-radius: 10px;
-            padding: 14px 18px;
+            padding: 18px 22px;
             display: flex;
             justify-content: space-between;
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+            font-size: 19px;
         }
 
         .sectionTitle {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             color: #333;
         }
 
         .rightSide {
-            width: 360px;
+            width: 400px;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -158,39 +159,41 @@ $basketIsEmpty = empty($basketItems);
         .paymentBox {
             background: #f7f7f7;
             border-radius: 10px;
-            padding: 18px;
+            padding: 22px;
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+            font-size: 17px;
         }
 
         .priceRow {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .totalPrice {
             border-top: 1px solid #ccc;
             padding-top: 10px;
             font-weight: bold;
-            font-size: 17px;
+            font-size: 20px;
         }
 
         .payOption {
             display: block;
-            margin-bottom: 10px;
-            font-size: 15px;
+            margin-bottom: 12px;
+            font-size: 18px;
         }
 
         .confirmBtn {
             display: block;
             margin-top: 15px;
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background-color: #28a745;
             color: white;
             border: none;
             border-radius: 8px;
             font-weight: 600;
+            font-size: 18px;
             cursor: pointer;
             transition: all 0.25s ease;
         }
@@ -202,16 +205,16 @@ $basketIsEmpty = empty($basketItems);
 
         .returnBtn {
             position: absolute;
-            left: 210px; 
             top: 50%;
             transform: translateY(-50%);
 
-            padding: 10px 16px;
+            padding: 14px 24px;
             background-color: #2d7ef7;
             color: white;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
+            font-size: 20px;
             transition: 0.25s ease;
         }
 
@@ -220,19 +223,26 @@ $basketIsEmpty = empty($basketItems);
             filter: brightness(1.05);
         }
 
+        .basketBtn {
+            left: 490px;
+            background-color: #f5a623;
+        }
+
         .footer {
             background-color: #1e1e1e;
             color: #ccc;
             text-align: center;
-            padding: 18px 10px;
+            padding: 22px 10px;
+            font-size: 15px;
         }
 
         .detailsEntryField {
-           width:100%; 
-           padding:10px; 
-           margin:8px 0; 
-           border-radius:6px; 
-           border:1px solid #ccc;
+           width: 100%; 
+           padding: 10px; 
+           margin: 8px 0; 
+           border-radius: 6px; 
+           border: 1px solid #ccc;
+           font-size: 17px;
         }
 
         .orderDetails {
@@ -250,8 +260,7 @@ $basketIsEmpty = empty($basketItems);
             justify-content: center;
 
             text-align: center;
-            gap: 4px;
-            font-size: 14px;
+            gap: 8px;
             font-weight: 500;
             color: #ffffff;
         }
@@ -259,13 +268,13 @@ $basketIsEmpty = empty($basketItems);
         .bannerRight p {
             margin: 0;
             color: white;
-            font-size: 14px;
+            font-size: 20px;
         }
 
         .bannerButtons {
-            margin-top: 5px;
+            margin-top: 8px;
             display: flex;
-            gap: 14px;
+            gap: 16px;
             justify-content: center;
             align-items: center;
         }
@@ -275,12 +284,12 @@ $basketIsEmpty = empty($basketItems);
             justify-content: center;
             align-items: center;
 
-            border-radius: 8px;
+            border-radius: 10px;
             border: none;
-            height: 30px;
-            width: 100px;
+            height: 46px;
+            width: 140px;
 
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 600;
             color: white;
             cursor: pointer;
@@ -306,11 +315,6 @@ $basketIsEmpty = empty($basketItems);
             filter: brightness(1.08);
         }
 
-        .basketBtn {
-            left: 390px;
-            background-color: #f5a623;
-        }
-
     </style>
 </head>
 
@@ -319,7 +323,7 @@ $basketIsEmpty = empty($basketItems);
 
         <div class="homePageBanner">
 
-            <a href="StoreHomePage.php" class="returnBtn">Return to Store</a>
+            <a href="StoreHomePage.php" class="returnBtn" style="left: 280px;">Return to Store</a>
             <a href="Basket.php" class="returnBtn basketBtn">Return to Basket</a>
 
             <a href="./WelcomePage.html" class="linkImage"><img src="../Images/LogoImages/baweedGroceriesLogo.png" alt="Logo"></a>
@@ -361,7 +365,7 @@ $basketIsEmpty = empty($basketItems);
 
                     <?php if ($basketIsEmpty): ?>
 
-                        <p style="color:#777; font-style:italic; padding: 20px 0;">
+                        <p style="color:#777; font-style:italic; padding: 20px 0; font-size: 18px;">
                             Your basket is empty. Please add items before checking out.
                         </p>
 

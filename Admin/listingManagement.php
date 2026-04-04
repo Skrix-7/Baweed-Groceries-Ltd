@@ -103,14 +103,14 @@ while ($row = $result->fetch_assoc()) {
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-            max-width: 1600px;
+            width: 100%;
         }
 
         .mainDiv {
             background-color: #f5f7fa;
             width: 88%;
-            min-height: 900px;
-            margin-top: 12.5px;
+            min-height: calc(100vh - 24px);
+            margin-top: 12px;
             border-radius: 18px;
             box-shadow: 0 12px 32px rgba(0,0,0,0.35);
             overflow: hidden;
@@ -122,7 +122,7 @@ while ($row = $result->fetch_assoc()) {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 28px;
+            padding: 20px 36px;
             background: linear-gradient(to right, #db8e08, #c77e09);
             color: white;
         }
@@ -130,7 +130,7 @@ while ($row = $result->fetch_assoc()) {
         .bannerLeft {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 22px;
         }
 
         .shopBanner img {
@@ -143,7 +143,7 @@ while ($row = $result->fetch_assoc()) {
         }
 
         .shopBanner h1 {
-            font-size: 26px;
+            font-size: 34px;
             font-weight: 600;
             margin: 0;
             letter-spacing: 0.5px;
@@ -155,12 +155,12 @@ while ($row = $result->fetch_assoc()) {
             align-items: center;
             justify-content: center;
             text-align: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .bannerRight p {
             margin: 0;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 500;
         }
 
@@ -178,14 +178,15 @@ while ($row = $result->fetch_assoc()) {
             align-items: center;
             border-radius: 8px;
             border: none;
-            height: 30px;
-            width: 100px;
+            height: 40px;
+            padding: 0 18px;
             font-size: 15px;
             font-weight: 600;
             color: white;
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0,0,0,0.25);
             transition: all 0.25s ease;
+            white-space: nowrap;
         }
 
         .logOutButton {
@@ -205,22 +206,22 @@ while ($row = $result->fetch_assoc()) {
         }
 
         .productPanel {
-            width: 240px;
-            min-width: 240px;
+            width: 280px;
+            min-width: 280px;
             background: #ffffff;
             border-right: 1px solid #e2e2e2;
             display: flex;
             flex-direction: column;
-            padding: 20px 0;
+            padding: 22px 0;
         }
 
         .panelTitle {
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 700;
             letter-spacing: 0.8px;
             text-transform: uppercase;
             color: #999;
-            padding: 0 18px 12px 18px;
+            padding: 0 20px 14px 20px;
             border-bottom: 1px solid #ebebeb;
             margin-bottom: 8px;
         }
@@ -229,12 +230,12 @@ while ($row = $result->fetch_assoc()) {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 11px 18px;
+            padding: 13px 20px;
 
             border: none;
             background: none;
             font-family: "Segoe UI", Arial, sans-serif;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 500;
             color: #333;
             cursor: pointer;
@@ -258,11 +259,11 @@ while ($row = $result->fetch_assoc()) {
 
         .listingsPanel {
             flex: 1;
-            padding: 28px 32px;
+            padding: 32px 36px;
 
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
         }
 
         .listingsHeader {
@@ -272,13 +273,13 @@ while ($row = $result->fetch_assoc()) {
         }
 
         .listingsTitle {
-            font-size: 20px;
+            font-size: 26px;
             font-weight: 700;
             color: #2a2a2a;
         }
 
         .listingsSubtitle {
-            font-size: 13px;
+            font-size: 15px;
             color: #999;
             margin-top: 2px;
         }
@@ -291,31 +292,31 @@ while ($row = $result->fetch_assoc()) {
             flex: 1;
 
             color: #bbb;
-            font-size: 15px;
+            font-size: 17px;
             gap: 10px;
             padding: 60px 0;
         }
 
         .emptyState span {
-            font-size: 48px;
+            font-size: 52px;
         }
 
         .listingsGrid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 18px;
         }
 
         .listingCard {
             background: white;
             border-radius: 12px;
-            padding: 18px;
+            padding: 22px;
             border: 1px solid #e8e8e8;
             box-shadow: 0 3px 8px rgba(0,0,0,0.06);
 
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
             transition: 0.2s ease;
         }
 
@@ -331,7 +332,7 @@ while ($row = $result->fetch_assoc()) {
         }
 
         .listingId {
-            font-size: 11px;
+            font-size: 13px;
             color: #bbb;
             font-weight: 600;
             letter-spacing: 0.5px;
@@ -339,23 +340,23 @@ while ($row = $result->fetch_assoc()) {
         }
 
         .listingSupplier {
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 600;
             color: #444;
             margin-top: 2px;
         }
 
         .listingStock {
-            font-size: 12px;
+            font-size: 14px;
             color: #888;
         }
 
         .stockBadge {
             display: inline-block;
-            padding: 3px 9px;
+            padding: 4px 11px;
 
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
         }
 
@@ -370,7 +371,7 @@ while ($row = $result->fetch_assoc()) {
         }
 
         .priceLabel {
-            font-size: 12px;
+            font-size: 13px;
             color: #999;
             font-weight: 600;
             text-transform: uppercase;
@@ -380,11 +381,11 @@ while ($row = $result->fetch_assoc()) {
 
         .priceInput {
             flex: 1;
-            padding: 7px 10px;
+            padding: 9px 12px;
             border: 1px solid #ddd;
             border-radius: 6px;
 
-            font-size: 14px;
+            font-size: 15px;
             font-family: "Segoe UI", Arial, sans-serif;
 
             transition: 0.2s ease;
@@ -398,13 +399,13 @@ while ($row = $result->fetch_assoc()) {
         }
 
         .saveBtn {
-            padding: 7px 14px;
+            padding: 9px 16px;
 
             background: linear-gradient(to right, #f5a623, #c4841a);
             color: white;
             border: none;
             border-radius: 6px;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
 
             cursor: pointer;
@@ -418,13 +419,13 @@ while ($row = $result->fetch_assoc()) {
 
         .deleteBtn {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             background: none;
             border: 1px solid #f5c6c6;
             border-radius: 6px;
 
             color: #c62828;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
 
             cursor: pointer;
@@ -437,7 +438,7 @@ while ($row = $result->fetch_assoc()) {
         }
 
         .cardFeedback {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
             text-align: center;
             min-height: 16px;
@@ -453,7 +454,7 @@ while ($row = $result->fetch_assoc()) {
 
             padding: 60px 0;
             color: #bbb;
-            font-size: 14px;
+            font-size: 16px;
             gap: 10px;
         }
 
@@ -462,8 +463,8 @@ while ($row = $result->fetch_assoc()) {
             color: #ccc;
             text-align: center;
 
-            padding: 20px 0;
-            font-size: 13px;
+            padding: 24px 0;
+            font-size: 15px;
             border-top: 1px solid #3d3d3d;
             box-shadow: 0 -3px 10px rgba(0,0,0,0.25);
         }
@@ -482,7 +483,7 @@ while ($row = $result->fetch_assoc()) {
             <div class="bannerLeft">
 
                 <a href="../MainPages/WelcomePage.html">
-                    <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="180">
+                    <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="220">
                 </a>
 
                 <h1>Listing Management</h1>
@@ -494,7 +495,7 @@ while ($row = $result->fetch_assoc()) {
                 <p>Admin: <?= htmlspecialchars($_SESSION['adminUser'] ?? 'Admin') ?></p>
 
                 <div class="bannerButtons">
-                    <button onclick="window.location.href='adminHomePage.php'" class="shopButton" style="background:linear-gradient(to right,#555,#333); width:120px;">← Dashboard</button>
+                    <button onclick="window.location.href='adminHomePage.php'" class="shopButton" style="background:linear-gradient(to right,#555,#333);">← Dashboard</button>
                     <button onclick="logOut()" class="shopButton logOutButton">Log Out</button>
                 </div>
 

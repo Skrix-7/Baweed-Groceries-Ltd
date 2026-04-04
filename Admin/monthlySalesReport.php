@@ -87,14 +87,14 @@ $totalProducts = count($productSales);
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-            max-width: 1600px;
+            width: 100%;
         }
 
         .mainDiv {
             background-color: #f5f7fa;
             width: 88%;
-            min-height: 900px;
-            margin-top: 12.5px;
+            min-height: calc(100vh - 24px);
+            margin-top: 12px;
             border-radius: 18px;
             box-shadow: 0 12px 32px rgba(0,0,0,0.35);
             overflow: hidden;
@@ -106,7 +106,7 @@ $totalProducts = count($productSales);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 28px;
+            padding: 20px 36px;
             background: linear-gradient(to right, #db8e08, #c77e09);
             color: white;
         }
@@ -114,14 +114,14 @@ $totalProducts = count($productSales);
         .bannerLeft {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 22px;
         }
 
         .shopBanner img { transition: 0.25s ease; cursor: pointer; }
         .shopBanner img:hover { transform: scale(1.06); }
 
         .shopBanner h1 {
-            font-size: 26px;
+            font-size: 34px;
             font-weight: 600;
             margin: 0;
             letter-spacing: 0.5px;
@@ -132,10 +132,10 @@ $totalProducts = count($productSales);
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 6px;
+            gap: 8px;
         }
 
-        .bannerRight p { margin: 0; font-size: 14px; font-weight: 500; }
+        .bannerRight p { margin: 0; font-size: 18px; font-weight: 500; }
 
         .bannerButtons {
             margin-top: 5px;
@@ -151,9 +151,9 @@ $totalProducts = count($productSales);
             align-items: center;
             border-radius: 8px;
             border: none;
-            height: 30px;
-            padding: 0 14px;
-            font-size: 13px;
+            height: 40px;
+            padding: 0 18px;
+            font-size: 15px;
             font-weight: 600;
             color: white;
             cursor: pointer;
@@ -173,10 +173,10 @@ $totalProducts = count($productSales);
 
         .content {
             flex: 1;
-            padding: 32px 40px;
+            padding: 36px 44px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 26px;
         }
 
         .pageHeader {
@@ -188,7 +188,7 @@ $totalProducts = count($productSales);
         }
 
         .pageTitle {
-            font-size: 22px;
+            font-size: 28px;
             font-weight: 700;
             color: #2a2a2a;
         }
@@ -197,22 +197,22 @@ $totalProducts = count($productSales);
             background: #fff3cd;
             border: 1px solid #ffc107;
             color: #856404;
-            padding: 5px 14px;
+            padding: 6px 18px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 600;
         }
 
         .summaryRow {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            gap: 18px;
         }
 
         .summaryCard {
             background: white;
             border-radius: 12px;
-            padding: 20px 22px;
+            padding: 24px 26px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.07);
             display: flex;
             flex-direction: column;
@@ -225,7 +225,7 @@ $totalProducts = count($productSales);
         .summaryCard.products { border-color: #28a745; }
 
         .summaryLabel {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
             letter-spacing: 0.8px;
             text-transform: uppercase;
@@ -233,7 +233,7 @@ $totalProducts = count($productSales);
         }
 
         .summaryValue {
-            font-size: 32px;
+            font-size: 40px;
             font-weight: 700;
         }
 
@@ -241,18 +241,18 @@ $totalProducts = count($productSales);
         .summaryCard.units    .summaryValue { color: #1c5ed6; }
         .summaryCard.products .summaryValue { color: #1e7e34; }
 
-        .summaryDesc { font-size: 12px; color: #aaa; }
+        .summaryDesc { font-size: 14px; color: #aaa; }
 
         .paymentRow {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
         }
 
         .paymentCard {
             background: white;
             border-radius: 12px;
-            padding: 16px 20px;
+            padding: 20px 24px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.07);
             display: flex;
             flex-direction: column;
@@ -264,7 +264,7 @@ $totalProducts = count($productSales);
         .paymentCard.in_person { border-color: #28a745; }
 
         .paymentMethod {
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 700;
             text-transform: capitalize;
             color: #444;
@@ -272,18 +272,18 @@ $totalProducts = count($productSales);
         }
 
         .paymentRevenue {
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 700;
             color: #2a2a2a;
         }
 
         .paymentMeta {
-            font-size: 12px;
+            font-size: 14px;
             color: #aaa;
         }
 
         .sectionTitle {
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 700;
             color: #555;
             text-transform: uppercase;
@@ -302,25 +302,25 @@ $totalProducts = count($productSales);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 18px 22px 14px;
+            padding: 20px 26px 16px;
             border-bottom: 1px solid #f0f0f0;
             flex-wrap: wrap;
             gap: 10px;
         }
 
         .tableTitle {
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 700;
             color: #2a2a2a;
         }
 
         .searchInput {
-            padding: 7px 14px;
+            padding: 9px 16px;
             border: 1px solid #ddd;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 15px;
             font-family: "Segoe UI", Arial, sans-serif;
-            width: 200px;
+            width: 220px;
             transition: 0.2s ease;
             outline: none;
         }
@@ -337,9 +337,9 @@ $totalProducts = count($productSales);
 
         thead th {
             background: #fafafa;
-            padding: 12px 22px;
+            padding: 14px 26px;
             text-align: left;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
             letter-spacing: 0.7px;
             text-transform: uppercase;
@@ -356,7 +356,7 @@ $totalProducts = count($productSales);
             display: inline-block;
             margin-left: 4px;
             opacity: 0.4;
-            font-size: 10px;
+            font-size: 12px;
         }
 
         thead th.sorted .sortIcon { opacity: 1; color: #f5a623; }
@@ -370,8 +370,8 @@ $totalProducts = count($productSales);
         tbody tr:hover      { background: #fffbf2; }
 
         tbody td {
-            padding: 13px 22px;
-            font-size: 14px;
+            padding: 15px 26px;
+            font-size: 16px;
             color: #333;
         }
 
@@ -379,11 +379,11 @@ $totalProducts = count($productSales);
 
         .pill {
             display: inline-block;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 600;
-            min-width: 40px;
+            min-width: 44px;
             text-align: center;
         }
 
@@ -408,7 +408,7 @@ $totalProducts = count($productSales);
             text-align: center;
             padding: 40px;
             color: #bbb;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .emptyState {
@@ -419,17 +419,17 @@ $totalProducts = count($productSales);
             padding: 60px 20px;
             color: #bbb;
             gap: 10px;
-            font-size: 15px;
+            font-size: 17px;
         }
 
-        .emptyState span { font-size: 48px; }
+        .emptyState span { font-size: 52px; }
 
         .footer {
             background-color: #1e1e1e;
             color: #ccc;
             text-align: center;
-            padding: 20px 0;
-            font-size: 13px;
+            padding: 24px 0;
+            font-size: 15px;
             border-top: 1px solid #3d3d3d;
             box-shadow: 0 -3px 10px rgba(0,0,0,0.25);
         }
@@ -447,7 +447,7 @@ $totalProducts = count($productSales);
         <div class="bannerLeft">
 
             <a href="../MainPages/WelcomePage.html">
-                <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="180">
+                <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="220">
             </a>
 
             <h1>Monthly Sales Report</h1>
@@ -527,7 +527,7 @@ $totalProducts = count($productSales);
             <div class="tableHeader">
 
                 <div class="tableTitle">All Products
-                    <span style="font-size:12px; color:#aaa; font-weight:400; margin-left:8px;"> sorted by revenue </span>
+                    <span style="font-size:14px; color:#aaa; font-weight:400; margin-left:8px;"> sorted by revenue </span>
                 </div>
 
                 <input class="searchInput" type="text" placeholder="Filter products…" oninput="filterTable(this.value)">
@@ -570,7 +570,7 @@ $totalProducts = count($productSales);
 
                                     <div class="barWrap">
                                         <div class="bar" style="width: <?= min($barPct, 100) ?>%"></div>
-                                        <span style="font-size:13px; color:#888; white-space:nowrap;"><?= $pct ?>%</span>
+                                        <span style="font-size:15px; color:#888; white-space:nowrap;"><?= $pct ?>%</span>
                                     </div>
 
                                 </td>

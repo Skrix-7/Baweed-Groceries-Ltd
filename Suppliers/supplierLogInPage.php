@@ -69,8 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             align-items: center;
 
             background: linear-gradient(to right, #363333, #2f2b2b);
-            height: 100vh;
-            max-width: 1600px;
+            min-height: 100vh;
+            margin: 0;
 
             font-family: Arial, sans-serif;
         }
@@ -79,35 +79,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 44px;
+            gap: 12px;
 
-            width: 320px;
-            border-radius: 12px;
+            width: 480px;
+            border-radius: 14px;
             background-color: #f0f0f0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .loginText {
-            font-size: 19px;
+            font-size: 32px;
             text-align: center;
             font-family: Arial, sans-serif;
             font-weight: bold;
+            margin: 0;
+        }
+
+        .loginText p {
+            margin: 0;
         }
 
         .entryFields {
             display: flex;
             flex-direction: column;
             width: 100%;
-            gap: 5px;
+            gap: 12px;
         }
 
         .entryFields input {
-            padding: 10px;
+            padding: 16px;
             border-radius: 6px;
             border: 1px solid #dcdcdc;
             width: 100%;
             box-sizing: border-box;
-            font-size: 14px;
+            font-size: 18px;
             transition: 0.2s ease;
         }
 
@@ -119,12 +125,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .formButton {
             width: 100%;
-            height: 38px;
+            height: 52px;
 
             border: none;
             border-radius: 8px;
 
-            font-size: 14px;
+            font-size: 20px;
             font-family: "Segoe UI", Arial, sans-serif;
             font-weight: 600;
             letter-spacing: 0.3px;
@@ -140,7 +146,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .secondaryButton {
             background-color: #4a4a4a;
-            margin-top: 12px;
         }
 
         .secondaryButton:hover {
@@ -149,7 +154,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .loginButton {
             background-color: #e03030;
-            margin-top: 10px;
         }
 
         .loginButton:hover {
@@ -157,8 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .responseMessage {
-            margin-top: 8px;
-            height: 18px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -167,14 +170,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .responseMessage p {
             margin: 0;
             color: #d93025;
-            font-size: 13px;
+            font-size: 18px;
             font-weight: 600;
             text-align: center;
         }
 
         .skipLink {
-            margin-top: 6px;
-            font-size: 12px;
+            font-size: 17px;
             color: #6b6b6b;
             text-decoration: none;
             opacity: 0.7;
@@ -210,7 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="button" class="formButton secondaryButton" onclick="togglePassword()">Show Password</button>
         <button class="formButton loginButton" onclick="handleLogin()">Log In</button>
 
-        <a href="../MainPages/WelcomePage.html" class="skipLink">← Return to Store</a>
+        <a href="../MainPages/WelcomePage.html" class="skipLink">Return to Store</a>
 
         <div class="responseMessage">
             <p id="response"><?= htmlspecialchars($errorMessage) ?></p>

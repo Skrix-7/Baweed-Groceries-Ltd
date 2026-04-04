@@ -230,9 +230,14 @@ $stmt->close();
 <html>
 <head>
     <title>Supplier Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='icon' type='image/x-icon' href='../Images/LogoImages/favicon.ico'>
 
     <style>
+
+        html {
+            font-size: calc(12px + 0.35vw);
+        }
 
         body {
             margin: 0;
@@ -242,14 +247,15 @@ $stmt->close();
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-            max-width: 1600px;
         }
 
         .mainDiv {
             background-color: #f5f7fa;
-            width: 88%;
+            width: 92%;
+            max-width: 1800px;
             min-height: 900px;
-            margin-top: 12.5px;
+            margin-top: calc(10px + 0.4vw);
+            margin-bottom: calc(10px + 0.4vw);
             border-radius: 18px;
             box-shadow: 0 12px 32px rgba(0,0,0,0.35);
             overflow: hidden;
@@ -261,7 +267,7 @@ $stmt->close();
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 28px;
+            padding: calc(12px + 0.3vw) calc(24px + 0.5vw);
             background: linear-gradient(to right, #c0392b, #96281b);
             color: white;
         }
@@ -269,10 +275,12 @@ $stmt->close();
         .bannerLeft {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: calc(14px + 0.3vw);
         }
 
         .shopBanner img {
+            width: calc(140px + 3vw);
+            height: auto;
             transition: 0.25s ease;
             cursor: pointer;
         }
@@ -282,7 +290,7 @@ $stmt->close();
         }
 
         .shopBanner h1 {
-            font-size: 26px;
+            font-size: calc(18px + 0.5vw);
             font-weight: 600;
             margin: 0;
             letter-spacing: 0.5px;
@@ -294,19 +302,19 @@ $stmt->close();
             align-items: center;
             justify-content: center;
             text-align: center;
-            gap: 6px;
+            gap: calc(4px + 0.1vw);
         }
 
         .bannerRight p {
             margin: 0;
-            font-size: 14px;
+            font-size: calc(12px + 0.2vw);
             font-weight: 500;
         }
 
         .bannerButtons {
-            margin-top: 5px;
+            margin-top: calc(4px + 0.1vw);
             display: flex;
-            gap: 14px;
+            gap: calc(10px + 0.2vw);
             justify-content: center;
             align-items: center;
         }
@@ -317,9 +325,9 @@ $stmt->close();
             align-items: center;
             border-radius: 8px;
             border: none;
-            height: 30px;
-            width: 100px;
-            font-size: 15px;
+            height: calc(28px + 0.3vw);
+            width: calc(80px + 1.5vw);
+            font-size: calc(12px + 0.2vw);
             font-weight: 600;
             color: white;
             cursor: pointer;
@@ -339,10 +347,10 @@ $stmt->close();
 
         .content {
             flex: 1;
-            padding: 32px 40px;
+            padding: calc(24px + 0.5vw) calc(30px + 0.8vw);
             display: flex;
             flex-direction: column;
-            gap: 28px;
+            gap: calc(20px + 0.4vw);
         }
 
         .sectionCard {
@@ -356,20 +364,20 @@ $stmt->close();
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 18px 24px 14px;
+            padding: calc(14px + 0.2vw) calc(20px + 0.3vw) calc(12px + 0.2vw);
             border-bottom: 1px solid #f0f0f0;
             flex-wrap: wrap;
             gap: 10px;
         }
 
         .sectionTitle {
-            font-size: 16px;
+            font-size: calc(14px + 0.2vw);
             font-weight: 700;
             color: #2a2a2a;
         }
 
         .sectionBody {
-            padding: 24px;
+            padding: calc(18px + 0.4vw) calc(20px + 0.3vw);
         }
 
         .actionBtn {
@@ -378,9 +386,9 @@ $stmt->close();
             justify-content: center;
             border: none;
             border-radius: 8px;
-            padding: 0 18px;
-            height: 34px;
-            font-size: 13px;
+            padding: 0 calc(14px + 0.3vw);
+            height: calc(30px + 0.3vw);
+            font-size: calc(11px + 0.2vw);
             font-weight: 600;
             color: white;
             cursor: pointer;
@@ -401,7 +409,7 @@ $stmt->close();
 
         .formRow {
             display: flex;
-            gap: 14px;
+            gap: calc(12px + 0.2vw);
             flex-wrap: wrap;
             align-items: flex-end;
         }
@@ -413,7 +421,7 @@ $stmt->close();
         }
 
         .formGroup label {
-            font-size: 12px;
+            font-size: calc(10px + 0.15vw);
             font-weight: 700;
             color: #888;
             text-transform: uppercase;
@@ -422,14 +430,14 @@ $stmt->close();
 
         .formGroup select,
         .formGroup input {
-            padding: 8px 12px;
+            padding: calc(6px + 0.15vw) calc(10px + 0.2vw);
             border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: calc(12px + 0.2vw);
             font-family: "Segoe UI", Arial, sans-serif;
             outline: none;
             transition: 0.2s ease;
-            min-width: 140px;
+            min-width: calc(120px + 2vw);
         }
 
         .formGroup select:focus,
@@ -441,14 +449,14 @@ $stmt->close();
         .listingDisplay {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: calc(16px + 0.4vw);
             flex-wrap: wrap;
         }
 
         .listingInfo {
             flex: 1;
             display: flex;
-            gap: 24px;
+            gap: calc(18px + 0.5vw);
             flex-wrap: wrap;
         }
 
@@ -459,7 +467,7 @@ $stmt->close();
         }
 
         .listingFieldLabel {
-            font-size: 11px;
+            font-size: calc(9px + 0.15vw);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.6px;
@@ -467,23 +475,23 @@ $stmt->close();
         }
 
         .listingFieldValue {
-            font-size: 18px;
+            font-size: calc(15px + 0.3vw);
             font-weight: 700;
             color: #2a2a2a;
         }
 
         .listingActions {
             display: flex;
-            gap: 10px;
+            gap: calc(8px + 0.2vw);
             flex-wrap: wrap;
         }
 
         .editRow {
             display: flex;
-            gap: 14px;
+            gap: calc(12px + 0.2vw);
             flex-wrap: wrap;
             align-items: flex-end;
-            margin-top: 16px;
+            margin-top: calc(14px + 0.2vw);
         }
 
         table {
@@ -493,9 +501,9 @@ $stmt->close();
 
         thead th {
             background: #fafafa;
-            padding: 11px 20px;
+            padding: calc(9px + 0.2vw) calc(16px + 0.4vw);
             text-align: left;
-            font-size: 12px;
+            font-size: calc(10px + 0.15vw);
             font-weight: 700;
             letter-spacing: 0.7px;
             text-transform: uppercase;
@@ -512,16 +520,16 @@ $stmt->close();
         tbody tr:hover      { background: #fff5f5; }
 
         tbody td {
-            padding: 12px 20px;
-            font-size: 14px;
+            padding: calc(10px + 0.2vw) calc(16px + 0.4vw);
+            font-size: calc(12px + 0.2vw);
             color: #333;
         }
 
         .pill {
             display: inline-block;
-            padding: 3px 10px;
+            padding: calc(2px + 0.1vw) calc(8px + 0.2vw);
             border-radius: 20px;
-            font-size: 13px;
+            font-size: calc(11px + 0.15vw);
             font-weight: 600;
             text-align: center;
         }
@@ -533,13 +541,13 @@ $stmt->close();
 
         .emptyState {
             text-align: center;
-            padding: 36px;
+            padding: calc(28px + 0.5vw);
             color: #bbb;
-            font-size: 14px;
+            font-size: calc(12px + 0.2vw);
         }
 
         .responseMsg {
-            font-size: 13px;
+            font-size: calc(11px + 0.15vw);
             font-weight: 600;
             margin-top: 10px;
             height: 18px;
@@ -565,7 +573,7 @@ $stmt->close();
         .popupBox {
             background: white;
             border-radius: 16px;
-            width: 460px;
+            width: calc(360px + 8vw);
             max-width: 92vw;
             box-shadow: 0 16px 48px rgba(0,0,0,0.35);
             overflow: hidden;
@@ -580,7 +588,7 @@ $stmt->close();
         .popupHeader {
             background: linear-gradient(to right, #c0392b, #96281b);
             color: white;
-            padding: 18px 24px;
+            padding: calc(14px + 0.3vw) calc(20px + 0.3vw);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -588,7 +596,7 @@ $stmt->close();
 
         .popupHeader h2 {
             margin: 0;
-            font-size: 18px;
+            font-size: calc(15px + 0.3vw);
             font-weight: 700;
         }
 
@@ -596,7 +604,7 @@ $stmt->close();
             background: none;
             border: none;
             color: white;
-            font-size: 22px;
+            font-size: calc(18px + 0.3vw);
             cursor: pointer;
             line-height: 1;
             padding: 0;
@@ -607,15 +615,15 @@ $stmt->close();
         .popupClose:hover { opacity: 1; }
 
         .popupBody {
-            padding: 28px 24px;
+            padding: calc(22px + 0.4vw) calc(20px + 0.3vw);
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: calc(14px + 0.3vw);
         }
 
         .popupMonth {
             text-align: center;
-            font-size: 13px;
+            font-size: calc(11px + 0.2vw);
             font-weight: 700;
             color: #aaa;
             text-transform: uppercase;
@@ -625,13 +633,13 @@ $stmt->close();
         .reportGrid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            gap: calc(10px + 0.3vw);
         }
 
         .reportCard {
             background: #f8f9fa;
             border-radius: 10px;
-            padding: 16px;
+            padding: calc(12px + 0.3vw);
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -639,7 +647,7 @@ $stmt->close();
         }
 
         .reportCardLabel {
-            font-size: 11px;
+            font-size: calc(9px + 0.15vw);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.6px;
@@ -647,20 +655,20 @@ $stmt->close();
         }
 
         .reportCardValue {
-            font-size: 26px;
+            font-size: calc(20px + 0.5vw);
             font-weight: 700;
             color: #2a2a2a;
         }
 
         .reportCardSub {
-            font-size: 12px;
+            font-size: calc(10px + 0.15vw);
             color: #bbb;
         }
 
         .popupNoListing {
             text-align: center;
             color: #aaa;
-            font-size: 14px;
+            font-size: calc(12px + 0.2vw);
             padding: 20px 0;
         }
 
@@ -668,8 +676,8 @@ $stmt->close();
             background-color: #1e1e1e;
             color: #ccc;
             text-align: center;
-            padding: 20px 0;
-            font-size: 13px;
+            padding: calc(16px + 0.3vw) 0;
+            font-size: calc(11px + 0.15vw);
             letter-spacing: 0.3px;
             border-top: 1px solid #3d3d3d;
             box-shadow: 0 -3px 10px rgba(0,0,0,0.25);

@@ -148,58 +148,58 @@ if ($showSuccess) {
             justify-content: center;
             align-items: center;
             background: linear-gradient(to right, #363333, #2f2b2b);
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
         }
 
         .container {
-            width: 340px;
-            padding: 30px;
-            border-radius: 12px;
+            width: 480px;
+            padding: 44px;
+            border-radius: 14px;
             background-color: #f0f0f0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             text-align: center;
         }
 
         .title {
-            font-size: 22px;
+            font-size: 32px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             color: #333;
         }
 
         .success-message {
             background: #e8f5e9;
             color: #2e7d32;
-            padding: 16px;
+            padding: 22px;
             border-radius: 8px;
-            margin: 20px 0;
-            font-size: 17px;
+            margin: 24px 0;
+            font-size: 22px;
             font-weight: 600;
         }
 
         .error-message {
             background: #ffebee;
             color: #c62828;
-            padding: 12px;
+            padding: 16px;
             border-radius: 8px;
-            margin: 15px 0;
-            font-size: 14px;
+            margin: 18px 0;
+            font-size: 18px;
         }
 
         .entryFields {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin: 20px 0;
+            gap: 14px;
+            margin: 24px 0;
         }
 
         .entryFields input {
-            padding: 12px;
+            padding: 16px;
             border-radius: 6px;
             border: 1px solid #dcdcdc;
-            font-size: 15px;
+            font-size: 18px;
             width: 100%;
             box-sizing: border-box;
         }
@@ -212,12 +212,12 @@ if ($showSuccess) {
 
         .confirmBtn {
             width: 100%;
-            padding: 14px;
+            padding: 18px;
             background-color: #2d7ef7;
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
@@ -229,15 +229,15 @@ if ($showSuccess) {
 
         .continueBtn {
             width: 100%;
-            padding: 14px;
+            padding: 18px;
             background-color: #28a745;
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 18px;
             transition: 0.2s;
         }
 
@@ -246,8 +246,8 @@ if ($showSuccess) {
         }
 
         .backLink {
-            margin-top: 20px;
-            font-size: 14px;
+            margin-top: 24px;
+            font-size: 18px;
         }
 
         .backLink a {
@@ -275,7 +275,7 @@ if ($showSuccess) {
                 Your order has been placed.
             </div>
 
-            <p style="margin: 20px 0; color: #555;">
+            <p style="margin: 24px 0; color: #555; font-size: 19px;">
 
                 <?php if ($isLoggedIn): ?>
                     Thank you for your order! We'll prepare it for you.<br>
@@ -314,7 +314,7 @@ if ($showSuccess) {
                 </form>
 
             <?php else: ?>
-                <p style="color:#c62828;">Something went wrong. Please go back and try again.</p>
+                <p style="color:#c62828; font-size: 18px;">Something went wrong. Please go back and try again.</p>
             <?php endif; ?>
 
             <div class="backLink">

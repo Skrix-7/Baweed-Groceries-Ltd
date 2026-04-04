@@ -7,6 +7,7 @@ include "../dbConnector.local.php";
 
 <head>
     <title>Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='icon' type='image/x-icon' href='../Images/LogoImages/favicon.ico'>
 
     <style>
@@ -17,10 +18,9 @@ include "../dbConnector.local.php";
             align-items: center;
 
             background: linear-gradient(to right, #363333, #2f2b2b);
-            height: 100vh;
+            min-height: 100vh;
 
             font-family: Arial, sans-serif;
-            max-width: 1600px;
         }
 
         .signUpBar {
@@ -33,16 +33,16 @@ include "../dbConnector.local.php";
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 36px;
 
-            width: 320px;
+            width: 460px;
             border-radius: 12px;
             background-color: #f0f0f0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .signUpText {
-            font-size: 19px;
+            font-size: 22px;
             text-align: center;
             font-family: Arial, sans-serif;
             font-weight: bold;
@@ -52,16 +52,16 @@ include "../dbConnector.local.php";
             display: flex;
             flex-direction: column;
             width: 100%;
-            gap: 5px;
+            gap: 10px;
         }
 
         .entryFields input {
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
             border: 1px solid #dcdcdc;
             width: 100%;
             box-sizing: border-box;
-            font-size: 14px;
+            font-size: 16px;
             transition: 0.2s ease;
         }
 
@@ -73,12 +73,12 @@ include "../dbConnector.local.php";
 
         .formButton {
             width: 100%;
-            height: 38px;
+            height: 48px;
 
             border: none;
             border-radius: 8px;
 
-            font-size: 14px;
+            font-size: 16px;
             font-family: "Segoe UI", Arial, sans-serif;
             font-weight: 600;
             letter-spacing: 0.3px;
@@ -121,7 +121,7 @@ include "../dbConnector.local.php";
         .responseMessage p {
             margin: 0;
             color: #d93025;
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 600;
             text-align: center;
             opacity: 0;
@@ -134,7 +134,7 @@ include "../dbConnector.local.php";
 
         .skipLink {
             margin-top: 6px;
-            font-size: 12px;
+            font-size: 14px;
             color: #6b6b6b;
             text-decoration: none;
             opacity: 0.7;

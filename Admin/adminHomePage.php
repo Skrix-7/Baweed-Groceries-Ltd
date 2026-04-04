@@ -26,14 +26,14 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-            max-width: 1600px;
+            width: 100%;
         }
 
         .mainDiv {
             background-color: #f5f7fa;
             width: 88%;
-            min-height: 900px;
-            margin-top: 12.5px;
+            min-height: calc(100vh - 24px);
+            margin-top: 12px;
             border-radius: 18px;
             box-shadow: 0 12px 32px rgba(0,0,0,0.35);
             overflow: hidden;
@@ -45,7 +45,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 28px;
+            padding: 20px 36px;
             background: linear-gradient(to right, #db8e08, #c77e09);
             color: white;
         }
@@ -53,7 +53,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
         .bannerLeft {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 22px;
         }
 
         .shopBanner img {
@@ -66,7 +66,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
         }
 
         .shopBanner h1 {
-            font-size: 26px;
+            font-size: 34px;
             font-weight: 600;
             margin: 0;
             letter-spacing: 0.5px;
@@ -78,12 +78,12 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             align-items: center;
             justify-content: center;
             text-align: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .bannerRight p {
             margin: 0;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 500;
         }
 
@@ -101,9 +101,9 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             align-items: center;
             border-radius: 8px;
             border: none;
-            height: 30px;
-            width: 100px;
-            font-size: 15px;
+            height: 40px;
+            width: 120px;
+            font-size: 17px;
             font-weight: 600;
             color: white;
             cursor: pointer;
@@ -131,7 +131,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
         }
 
         .mainText {
-            font-size: 22px;
+            font-size: 28px;
             font-weight: 700;
             color: #2a2a2a;
             margin-bottom: 10px;
@@ -141,18 +141,18 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
         .featureGrid {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
             width: 100%;
-            max-width: 520px;
+            max-width: 740px;
         }
 
         .featureBtn {
             width: 100%;
-            padding: 18px 24px;
+            padding: 28px 32px;
             border: none;
             border-radius: 12px;
             font-family: "Segoe UI", Arial, sans-serif;
-            font-size: 16px;
+            font-size: 24px;
             font-weight: 600;
             color: white;
             cursor: pointer;
@@ -185,8 +185,8 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             background-color: #1e1e1e;
             color: #ccc;
             text-align: center;
-            padding: 20px 0;
-            font-size: 13px;
+            padding: 24px 0;
+            font-size: 15px;
             letter-spacing: 0.3px;
             border-top: 1px solid #3d3d3d;
             box-shadow: 0 -3px 10px rgba(0,0,0,0.25);
@@ -208,7 +208,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             <div class="bannerLeft">
 
                 <a href="../MainPages/WelcomePage.html">
-                    <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="180">
+                    <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="220">
                 </a>
 
                 <h1>Admin Dashboard</h1>

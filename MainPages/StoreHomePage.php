@@ -4,10 +4,12 @@ include "../dbConnector.local.php";
 ?>
 
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
     <title>Shop</title>
     <link rel='icon' type='image/x-icon' href='../Images/LogoImages/favicon.ico'>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
 
@@ -27,9 +29,10 @@ include "../dbConnector.local.php";
 
         .mainDiv {
             background-color: #f5f7fa;
-            width: 88%;
-            min-height: calc(100vh - 25px);
-            margin-top:12.5px;
+            width: 94vw;
+            max-width: 2400px;
+            min-height: calc(100vh - 32px);
+            margin-top: 16px;
 
             border-radius: 18px;
             box-shadow: 0 12px 32px rgba(0,0,0,0.35);
@@ -44,7 +47,7 @@ include "../dbConnector.local.php";
             align-items: center;
             justify-content: space-between;
 
-            padding: 14px 28px;
+            padding: 24px 44px;
 
             background: linear-gradient(to right, #1c4693, #14356f);
             color: white;
@@ -53,12 +56,14 @@ include "../dbConnector.local.php";
         .bannerLeft {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 28px;
         }
 
         .shopBanner img {
             transition: 0.25s ease;
             cursor: pointer;
+            width: 220px;
+            height: auto;
         }
 
         .shopBanner img:hover {
@@ -66,7 +71,7 @@ include "../dbConnector.local.php";
         }
 
         .shopBanner h1 {
-            font-size: 26px;
+            font-size: 36px;
             font-weight: 600;
             margin: 0;
             letter-spacing: 0.5px;
@@ -74,37 +79,44 @@ include "../dbConnector.local.php";
 
         .bannerRight {
             display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 24px;
+        }
+
+        .bannerRightInfo {
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
 
             text-align: center;
-            gap: 6px;
+            gap: 10px;
         }
 
         .bannerRight p {
             margin: 0;
-            font-size: 14px;
+            font-size: 20px;
             font-weight: 500;
         }
 
         .search {
             display: flex;
             justify-content: center;
-            margin: 10px 0 8px 0; 
+            margin: 20px 0 16px 0; 
         }
 
         .searchDiv {
             position: relative;
-            width: 420px;
+            width: 600px;
         }
         
         .searchDiv input {
             width: 100%;
-            padding: 11px 42px 11px 14px;
-            border-radius: 22px;
+            padding: 14px 52px 14px 20px;
+            border-radius: 30px;
             border: 1px solid #cfcfcf;
-            font-size: 14px;
+            font-size: 20px;
             box-sizing: border-box;
             transition: 0.2s ease;
         }
@@ -112,17 +124,17 @@ include "../dbConnector.local.php";
         .searchDiv input:focus {
             outline: none;
             border-color: #2d7ef7;
-            box-shadow: 0 0 0 2px rgba(45,126,247,0.15);
+            box-shadow: 0 0 0 3px rgba(45,126,247,0.15);
         }
 
         .searchDiv button {
             position: absolute;
-            right: 8px;
+            right: 14px;
             top: 50%;
             transform: translateY(-50%);
             border: none;
             background: none;
-            font-size: 16px;
+            font-size: 24px;
             cursor: pointer;
             opacity: 0.75;
         }
@@ -134,47 +146,49 @@ include "../dbConnector.local.php";
         .productMainDiv {
             display: flex;
             justify-content: center;
-            margin-bottom: 25px;
-            margin-top: 10px;
+            margin-bottom: 32px;
+            margin-top: 16px;
             flex: 1;
         }
 
         .productsDiv {
             background-color: white;
-            border-radius: 14px;
-            padding: 25px;
+            border-radius: 16px;
+            padding: 32px;
             box-shadow: 0 5px 14px rgba(0,0,0,0.08);
             width: 100%;
-            max-width: 1200px; 
+            max-width: 2200px; 
             box-sizing: border-box;
         }
 
         .mainText {
-            font-size: 20px;
+            font-size: 26px;
             font-weight: 600;
-            margin-bottom: 18px;
+            margin-bottom: 24px;
             color: #2a2a2a;
         }
 
         .products {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
+            gap: 24px;
         }
 
         .productCard {
             background: #ffffff;
-            border-radius: 10px;
-            padding: 12px;
+            border-radius: 14px;
+            padding: 16px;
             text-align: center;
             border: 1px solid #e2e2e2;
             transition: 0.2s ease;
             overflow: hidden;
+            font-size: 22px;
+            cursor: pointer;
         }
 
         .productCard:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
         }
 
         .footer {
@@ -184,8 +198,8 @@ include "../dbConnector.local.php";
             color: #e4e4e4;
 
             text-align: center;
-            padding: 20px 0;
-            font-size: 13px;
+            padding: 24px 0;
+            font-size: 18px;
             letter-spacing: 0.3px;
 
             border-top: 1px solid #3d3d3d; 
@@ -194,16 +208,16 @@ include "../dbConnector.local.php";
 
         .footer p {
             color: #ccc;                     
-            font-size: 13px;
+            font-size: 18px;
             text-align: center;
             letter-spacing: 0.5px;
             margin: 0;
         }
 
         .bannerButtons {
-            margin-top: 5px;
+            margin-top: 10px;
             display: flex;
-            gap: 14px;             
+            gap: 20px;             
             justify-content: center;
             align-items: center;
         }
@@ -214,12 +228,12 @@ include "../dbConnector.local.php";
             align-items: center;
 
             background: linear-gradient(to right, #21f367, #17b851);
-            border-radius: 8px;
+            border-radius: 10px;
             border: none;
-            height: 30px;
-            width: 100px;
+            height: 48px;
+            width: 140px;
 
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 600;
             color: white;
             cursor: pointer;
@@ -246,65 +260,40 @@ include "../dbConnector.local.php";
             box-shadow: 0 8px 18px rgba(0,0,0,0.35);
         }
 
-        .basketButtonDiv {
-            margin-right:-700px;
-        }
-
         .basketButton {
-            gap:8px;
+            padding: 14px 28px;
 
-            padding:8px 16px;
+            background: linear-gradient(135deg, #ffb347, #ff7b00);
+            border: none;
+            border-radius: 12px;
 
-            background:linear-gradient(135deg,#ffb347,#ff7b00);
-            border:none;
-            border-radius:10px;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
 
-            color:white;
-            font-size:15px;
-            font-weight:600;
-            cursor:pointer;
-
-            box-shadow:0 6px 14px rgba(0,0,0,0.25);
-            transition:all 0.25s ease;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+            transition: all 0.25s ease;
         }
 
         .basketButton:hover {
-            transform:translateY(-3px);
-            filter:brightness(1.1);
-            box-shadow:0 10px 20px rgba(0,0,0,0.35);
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.35);
         }
 
         .productImg {
             width: 100%;
-            height: 120px;
+            height: 220px;
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            border-radius: 10px;
+            margin-bottom: 14px;
         }
 
         .logOutDiv {
             position: absolute;
             top: 18px;
             right: 28px;
-        }
-
-
-        /* ── Responsive styles ── */
-
-        /* Large monitors and whiteboards: widen containers, keep sizing normal */
-        @media (min-width: 1440px) {
-            .mainDiv {
-                width: 82%;
-                max-width: 1600px;
-            }
-
-            .productsDiv {
-                max-width: 1400px;
-            }
-
-            .products {
-                grid-template-columns: repeat(4, 1fr);
-            }
         }
 
     </style>
@@ -316,42 +305,46 @@ include "../dbConnector.local.php";
         <div class="shopBanner">
 
             <div class="bannerLeft">
+
                 <a href="WelcomePage.html">
                     <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="180">
                 </a>
-                <h1>Store</h1>
-            </div>
 
-            <div class="basketButtonDiv">
-                <button class="basketButton" onclick="window.location.href='Basket.php'">Basket</button>
+                <h1>Store</h1>
+
             </div>
 
             <div class="bannerRight">
 
-                <?php if (isset($_SESSION['customerID'])) { ?>
+                <button class="basketButton" onclick="window.location.href='Basket.php'">Basket</button>
 
-                    <p>Status: Logged In</p>
-                    <p>Welcome to Baweed Groceries</p>
+                <div class="bannerRightInfo">
 
-                    <div class="bannerButtons">
-                        <button onclick="logOut()" class="shopButton logOutButton">Log Out</button>
-                    </div>
+                    <?php if (isset($_SESSION['customerID'])) { ?>
 
-                <?php } else { ?>
+                        <p>Status: Logged In</p>
+                        <p>Welcome to Baweed Groceries</p>
 
-                    <p>Status: Logged Out</p>
-                    <p>Welcome to Baweed Groceries</p>
+                        <div class="bannerButtons">
+                            <button onclick="logOut()" class="shopButton logOutButton">Log Out</button>
+                        </div>
 
-                    <div class="bannerButtons">
-                        <button onclick="signUp()" class="shopButton signUpButton">Sign Up</button>
-                        <button onclick="logIn()" class="shopButton logInButton">Log In</button>
-                    </div>
+                    <?php } else { ?>
 
-                <?php } ?>
+                        <p>Status: Logged Out</p>
+                        <p>Welcome to Baweed Groceries</p>
 
+                        <div class="bannerButtons">
+                            <button onclick="signUp()" class="shopButton signUpButton">Sign Up</button>
+                            <button onclick="logIn()" class="shopButton logInButton">Log In</button>
+                        </div>
+
+                    <?php } ?>
                 </div>
+            </div>
 
             <div class="logOutDiv"></div>
+
         </div>
 
         <div class="search">
@@ -365,6 +358,7 @@ include "../dbConnector.local.php";
 
         <div class="productMainDiv">
             <div class="productsDiv">
+
                 <div class="mainText">
 
                 </div>
@@ -372,6 +366,7 @@ include "../dbConnector.local.php";
                 <div class="products">
                             
                 </div>
+                
             </div>
         </div>
 
@@ -379,8 +374,7 @@ include "../dbConnector.local.php";
             <p>© 2026 Baweed Groceries Ltd. All Rights Reserved.</p>
         </div>
 
-        </div>
-    </div> 
+    </div>
 
     <script>
 
