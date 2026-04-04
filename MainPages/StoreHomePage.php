@@ -21,13 +21,14 @@ include "../dbConnector.local.php";
             justify-content: center;
             align-items: flex-start;  
             min-height: 100vh;
-            max-width: 1600px;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .mainDiv {
             background-color: #f5f7fa;
             width: 88%;
-            min-height: 900px;
+            min-height: calc(100vh - 25px);
             margin-top:12.5px;
 
             border-radius: 18px;
@@ -135,6 +136,7 @@ include "../dbConnector.local.php";
             justify-content: center;
             margin-bottom: 25px;
             margin-top: 10px;
+            flex: 1;
         }
 
         .productsDiv {
@@ -284,6 +286,25 @@ include "../dbConnector.local.php";
             position: absolute;
             top: 18px;
             right: 28px;
+        }
+
+
+        /* ── Responsive styles ── */
+
+        /* Large monitors and whiteboards: widen containers, keep sizing normal */
+        @media (min-width: 1440px) {
+            .mainDiv {
+                width: 82%;
+                max-width: 1600px;
+            }
+
+            .productsDiv {
+                max-width: 1400px;
+            }
+
+            .products {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
     </style>

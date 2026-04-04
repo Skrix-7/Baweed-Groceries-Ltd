@@ -74,7 +74,6 @@ foreach ($basketItems as $item) {
             margin: 0;
             font-family: "Segoe UI", Arial, sans-serif;
             background: #eceaea;
-            max-width: 1600px;
         }
 
         .pageWrapper {
@@ -406,6 +405,19 @@ foreach ($basketItems as $item) {
             text-align: right;
             font-weight: 600;
             font-size: 15px;
+        }
+
+        /* ── Responsive styles ── */
+
+        /* Large monitors and whiteboards: widen the basket layout to use available space */
+        @media (min-width: 1440px) {
+            .basketItems {
+                width: 700px;
+            }
+
+            .priceSummary {
+                width: 320px;
+            }
         }
 
     </style>
