@@ -7,7 +7,7 @@ $productID = 1;
 $productName = "Broccoli";       
 $productImage = "../Images/ProductImages/Broccoli.avif";
 
-//This is a query to recieve all the listings for this product and the suppliers that are selling it, ordered by price (lowest first)
+//This is a query to recieve all the listings for this product and the suppliers that are selling it 
 $listings = [];
 if ($stmt = $conn->prepare("
     SELECT l.listingID, l.Price, l.Quantity, s.Fullname
@@ -31,7 +31,7 @@ if ($stmt = $conn->prepare("
     $stmt->close();
 } 
 
-//If there was an error preparing the statemen
+//If there was an error preparing the statement
 else {
     error_log("Database prepare error: " . $conn->error);
 }
@@ -46,36 +46,39 @@ else {
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
         }
 
         body {
-            margin: 0;
             font-family: "Segoe UI", Arial, sans-serif;
             background: linear-gradient(135deg, #555555, #474747, #292929);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
             min-height: 100vh;
-            max-width: 1600px;
+            width: 100%;
         }
 
         .mainDiv {
             background-color: #f5f7fa;
-            width: 88%;
-            min-height: 900px;
-            margin-top: 12.5px;
-            border-radius: 18px;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.35);
-            overflow: hidden;
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            border-radius: 0;
+            box-shadow: none;
             display: flex;
             flex-direction: column;
+            zoom: 1.4;
         }
 
         .shopBanner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 28px;
+            padding: 18px 36px;
             background: linear-gradient(to right, #1c4693, #14356f);
             color: white;
             position: relative;
@@ -97,7 +100,7 @@ else {
         }
 
         .shopBanner h1 {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 600;
             margin: 0;
             letter-spacing: 0.5px;
@@ -132,9 +135,9 @@ else {
             align-items: center;
             border-radius: 8px;
             border: none;
-            height: 30px;
-            width: 100px;
-            font-size: 16px;
+            height: 34px;
+            width: 110px;
+            font-size: 15px;
             font-weight: 600;
             color: white;
             cursor: pointer;
@@ -153,11 +156,11 @@ else {
         }
 
         .basketButtonDiv {
-            margin-right: -700px;
+            margin-right: 0;
         }
 
         .basketButton {
-            padding: 8px 16px;
+            padding: 8px 20px;
             background: linear-gradient(135deg, #ffb347, #ff7b00);
             border: none;
             border-radius: 10px;
@@ -180,7 +183,6 @@ else {
             margin: 16px 0 12px;
             padding: 12px 40px;
             width: calc(100% - 48px);
-            max-width: 1100px;
             background: linear-gradient(135deg, #ffb347, #ff7b00);
             border: none;
             border-radius: 10px;
@@ -202,19 +204,19 @@ else {
             display: flex;
             justify-content: center;
             margin: 20px 0 35px;
+            padding: 0 40px;
         }
 
         .productContentDiv {
             background-color: white;
             border-radius: 14px;
-            padding: 28px;
+            padding: 36px;
             box-shadow: 0 5px 14px rgba(0,0,0,0.08);
             width: 100%;
-            max-width: 1200px;
         }
 
         .productHeader {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 600;
             margin-bottom: 8px;
             color: #2a2a2a;
@@ -246,7 +248,7 @@ else {
 
         .productInfo {
             flex: 1;
-            min-width: 380px;
+            min-width: 300px;
         }
 
         .sellerList {
@@ -287,6 +289,7 @@ else {
             border: none;
             border-radius: 8px;
             color: white;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -365,7 +368,7 @@ else {
         <div class="shopBanner">
 
             <div class="bannerLeft">
-                <a href="Shop.php">
+                <a href="../MainPages/WelcomePage.html">
                     <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="180" alt="Logo">
                 </a>
                 <h1>Store</h1>
@@ -400,7 +403,7 @@ else {
             </div>
         </div>
 
-        <button class="returnButton" onclick="returnToStore()">← Return to Store</button>
+        <button class="returnButton" onclick="returnToStore()">Return to Store</button>
 
         <div class="productMainDiv">
             <div class="productContentDiv">
