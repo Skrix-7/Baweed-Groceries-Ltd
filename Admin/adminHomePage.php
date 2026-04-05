@@ -21,9 +21,11 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
         body {
             margin: 0;
             font-family: "Segoe UI", Arial, sans-serif;
+            
             background: linear-gradient(135deg, #555555, #474747, #292929);
             display: flex;
             justify-content: center;
+
             align-items: flex-start;
             min-height: 100vh;
             width: 100%;
@@ -33,9 +35,11 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             background-color: #f5f7fa;
             width: 88%;
             min-height: calc(100vh - 24px);
+
             margin-top: 12px;
             border-radius: 18px;
             box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -46,6 +50,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             align-items: center;
             justify-content: space-between;
             padding: 20px 36px;
+
             background: linear-gradient(to right, #db8e08, #c77e09);
             color: white;
         }
@@ -68,6 +73,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
         .shopBanner h1 {
             font-size: 34px;
             font-weight: 600;
+
             margin: 0;
             letter-spacing: 0.5px;
         }
@@ -76,6 +82,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             display: flex;
             flex-direction: column;
             align-items: center;
+
             justify-content: center;
             text-align: center;
             gap: 8px;
@@ -91,6 +98,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             margin-top: 5px;
             display: flex;
             gap: 14px;
+
             justify-content: center;
             align-items: center;
         }
@@ -99,12 +107,15 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             display: inline-flex;
             justify-content: center;
             align-items: center;
+
             border-radius: 8px;
             border: none;
             height: 40px;
+
             width: 120px;
             font-size: 17px;
             font-weight: 600;
+
             color: white;
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0,0,0,0.25);
@@ -125,6 +136,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             flex: 1;
             display: flex;
             flex-direction: column;
+
             align-items: center;
             padding: 50px 28px;
             gap: 16px;
@@ -134,6 +146,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             font-size: 28px;
             font-weight: 700;
             color: #2a2a2a;
+
             margin-bottom: 10px;
             text-align: center;
         }
@@ -141,6 +154,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
         .featureGrid {
             display: flex;
             flex-direction: column;
+
             gap: 18px;
             width: 100%;
             max-width: 740px;
@@ -150,16 +164,20 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             width: 100%;
             padding: 28px 32px;
             border: none;
+
             border-radius: 12px;
             font-family: "Segoe UI", Arial, sans-serif;
             font-size: 24px;
             font-weight: 600;
+
             color: white;
             cursor: pointer;
             text-align: left;
+
             display: flex;
             align-items: center;
             gap: 14px;
+
             box-shadow: 0 5px 14px rgba(0,0,0,0.15);
             transition: all 0.25s ease;
             background: linear-gradient(to right, #db8e08, #c77e09);
@@ -186,8 +204,10 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
             color: #ccc;
             text-align: center;
             padding: 24px 0;
+
             font-size: 15px;
             letter-spacing: 0.3px;
+
             border-top: 1px solid #3d3d3d;
             box-shadow: 0 -3px 10px rgba(0,0,0,0.25);
         }

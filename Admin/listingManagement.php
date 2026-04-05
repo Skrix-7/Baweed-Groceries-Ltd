@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     //This is the variables for the product
     $listingID = intval($_POST['listingID']);
-    $newPrice  = floatval($_POST['price']);
+    $newPrice = floatval($_POST['price']);
 
     //Prevents 0/negative pries
     if ($newPrice <= 0) {
@@ -106,8 +106,10 @@ while ($row = $result->fetch_assoc()) {
             margin: 0;
             font-family: "Segoe UI", Arial, sans-serif;
             background: linear-gradient(135deg, #555555, #474747, #292929);
+
             display: flex;
             justify-content: center;
+
             align-items: flex-start;
             min-height: 100vh;
             width: 100%;
@@ -117,9 +119,11 @@ while ($row = $result->fetch_assoc()) {
             background-color: #f5f7fa;
             width: 88%;
             min-height: calc(100vh - 24px);
+            
             margin-top: 12px;
             border-radius: 18px;
             box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -129,6 +133,7 @@ while ($row = $result->fetch_assoc()) {
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             padding: 20px 36px;
             background: linear-gradient(to right, #db8e08, #c77e09);
             color: white;
@@ -152,6 +157,7 @@ while ($row = $result->fetch_assoc()) {
         .shopBanner h1 {
             font-size: 34px;
             font-weight: 600;
+
             margin: 0;
             letter-spacing: 0.5px;
         }
@@ -160,6 +166,7 @@ while ($row = $result->fetch_assoc()) {
             display: flex;
             flex-direction: column;
             align-items: center;
+
             justify-content: center;
             text-align: center;
             gap: 8px;
@@ -175,6 +182,7 @@ while ($row = $result->fetch_assoc()) {
             margin-top: 5px;
             display: flex;
             gap: 14px;
+
             justify-content: center;
             align-items: center;
         }
@@ -182,15 +190,19 @@ while ($row = $result->fetch_assoc()) {
         .shopButton {
             display: inline-flex;
             justify-content: center;
+
             align-items: center;
             border-radius: 8px;
             border: none;
+
             height: 40px;
             padding: 0 18px;
             font-size: 15px;
+
             font-weight: 600;
             color: white;
             cursor: pointer;
+
             box-shadow: 0 4px 8px rgba(0,0,0,0.25);
             transition: all 0.25s ease;
             white-space: nowrap;
@@ -216,8 +228,10 @@ while ($row = $result->fetch_assoc()) {
             width: 280px;
             min-width: 280px;
             background: #ffffff;
+
             border-right: 1px solid #e2e2e2;
             display: flex;
+
             flex-direction: column;
             padding: 22px 0;
         }
@@ -226,9 +240,11 @@ while ($row = $result->fetch_assoc()) {
             font-size: 15px;
             font-weight: 700;
             letter-spacing: 0.8px;
+
             text-transform: uppercase;
             color: #999;
             padding: 0 20px 14px 20px;
+
             border-bottom: 1px solid #ebebeb;
             margin-bottom: 8px;
         }
@@ -236,14 +252,17 @@ while ($row = $result->fetch_assoc()) {
         .productTypeBtn {
             display: flex;
             align-items: center;
+
             gap: 10px;
             padding: 13px 20px;
 
             border: none;
             background: none;
+
             font-family: "Segoe UI", Arial, sans-serif;
             font-size: 16px;
             font-weight: 500;
+
             color: #333;
             cursor: pointer;
             text-align: left;
@@ -260,6 +279,7 @@ while ($row = $result->fetch_assoc()) {
         .productTypeBtn.active {
             background: #fdf3e3;
             color: #b37200;
+
             font-weight: 700;
             border-left: 3px solid #f5a623;
         }
@@ -294,6 +314,7 @@ while ($row = $result->fetch_assoc()) {
         .emptyState {
             display: flex;
             flex-direction: column;
+
             align-items: center;
             justify-content: center;
             flex: 1;
@@ -318,6 +339,7 @@ while ($row = $result->fetch_assoc()) {
             background: white;
             border-radius: 12px;
             padding: 22px;
+
             border: 1px solid #e8e8e8;
             box-shadow: 0 3px 8px rgba(0,0,0,0.06);
 
@@ -342,6 +364,7 @@ while ($row = $result->fetch_assoc()) {
             font-size: 13px;
             color: #bbb;
             font-weight: 600;
+
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
@@ -349,6 +372,7 @@ while ($row = $result->fetch_assoc()) {
         .listingSupplier {
             font-size: 15px;
             font-weight: 600;
+
             color: #444;
             margin-top: 2px;
         }
@@ -367,9 +391,9 @@ while ($row = $result->fetch_assoc()) {
             font-weight: 600;
         }
 
-        .stockHigh   { background: #e8f5e9; color: #2e7d32; }
-        .stockMed    { background: #fff8e1; color: #f57f17; }
-        .stockLow    { background: #ffebee; color: #c62828; }
+        .stockHigh { background: #e8f5e9; color: #2e7d32; }
+        .stockMed { background: #fff8e1; color: #f57f17; }
+        .stockLow { background: #ffebee; color: #c62828; }
 
         .priceRow {
             display: flex;
@@ -381,6 +405,7 @@ while ($row = $result->fetch_assoc()) {
             font-size: 13px;
             color: #999;
             font-weight: 600;
+
             text-transform: uppercase;
             letter-spacing: 0.5px;
             white-space: nowrap;
@@ -411,6 +436,7 @@ while ($row = $result->fetch_assoc()) {
             background: linear-gradient(to right, #f5a623, #c4841a);
             color: white;
             border: none;
+
             border-radius: 6px;
             font-size: 14px;
             font-weight: 600;
@@ -451,7 +477,7 @@ while ($row = $result->fetch_assoc()) {
             min-height: 16px;
         }
 
-        .feedbackOk  { color: #2e7d32; }
+        .feedbackOk { color: #2e7d32; }
         .feedbackErr { color: #c62828; }
 
         .spinner {
@@ -472,6 +498,7 @@ while ($row = $result->fetch_assoc()) {
 
             padding: 24px 0;
             font-size: 15px;
+
             border-top: 1px solid #3d3d3d;
             box-shadow: 0 -3px 10px rgba(0,0,0,0.25);
         }
@@ -540,7 +567,7 @@ while ($row = $result->fetch_assoc()) {
 
     <script>
 
-        let activeProductID   = null;
+        let activeProductID = null;
         let activeProductName = null;
 
         //Load listings for the clicked product type
@@ -550,7 +577,7 @@ while ($row = $result->fetch_assoc()) {
             document.querySelectorAll('.productTypeBtn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            activeProductID   = btn.dataset.id;
+            activeProductID = btn.dataset.id;
             activeProductName = btn.dataset.name;
 
             const panel = document.getElementById('listingsPanel');
@@ -600,8 +627,8 @@ while ($row = $result->fetch_assoc()) {
             listings.forEach(listing => {
                 const stockNum = parseInt(listing.Quantity);
                 let stockClass = 'stockHigh';
-                if (stockNum === 0)      stockClass = 'stockLow';
-                else if (stockNum < 10)  stockClass = 'stockMed';
+                if (stockNum === 0) stockClass = 'stockLow';
+                else if (stockNum < 10) stockClass = 'stockMed';
 
                 const card = document.createElement('div');
                 card.className = 'listingCard';

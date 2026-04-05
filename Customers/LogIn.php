@@ -32,11 +32,13 @@ include "../dbConnector.local.php";
         .signUpBox {
             display: flex;
             flex-direction: column;
+            
             align-items: center;
             padding: 36px;
 
             width: 460px;
             border-radius: 12px;
+
             background-color: #f0f0f0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
@@ -44,12 +46,14 @@ include "../dbConnector.local.php";
         .signUpText {
             font-size: 22px;
             text-align: center;
+
             font-family: Arial, sans-serif;
             font-weight: bold;
         }
 
         .entryFields {
             display: flex;
+
             flex-direction: column;
             width: 100%;
             gap: 10px;
@@ -58,8 +62,10 @@ include "../dbConnector.local.php";
         .entryFields input {
             padding: 12px;
             border-radius: 6px;
+
             border: 1px solid #dcdcdc;
             width: 100%;
+
             box-sizing: border-box;
             font-size: 16px;
             transition: 0.2s ease;
@@ -114,6 +120,7 @@ include "../dbConnector.local.php";
             margin-top: 8px;
             height: 18px;
             display: flex;
+
             align-items: center;
             justify-content: center;
         }
@@ -122,8 +129,10 @@ include "../dbConnector.local.php";
             margin: 0;
             color: #d93025;
             font-size: 15px;
+
             font-weight: 600;
             text-align: center;
+
             opacity: 0;
             transition: opacity 0.2s ease;
         }
@@ -136,6 +145,7 @@ include "../dbConnector.local.php";
             margin-top: 6px;
             font-size: 14px;
             color: #6b6b6b;
+
             text-decoration: none;
             opacity: 0.7;
             transition: 0.2s ease;

@@ -21,7 +21,7 @@ include "../dbConnector.local.php";
 
             display: flex;
             justify-content: center;
-            align-items: flex-start;  
+            align-items: flex-start;
             min-height: 100vh;
             max-width: 100%;
             box-sizing: border-box;
@@ -87,6 +87,7 @@ include "../dbConnector.local.php";
         .bannerRightInfo {
             display: flex;
             flex-direction: column;
+            
             align-items: center;
             justify-content: center;
 
@@ -115,8 +116,10 @@ include "../dbConnector.local.php";
             width: 100%;
             padding: 14px 52px 14px 20px;
             border-radius: 30px;
+
             border: 1px solid #cfcfcf;
             font-size: 20px;
+
             box-sizing: border-box;
             transition: 0.2s ease;
         }
@@ -131,10 +134,12 @@ include "../dbConnector.local.php";
             position: absolute;
             right: 14px;
             top: 50%;
+
             transform: translateY(-50%);
             border: none;
             background: none;
             font-size: 24px;
+
             cursor: pointer;
             opacity: 0.75;
         }
@@ -146,6 +151,7 @@ include "../dbConnector.local.php";
         .productMainDiv {
             display: flex;
             justify-content: center;
+
             margin-bottom: 32px;
             margin-top: 16px;
             flex: 1;
@@ -155,8 +161,10 @@ include "../dbConnector.local.php";
             background-color: white;
             border-radius: 16px;
             padding: 32px;
+
             box-shadow: 0 5px 14px rgba(0,0,0,0.08);
             width: 100%;
+
             max-width: 2200px; 
             box-sizing: border-box;
         }
@@ -164,6 +172,7 @@ include "../dbConnector.local.php";
         .mainText {
             font-size: 26px;
             font-weight: 600;
+
             margin-bottom: 24px;
             color: #2a2a2a;
         }
@@ -178,8 +187,10 @@ include "../dbConnector.local.php";
             background: #ffffff;
             border-radius: 14px;
             padding: 16px;
+
             text-align: center;
             border: 1px solid #e2e2e2;
+
             transition: 0.2s ease;
             overflow: hidden;
             font-size: 22px;
@@ -194,7 +205,7 @@ include "../dbConnector.local.php";
         .footer {
             margin-top: auto;
 
-            background-color: #1e1e1e;    
+            background-color: #1e1e1e;
             color: #e4e4e4;
 
             text-align: center;
@@ -207,7 +218,7 @@ include "../dbConnector.local.php";
         }
 
         .footer p {
-            color: #ccc;                     
+            color: #ccc;
             font-size: 18px;
             text-align: center;
             letter-spacing: 0.5px;
@@ -217,7 +228,7 @@ include "../dbConnector.local.php";
         .bannerButtons {
             margin-top: 10px;
             display: flex;
-            gap: 20px;             
+            gap: 20px;
             justify-content: center;
             align-items: center;
         }

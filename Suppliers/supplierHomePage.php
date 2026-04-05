@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         //Gets the users inputs
         $listingID = (int)($_POST['listingID'] ?? 0);
-        $price = (float)($_POST['price']    ?? 0);
+        $price = (float)($_POST['price'] ?? 0);
         $quantity = (int)($_POST['quantity'] ?? 0);
 
         //Server side validation
@@ -130,11 +130,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         //Get sales this month for this supplier's listing
         $unitsSold = 0;
-        $revenue   = 0.0;
+        $revenue = 0.0;
 
         //If their is data then it gets the figures
         if ($listingRow) {
-            $lid  = (int)$listingRow['listingID'];
+            $lid = (int)$listingRow['listingID'];
             $stmt = $conn->prepare("
                 SELECT SUM(Quantity) AS units, SUM(TotalPrice) AS revenue
                 FROM transactions
@@ -153,19 +153,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt->close();
 
             //Getting the data from the query
-            $unitsSold = (int)($row['units']   ?? 0);
-            $revenue   = (float)($row['revenue'] ?? 0);
+            $unitsSold = (int)($row['units'] ?? 0);
+            $revenue = (float)($row['revenue'] ?? 0);
         }
 
         //Returns the data
         echo json_encode([
-            'status'      => 'success',
-            'monthLabel'  => $monthLabel,
-            'productName' => $listingRow['Name']      ?? 'N/A',
-            'listed'      => $listingRow['Quantity']  ?? 0,
-            'price'       => $listingRow['Price']     ?? 0,
-            'unitsSold'   => $unitsSold,
-            'revenue'     => $revenue,
+            'status' => 'success',
+            'monthLabel' => $monthLabel,
+            'productName' => $listingRow['Name'] ?? 'N/A',
+            'listed' => $listingRow['Quantity'] ?? 0,
+            'price' => $listingRow['Price'] ?? 0,
+            'unitsSold' => $unitsSold,
+            'revenue' => $revenue,
         ]);
         exit;
     }
@@ -176,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 }
 
 
-//Get this suppliers  listing
+//Get this suppliers listing
 $myListing = null;
 $stmt = $conn->prepare("
     SELECT l.listingID, l.Price, l.Quantity, l.productID, p.Name AS productName
@@ -208,7 +208,7 @@ $marketListings = [];
 $stmt = $conn->prepare("
     SELECT l.listingID, l.Price, l.Quantity, p.Name AS productName, s.Fullname AS supplierName
     FROM listings l
-    INNER JOIN products  p ON l.productID  = p.productID
+    INNER JOIN products p ON l.productID = p.productID
     INNER JOIN suppliers s ON l.supplierID = s.supplierID
     WHERE l.supplierID != ?
     ORDER BY p.Name ASC, l.Price ASC
@@ -243,6 +243,7 @@ $stmt->close();
             margin: 0;
             font-family: "Segoe UI", Arial, sans-serif;
             background: linear-gradient(135deg, #555555, #474747, #292929);
+
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -254,10 +255,12 @@ $stmt->close();
             width: 92%;
             max-width: 1800px;
             min-height: 900px;
+
             margin-top: calc(10px + 0.4vw);
             margin-bottom: calc(10px + 0.4vw);
             border-radius: 18px;
             box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -267,6 +270,7 @@ $stmt->close();
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             padding: calc(12px + 0.3vw) calc(24px + 0.5vw);
             background: linear-gradient(to right, #c0392b, #96281b);
             color: white;
@@ -281,6 +285,7 @@ $stmt->close();
         .shopBanner img {
             width: calc(140px + 3vw);
             height: auto;
+
             transition: 0.25s ease;
             cursor: pointer;
         }
@@ -299,9 +304,11 @@ $stmt->close();
         .bannerRight {
             display: flex;
             flex-direction: column;
+
             align-items: center;
             justify-content: center;
             text-align: center;
+
             gap: calc(4px + 0.1vw);
         }
 
@@ -315,6 +322,7 @@ $stmt->close();
             margin-top: calc(4px + 0.1vw);
             display: flex;
             gap: calc(10px + 0.2vw);
+
             justify-content: center;
             align-items: center;
         }
@@ -323,14 +331,18 @@ $stmt->close();
             display: inline-flex;
             justify-content: center;
             align-items: center;
+
             border-radius: 8px;
             border: none;
+
             height: calc(28px + 0.3vw);
             width: calc(80px + 1.5vw);
             font-size: calc(12px + 0.2vw);
             font-weight: 600;
+
             color: white;
             cursor: pointer;
+
             box-shadow: 0 4px 8px rgba(0,0,0,0.25);
             transition: all 0.25s ease;
         }
@@ -349,6 +361,7 @@ $stmt->close();
             flex: 1;
             padding: calc(24px + 0.5vw) calc(30px + 0.8vw);
             display: flex;
+
             flex-direction: column;
             gap: calc(20px + 0.4vw);
         }
@@ -356,6 +369,7 @@ $stmt->close();
         .sectionCard {
             background: white;
             border-radius: 14px;
+
             box-shadow: 0 3px 10px rgba(0,0,0,0.07);
             overflow: hidden;
         }
@@ -364,6 +378,7 @@ $stmt->close();
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             padding: calc(14px + 0.2vw) calc(20px + 0.3vw) calc(12px + 0.2vw);
             border-bottom: 1px solid #f0f0f0;
             flex-wrap: wrap;
@@ -384,13 +399,17 @@ $stmt->close();
             display: inline-flex;
             align-items: center;
             justify-content: center;
+
             border: none;
             border-radius: 8px;
+
             padding: 0 calc(14px + 0.3vw);
             height: calc(30px + 0.3vw);
             font-size: calc(11px + 0.2vw);
+
             font-weight: 600;
             color: white;
+
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 3px 8px rgba(0,0,0,0.15);
@@ -402,9 +421,9 @@ $stmt->close();
             box-shadow: 0 6px 14px rgba(0,0,0,0.22);
         }
 
-        .btnRed    { background: linear-gradient(to right, #c0392b, #96281b); }
-        .btnGrey   { background: linear-gradient(to right, #636e72, #4a4a4a); }
-        .btnGreen  { background: linear-gradient(to right, #27ae60, #1e8449); }
+        .btnRed { background: linear-gradient(to right, #c0392b, #96281b); }
+        .btnGrey { background: linear-gradient(to right, #636e72, #4a4a4a); }
+        .btnGreen { background: linear-gradient(to right, #27ae60, #1e8449); }
         .btnReport { background: linear-gradient(to right, #8e44ad, #6c3483); }
 
         .formRow {
@@ -424,6 +443,7 @@ $stmt->close();
             font-size: calc(10px + 0.15vw);
             font-weight: 700;
             color: #888;
+
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -433,9 +453,11 @@ $stmt->close();
             padding: calc(6px + 0.15vw) calc(10px + 0.2vw);
             border: 1px solid #ddd;
             border-radius: 8px;
+
             font-size: calc(12px + 0.2vw);
             font-family: "Segoe UI", Arial, sans-serif;
             outline: none;
+
             transition: 0.2s ease;
             min-width: calc(120px + 2vw);
         }
@@ -504,8 +526,10 @@ $stmt->close();
             padding: calc(9px + 0.2vw) calc(16px + 0.4vw);
             text-align: left;
             font-size: calc(10px + 0.15vw);
+
             font-weight: 700;
             letter-spacing: 0.7px;
+
             text-transform: uppercase;
             color: #999;
             border-bottom: 1px solid #efefef;
@@ -517,7 +541,7 @@ $stmt->close();
         }
 
         tbody tr:last-child { border-bottom: none; }
-        tbody tr:hover      { background: #fff5f5; }
+        tbody tr:hover { background: #fff5f5; }
 
         tbody td {
             padding: calc(10px + 0.2vw) calc(16px + 0.4vw);
@@ -536,8 +560,8 @@ $stmt->close();
 
         .pillPrice { background: #fdecea; color: #c0392b; }
         .pillStock { background: #eafaf1; color: #1e8449; }
-        .pillLow   { background: #fef9e7; color: #b7950b; }
-        .pillOut   { background: #f9ebea; color: #922b21; }
+        .pillLow { background: #fef9e7; color: #b7950b; }
+        .pillOut { background: #f9ebea; color: #922b21; }
 
         .emptyState {
             text-align: center;
@@ -554,7 +578,7 @@ $stmt->close();
         }
 
         .msgSuccess { color: #1e8449; }
-        .msgError   { color: #c0392b; }
+        .msgError { color: #c0392b; }
 
         .popupOverlay {
             display: none;
@@ -582,13 +606,14 @@ $stmt->close();
 
         @keyframes popIn {
             from { transform: scale(0.93); opacity: 0; }
-            to   { transform: scale(1);    opacity: 1; }
+            to   { transform: scale(1); opacity: 1; }
         }
 
         .popupHeader {
             background: linear-gradient(to right, #c0392b, #96281b);
             color: white;
             padding: calc(14px + 0.3vw) calc(20px + 0.3vw);
+
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -605,9 +630,11 @@ $stmt->close();
             border: none;
             color: white;
             font-size: calc(18px + 0.3vw);
+
             cursor: pointer;
             line-height: 1;
             padding: 0;
+
             opacity: 0.8;
             transition: opacity 0.2s;
         }
@@ -617,6 +644,7 @@ $stmt->close();
         .popupBody {
             padding: calc(22px + 0.4vw) calc(20px + 0.3vw);
             display: flex;
+
             flex-direction: column;
             gap: calc(14px + 0.3vw);
         }
@@ -625,6 +653,7 @@ $stmt->close();
             text-align: center;
             font-size: calc(11px + 0.2vw);
             font-weight: 700;
+
             color: #aaa;
             text-transform: uppercase;
             letter-spacing: 0.8px;
@@ -640,6 +669,7 @@ $stmt->close();
             background: #f8f9fa;
             border-radius: 10px;
             padding: calc(12px + 0.3vw);
+
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -649,6 +679,7 @@ $stmt->close();
         .reportCardLabel {
             font-size: calc(9px + 0.15vw);
             font-weight: 700;
+
             text-transform: uppercase;
             letter-spacing: 0.6px;
             color: #aaa;
@@ -668,6 +699,7 @@ $stmt->close();
         .popupNoListing {
             text-align: center;
             color: #aaa;
+
             font-size: calc(12px + 0.2vw);
             padding: 20px 0;
         }
@@ -676,9 +708,11 @@ $stmt->close();
             background-color: #1e1e1e;
             color: #ccc;
             text-align: center;
+
             padding: calc(16px + 0.3vw) 0;
             font-size: calc(11px + 0.15vw);
             letter-spacing: 0.3px;
+
             border-top: 1px solid #3d3d3d;
             box-shadow: 0 -3px 10px rgba(0,0,0,0.25);
         }
@@ -749,7 +783,7 @@ $stmt->close();
 
                                 <div class="listingActions">
                                     <button class="actionBtn btnGrey" onclick="showEdit()">Edit</button>
-                                    <button class="actionBtn btnRed"  onclick="deleteListing()">Remove</button>
+                                    <button class="actionBtn btnRed" onclick="deleteListing()">Remove</button>
                                 </div>
 
                             </div>
@@ -769,7 +803,7 @@ $stmt->close();
                                     </div>
 
                                     <button class="actionBtn btnGreen" onclick="saveListing()">Save</button>
-                                    <button class="actionBtn btnGrey"  onclick="cancelEdit()">Cancel</button>
+                                    <button class="actionBtn btnGrey" onclick="cancelEdit()">Cancel</button>
 
                                 </div>
                             </div>
@@ -902,8 +936,8 @@ $stmt->close();
         //Sets the response message below the listing section
         function setMsg(text, type) {
             const el = document.getElementById('listingMsg');
-            el.textContent  = text;
-            el.className    = 'responseMsg ' + type;
+            el.textContent = text;
+            el.className = 'responseMsg ' + type;
         }
 
         //Sends a create listing request to the server

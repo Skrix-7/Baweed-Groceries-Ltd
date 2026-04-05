@@ -54,9 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else {
 
         //Guest users must supply address, card number and PIN
-        $guestAddress = trim($_POST['guestAddress']     ?? '');
-        $guestCard = trim($_POST['guestCardNumber']  ?? '');
-        $guestPin = trim($_POST['guestPin']         ?? '');
+        $guestAddress = trim($_POST['guestAddress'] ?? '');
+        $guestCard = trim($_POST['guestCardNumber'] ?? '');
+        $guestPin = trim($_POST['guestPin'] ?? '');
 
         //Entry validation
         if (strlen($guestAddress) < 5 || !preg_match('/^\d{16}$/', $guestCard) || !preg_match('/^\d{4}$/', $guestPin)) {
@@ -78,7 +78,7 @@ if ($showSuccess) {
         SELECT b.quantity, b.listingID, l.Price, l.Quantity AS stock, l.productID, p.Name AS productName
         FROM basket b
         INNER JOIN listings l ON b.listingID = l.listingID
-        INNER JOIN products p ON l.productID  = p.productID
+        INNER JOIN products p ON l.productID = p.productID
         WHERE b.$identifierField = ?
     ");
     $stmt->bind_param("s", $identifierValue);
@@ -96,13 +96,13 @@ if ($showSuccess) {
         //If quantity exceeds max stock then it prevents further errors
         if ($row['quantity'] > $row['stock']) {
             $errorMessage = "Not enough stock available for one or more items.";
-            $showSuccess  = false;
+            $showSuccess = false;
             break;
         }
 
         //Adds valid rows to the array and calculates total price
         $basketItems[] = $row;
-        $totalPrice   += $row['Price'] * $row['quantity'];
+        $totalPrice += $row['Price'] * $row['quantity'];
     }
 
     $stmt->close();
@@ -403,7 +403,7 @@ if ($showSuccess) {
 
         @keyframes popIn {
             from { transform: scale(0.93); opacity: 0; }
-            to   { transform: scale(1);    opacity: 1; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .popupHeader {

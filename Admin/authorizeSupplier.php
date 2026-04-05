@@ -9,7 +9,7 @@ if (!isset($_SESSION['adminID'])) {
 }
 
 $successMessage = "";
-$errorMessage   = "";
+$errorMessage = "";
 
 //Only allows POST requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -105,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             font-family: Arial, sans-serif;
             margin: 0;
+
             padding: 20px;
             box-sizing: border-box;
         }
@@ -112,11 +113,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .formBox {
             display: flex;
             flex-direction: column;
+
             align-items: center;
             padding: 36px;
 
             width: 460px;
             border-radius: 12px;
+
             background-color: #f0f0f0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
@@ -124,6 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .formTitle {
             font-size: 22px;
             text-align: center;
+
             font-family: Arial, sans-serif;
             font-weight: bold;
             margin-bottom: 4px;
@@ -141,6 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 6px;
             border: 1px solid #dcdcdc;
             width: 100%;
+
             box-sizing: border-box;
             font-size: 16px;
             transition: 0.2s ease;
@@ -195,6 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-top: 10px;
             width: 100%;
             display: flex;
+
             align-items: center;
             justify-content: center;
             min-height: 18px;
@@ -203,17 +209,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .responseMessage p {
             margin: 0;
             font-size: 15px;
+
             font-weight: 600;
             text-align: center;
         }
 
-        .errorText  { color: #d93025; }
+        .errorText { color: #d93025; }
         .successText { color: #1e8c3a; }
 
         .backLink {
             margin-top: 10px;
             font-size: 14px;
             color: #6b6b6b;
+
             text-decoration: none;
             opacity: 0.7;
             transition: 0.2s ease;
@@ -228,6 +236,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: flex;
             flex-direction: column;
             align-items: center;
+
             gap: 12px;
             padding: 10px 0;
             text-align: center;
@@ -237,6 +246,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .successHeading {
             font-size: 22px;
             font-weight: bold;
+
             color: #1e8c3a;
             margin: 0;
         }
@@ -244,6 +254,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .successDetail {
             font-size: 16px;
             color: #555;
+
             margin: 0;
             word-break: break-word;
         }
@@ -291,7 +302,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <button type="button" class="formButton secondaryButton" onclick="togglePassword()">Show Password</button>
-            <button type="button" class="formButton submitButton"    onclick="submitForm()">Authorize Supplier</button>
+            <button type="button" class="formButton submitButton" onclick="submitForm()">Authorize Supplier</button>
 
             <a href="adminHomePage.php" class="backLink">Back to Dashboard</a>
 
@@ -308,7 +319,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //Toggle password visibility
         function togglePassword() {
 
-            var field  = document.getElementById('password');
+            var field = document.getElementById('password');
             var button = event.target;
 
             //This reveals the password

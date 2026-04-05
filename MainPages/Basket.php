@@ -92,12 +92,12 @@ foreach ($basketItems as $item) {
             justify-content: center;
             padding: 0 40px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.18);
-            position: relative;    
+            position: relative;
         }
 
         @keyframes bannerShift {
-            0%   { background-position: 0% 50%; }
-            50%  { background-position: 100% 50%; }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
@@ -146,7 +146,7 @@ foreach ($basketItems as $item) {
             flex-direction: column;
             gap: 12px;
             margin-left: auto;
-            transform: translateX(-40px);   
+            transform: translateX(-40px);
         }
 
         .priceBox {
@@ -278,7 +278,7 @@ foreach ($basketItems as $item) {
         .bannerButtons {
             margin-top: 5px;
             display: flex;
-            gap: 14px;             
+            gap: 14px; 
             justify-content: center;
             align-items: center;
         }

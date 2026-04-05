@@ -20,11 +20,15 @@ else {
 //If the request is to clear all basket items, delete them all and return success
 if (!empty($data['clearAll'])) {
 
+    //This is a query to clear the users basket
     $stmt = $conn->prepare("DELETE FROM basket WHERE $identifierField = ?");
     $stmt->bind_param("s", $identifierValue);
+
+    //Executing the query then closing the statement
     $stmt->execute();
     $stmt->close();
 
+    //Returning success
     echo json_encode([
         'status' => 'success',
         'totalPrice' => 0,

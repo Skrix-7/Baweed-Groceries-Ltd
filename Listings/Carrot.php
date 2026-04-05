@@ -3,8 +3,8 @@ session_start();
 include "../dbConnector.local.php";
 
 //These are the attributes for this product page, different in every product page
-$productID = 2;               
-$productName = "Carrots";       
+$productID = 2;
+$productName = "Carrots";
 $productImage = "../Images/ProductImages/Carrot.avif";
 
 //This is a query to recieve all the listings for this product and the suppliers that are selling it 
@@ -136,10 +136,12 @@ else {
             justify-content: center;
             align-items: center;
             border-radius: 0.5em;
+
             border: none;
             height: 2.125em;
             width: 6.875em;
             font-size: 0.9375em;
+
             font-weight: 600;
             color: white;
             cursor: pointer;
@@ -147,7 +149,7 @@ else {
             transition: all 0.25s ease;
         }
 
-        .logInButton  { background: linear-gradient(to right, #2d7ef7, #1c5ed6); }
+        .logInButton { background: linear-gradient(to right, #2d7ef7, #1c5ed6); }
         .signUpButton { background: linear-gradient(to right, #21f367, #17b851); }
         .logOutButton { background: linear-gradient(to right, #e74c3c, #c0392b); }
 
@@ -165,10 +167,12 @@ else {
             padding: 0.5em 1.25em;
             background: linear-gradient(135deg, #ffb347, #ff7b00);
             border: none;
+
             border-radius: 0.625em;
             color: white;
             font-size: 0.9375em;
             font-weight: 600;
+
             cursor: pointer;
             box-shadow: 0 6px 14px rgba(0,0,0,0.25);
             transition: all 0.25s ease;
@@ -177,6 +181,7 @@ else {
         .basketButton:hover {
             transform: translateY(-3px);
             filter: brightness(1.1);
+
             box-shadow: 0 10px 20px rgba(0,0,0,0.35);
         }
 
@@ -185,10 +190,12 @@ else {
             margin: 1em 0 0.75em;
             padding: 0.75em 2.5em;
             width: calc(100% - 3em);
+
             background: linear-gradient(135deg, #ffb347, #ff7b00);
             border: none;
             border-radius: 0.625em;
             color: white;
+
             font-size: 1.0625em;
             font-weight: 600;
             cursor: pointer;
@@ -205,6 +212,7 @@ else {
         .productMainDiv {
             display: flex;
             justify-content: center;
+
             margin: 1.25em 0 2.1875em;
             padding: 0 2.5em;
         }
@@ -212,6 +220,7 @@ else {
         .productContentDiv {
             background-color: white;
             border-radius: 0.875em;
+
             padding: 2.25em;
             box-shadow: 0 5px 14px rgba(0,0,0,0.08);
             width: 100%;
@@ -220,6 +229,7 @@ else {
         .productHeader {
             font-size: 1.625em;
             font-weight: 600;
+
             margin-bottom: 0.5em;
             color: #2a2a2a;
         }
@@ -243,6 +253,7 @@ else {
         .productImage .imageWrapper {
             width: 100%;
             height: clamp(160px, 18vw, 300px);
+
             border-radius: 0.75em;
             box-shadow: 0 4px 12px rgba(0,0,0,0.12);
             overflow: hidden;
@@ -251,6 +262,7 @@ else {
         .productImage .imageWrapper img {
             width: 100%;
             height: 100%;
+
             object-fit: cover;
             object-position: center top;
         }
@@ -268,10 +280,12 @@ else {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             padding: 1em 1.25em;
             background: #f9f9f9;
             border: 1px solid #e2e2e2;
             border-radius: 0.625em;
+
             margin-bottom: 0.875em;
             transition: 0.2s ease;
         }
@@ -296,9 +310,11 @@ else {
             padding: 0.5625em 1.125em;
             background: linear-gradient(135deg, #ffb347, #ff7b00);
             border: none;
+
             border-radius: 0.5em;
             color: white;
             font-size: 0.875em;
+
             font-weight: 600;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -314,9 +330,11 @@ else {
             background-color: #1e1e1e;
             color: #e4e4e4;
             text-align: center;
+
             padding: 1.25em 0;
             font-size: 0.8125em;
             letter-spacing: 0.3px;
+
             border-top: 1px solid #3d3d3d;
             box-shadow: 0 -3px 10px rgba(0,0,0,0.25);
         }
@@ -343,12 +361,15 @@ else {
         .toast {
             background-color: #2a2a2a;
             color: #fff;
+
             padding: 0.75em 1.25em;
             border-radius: 0.5em;
             font-size: 0.875em;
+
             font-weight: 500;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             opacity: 0;
+
             transform: translateX(100%);
             transition: transform 0.3s ease, opacity 0.3s ease;
             pointer-events: none;
@@ -363,6 +384,7 @@ else {
             position: fixed;
             top: 20px;
             right: 20px;
+            
             z-index: 9999;
             display: flex;
             flex-direction: column;

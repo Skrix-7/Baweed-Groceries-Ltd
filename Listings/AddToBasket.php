@@ -7,7 +7,7 @@ $listingID = intval($_POST['listingID']);
 
 //If the user is logged in we use thier customer id, if they are a guest we use the session id to track their basket
 $customerID = $_SESSION['customerID'] ?? null;
-$sessionID  = session_id();
+$sessionID = session_id();
 
 //Checks if the item is already in the users basket, if it is we update the quantity, if not we add a new entry to the basket
 if ($customerID) {

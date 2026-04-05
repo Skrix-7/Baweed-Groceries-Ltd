@@ -48,7 +48,7 @@ if ($showSuccess) {
     $result = $stmt->get_result();
 
     $basketItems = [];
-    $totalPrice  = 0;
+    $totalPrice = 0;
 
     while ($row = $result->fetch_assoc()) {
 
@@ -181,6 +181,8 @@ if ($showSuccess) {
                 'items' => [],
                 'totalPrice' => $totalPrice,
             ];
+
+            //This loops through the basket items and adds them to the receipt data, along with their transaction and receipt IDs for reference
             foreach ($basketItems as $idx => $item) {
                 $receiptData['items'][] = [
                     'productName' => $item['productName'],
@@ -198,7 +200,7 @@ if ($showSuccess) {
         catch (Exception $e) {
             $conn->rollback();
             $errorMessage = "Order could not be processed. Please try again.";
-            $showSuccess  = false;
+            $showSuccess = false;
         }
     }
 }
@@ -362,7 +364,7 @@ if ($showSuccess) {
         .popupBox {
             background: white;
             border-radius: 14px;
-            
+
             width: 540px;
             max-width: 94vw;
             max-height: 88vh;
@@ -374,7 +376,7 @@ if ($showSuccess) {
 
         @keyframes popIn {
             from { transform: scale(0.93); opacity: 0; }
-            to   { transform: scale(1);    opacity: 1; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .popupHeader {

@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //Retrieving the users entries
     $fullnameInput = trim($_POST['fullname'] ?? '');
-    $password      = $_POST['password'] ?? '';
+    $password = $_POST['password'] ?? '';
 
     //If they entered nothing then the error message is displayed
     if (empty($fullnameInput) || empty($password)) {
@@ -35,13 +35,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $passwordValid = false;
         if (!$supplier) {
             $errorMessage = "Invalid full name or password.";
-        } elseif ($password === $supplier['Password']) {
+        } 
+        
+        //Compares the passwords
+        elseif ($password === $supplier['Password']) {
             $passwordValid = true;
         }
 
         //If the comparison was correct then they are logged in
         if ($passwordValid) {
-            $_SESSION['supplierID']   = $supplier['supplierID'];
+            $_SESSION['supplierID'] = $supplier['supplierID'];
             $_SESSION['supplierName'] = $supplier['Fullname'];
             header("Location: supplierHomePage.php");
             exit;
@@ -264,15 +267,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             form.method = "POST";
             form.action = "";
 
-            const eField   = document.createElement("input");
-            eField.type    = "hidden";
-            eField.name    = "fullname";
-            eField.value   = fullname;
+            const eField = document.createElement("input");
+            eField.type = "hidden";
+            eField.name = "fullname";
+            eField.value = fullname;
 
-            const pField   = document.createElement("input");
-            pField.type    = "hidden";
-            pField.name    = "password";
-            pField.value   = document.getElementById("password").value;
+            const pField = document.createElement("input");
+            pField.type = "hidden";
+            pField.name = "password";
+            pField.value = document.getElementById("password").value;
 
             form.appendChild(eField);
             form.appendChild(pField);

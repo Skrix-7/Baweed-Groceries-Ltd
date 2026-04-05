@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         //If the comparison was correct then they are logged in
         if ($passwordValid) {
-            $_SESSION['adminID']   = $adminID;
+            $_SESSION['adminID'] = $adminID;
             $_SESSION['adminUser'] = $username;
             header("Location: adminHomePage.php");
             exit;
@@ -82,11 +82,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .loginBox {
             display: flex;
             flex-direction: column;
+
             align-items: center;
             padding: 36px;
 
             width: 460px;
             border-radius: 12px;
+
             background-color: #f0f0f0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
@@ -94,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .loginText {
             font-size: 22px;
             text-align: center;
+
             font-family: Arial, sans-serif;
             font-weight: bold;
         }
@@ -101,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .entryFields {
             display: flex;
             flex-direction: column;
+
             width: 100%;
             gap: 10px;
         }
@@ -109,8 +113,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 12px;
             border-radius: 6px;
             border: 1px solid #dcdcdc;
+
             width: 100%;
             box-sizing: border-box;
+
             font-size: 16px;
             transition: 0.2s ease;
         }
@@ -164,6 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-top: 8px;
             height: 18px;
             display: flex;
+
             align-items: center;
             justify-content: center;
         }
@@ -172,6 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin: 0;
             color: #d93025;
             font-size: 15px;
+
             font-weight: 600;
             text-align: center;
         }
@@ -180,6 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-top: 6px;
             font-size: 14px;
             color: #6b6b6b;
+
             text-decoration: none;
             opacity: 0.7;
             transition: 0.2s ease;
@@ -266,15 +275,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             form.method = "POST";
             form.action = "";
 
-            const uField   = document.createElement("input");
-            uField.type    = "hidden";
-            uField.name    = "username";
-            uField.value   = username;
+            const uField = document.createElement("input");
+            uField.type = "hidden";
+            uField.name = "username";
+            uField.value = username;
 
-            const pField   = document.createElement("input");
-            pField.type    = "hidden";
-            pField.name    = "password";
-            pField.value   = document.getElementById("password").value;
+            const pField = document.createElement("input");
+            pField.type = "hidden";
+            pField.name = "password";
+            pField.value = document.getElementById("password").value;
 
             form.appendChild(uField);
             form.appendChild(pField);

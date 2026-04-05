@@ -32,6 +32,7 @@ include "../dbConnector.local.php";
         .signUpBox {
             display: flex;
             flex-direction: column;
+            
             align-items: center;
             padding: 36px;
 
@@ -44,6 +45,7 @@ include "../dbConnector.local.php";
         .signUpText {
             font-size: 22px;
             text-align: center;
+
             font-family: Arial, sans-serif;
             font-weight: bold;
         }
@@ -58,8 +60,10 @@ include "../dbConnector.local.php";
         .entryFields input {
             padding: 12px;
             border-radius: 6px;
+
             border: 1px solid #dcdcdc;
             width: 100%;
+
             box-sizing: border-box;
             font-size: 16px;
             transition: 0.2s ease;
@@ -114,6 +118,7 @@ include "../dbConnector.local.php";
             margin-top: 8px;
             height: 18px;
             display: flex;
+
             align-items: center;
             justify-content: center;
         }
@@ -123,6 +128,7 @@ include "../dbConnector.local.php";
             color: #d93025;
             font-size: 15px;
             font-weight: 600;
+
             text-align: center;
             opacity: 0;
             transition: opacity 0.2s ease;
@@ -136,6 +142,7 @@ include "../dbConnector.local.php";
             margin-top: 6px;
             font-size: 14px;
             color: #6b6b6b;
+
             text-decoration: none;
             opacity: 0.7;
             transition: 0.2s ease;
@@ -330,7 +337,7 @@ include "../dbConnector.local.php";
                 
                 //If it was succeful then they are logged into the home page
                 if (trimmed === "success") {
-                    window.location.href = "/MainPages/StoreHomePage.php";  
+                    window.location.href = "/MainPages/StoreHomePage.php";
                 } 
 
                 //This is the message displayed if the user tried to create an account that already exists

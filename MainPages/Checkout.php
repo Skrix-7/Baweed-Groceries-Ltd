@@ -24,7 +24,7 @@ $query = "
 
 //These are the variables for the users basket
 $basketItems = [];
-$totalPrice  = 0.00;
+$totalPrice = 0.00;
 
 //This prepares the statement
 if ($stmt = $conn->prepare($query)) {

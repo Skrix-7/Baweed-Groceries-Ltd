@@ -3,8 +3,8 @@ session_start();
 include "../dbConnector.local.php";
 
 //These are the attributes for this product page, different in every product page
-$productID = 1;               
-$productName = "Broccoli";       
+$productID = 1;
+$productName = "Broccoli";
 $productImage = "../Images/ProductImages/Broccoli.avif";
 
 //This is a query to recieve all the listings for this product and the suppliers that are selling it 
@@ -65,9 +65,11 @@ else {
         .mainDiv {
             background-color: #f5f7fa;
             width: 100%;
+
             min-height: 100vh;
             margin: 0;
             border-radius: 0;
+
             box-shadow: none;
             display: flex;
             flex-direction: column;
@@ -79,6 +81,7 @@ else {
             align-items: center;
             justify-content: space-between;
             padding: 18px 36px;
+
             background: linear-gradient(to right, #1c4693, #14356f);
             color: white;
             position: relative;
@@ -102,6 +105,7 @@ else {
         .shopBanner h1 {
             font-size: 28px;
             font-weight: 600;
+
             margin: 0;
             letter-spacing: 0.5px;
         }
@@ -110,6 +114,7 @@ else {
             display: flex;
             flex-direction: column;
             align-items: center;
+
             justify-content: center;
             text-align: center;
             gap: 6px;
@@ -125,6 +130,7 @@ else {
             margin-top: 5px;
             display: flex;
             gap: 14px;
+
             justify-content: center;
             align-items: center;
         }
@@ -133,19 +139,21 @@ else {
             display: inline-flex;
             justify-content: center;
             align-items: center;
+
             border-radius: 8px;
             border: none;
             height: 34px;
             width: 110px;
             font-size: 15px;
             font-weight: 600;
+
             color: white;
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0,0,0,0.25);
             transition: all 0.25s ease;
         }
 
-        .logInButton  { background: linear-gradient(to right, #2d7ef7, #1c5ed6); }
+        .logInButton { background: linear-gradient(to right, #2d7ef7, #1c5ed6); }
         .signUpButton { background: linear-gradient(to right, #21f367, #17b851); }
         .logOutButton { background: linear-gradient(to right, #e74c3c, #c0392b); }
 
@@ -163,10 +171,12 @@ else {
             padding: 8px 20px;
             background: linear-gradient(135deg, #ffb347, #ff7b00);
             border: none;
+
             border-radius: 10px;
             color: white;
             font-size: 15px;
             font-weight: 600;
+
             cursor: pointer;
             box-shadow: 0 6px 14px rgba(0,0,0,0.25);
             transition: all 0.25s ease;
@@ -184,11 +194,13 @@ else {
             padding: 12px 40px;
             width: calc(100% - 48px);
             background: linear-gradient(135deg, #ffb347, #ff7b00);
+
             border: none;
             border-radius: 10px;
             color: white;
             font-size: 17px;
             font-weight: 600;
+
             cursor: pointer;
             box-shadow: 0 6px 14px rgba(0,0,0,0.25);
             transition: all 0.25s ease;

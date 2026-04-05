@@ -15,11 +15,11 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 //This assigns variable names to the data given to it from the javascript
 $username = $_POST['username'] ?? null;
 $password = $_POST['password'] ?? null;
-$email    = $_POST['email'] ?? null;
-$phone    = $_POST['phoneNumber'] ?? null;
-$card     = $_POST['cardNumber'] ?? null;
-$pin      = $_POST['cardPin'] ?? null;
-$address  = $_POST['address'] ?? null;
+$email = $_POST['email'] ?? null;
+$phone = $_POST['phoneNumber'] ?? null;
+$card = $_POST['cardNumber'] ?? null;
+$pin = $_POST['cardPin'] ?? null;
+$address = $_POST['address'] ?? null;
 
 //Converting the pin to a integer
 $pinNum = intval($pin);
@@ -51,13 +51,13 @@ if (!$stmt) {
 //Bind variables to the fields
 $stmt->bind_param(
     "sssssss",
-    $username,  
-    $password,   
-    $email,     
+    $username,
+    $password,
+    $email,
     $phoneNum,
-    $cardNum,   
-    $pinNum,     
-    $address     
+    $cardNum,
+    $pinNum, 
+    $address
 );
 
 //Executing query

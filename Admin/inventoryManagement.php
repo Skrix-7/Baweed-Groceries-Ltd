@@ -10,7 +10,7 @@ if (!isset($_SESSION['adminID'])) {
 
 //Retrieves current date
 $monthStart = date('Y-m-01 00:00:00');
-$monthEnd   = date('Y-m-t 23:59:59');
+$monthEnd = date('Y-m-t 23:59:59');
 $monthLabel = date('F Y');
 
 //Gets the products sold this month
@@ -33,7 +33,7 @@ $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
     $outgoingMap[$row['productID']] = [
         'name' => $row['Name'],
-        'out'  => (int)$row['totalOut'],
+        'out' => (int)$row['totalOut'],
     ];
 }
 $stmt->close();
@@ -60,11 +60,11 @@ $result = $conn->query("SELECT productID, Name FROM products ORDER BY Name ASC")
 //Adds the products to a list
 while ($row = $result->fetch_assoc()) {
 
-    $pid  = $row['productID'];
+    $pid = $row['productID'];
     $name = $row['Name'];
 
     //Mapping all the arrays togehter
-    $in  = $incomingMap[$pid]  ?? 0;
+    $in = $incomingMap[$pid] ?? 0;
     $out = isset($outgoingMap[$pid]) ? $outgoingMap[$pid]['out'] : 0;
     $net = $in - $out;
 
@@ -96,8 +96,10 @@ $totalNet = $totalIn - $totalOut;
             font-family: "Segoe UI", Arial, sans-serif;
             background: linear-gradient(135deg, #555555, #474747, #292929);
             display: flex;
+
             justify-content: center;
             align-items: flex-start;
+
             min-height: 100vh;
             width: 100%;
         }
@@ -106,9 +108,11 @@ $totalNet = $totalIn - $totalOut;
             background-color: #f5f7fa;
             width: 88%;
             min-height: calc(100vh - 24px);
+
             margin-top: 12px;
             border-radius: 18px;
             box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -118,6 +122,7 @@ $totalNet = $totalIn - $totalOut;
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             padding: 20px 36px;
             background: linear-gradient(to right, #db8e08, #c77e09);
             color: white;
@@ -142,6 +147,7 @@ $totalNet = $totalIn - $totalOut;
         .bannerRight {
             display: flex;
             flex-direction: column;
+
             align-items: center;
             text-align: center;
             gap: 8px;
@@ -153,6 +159,7 @@ $totalNet = $totalIn - $totalOut;
             margin-top: 5px;
             display: flex;
             gap: 14px;
+
             justify-content: center;
             align-items: center;
         }
@@ -161,14 +168,18 @@ $totalNet = $totalIn - $totalOut;
             display: inline-flex;
             justify-content: center;
             align-items: center;
+
             border-radius: 8px;
             border: none;
             height: 40px;
+
             padding: 0 18px;
             font-size: 15px;
             font-weight: 600;
+
             color: white;
             cursor: pointer;
+
             box-shadow: 0 4px 8px rgba(0,0,0,0.25);
             transition: all 0.25s ease;
             white-space: nowrap;
@@ -180,7 +191,7 @@ $totalNet = $totalIn - $totalOut;
             box-shadow: 0 8px 18px rgba(0,0,0,0.35);
         }
 
-        .logOutButton    { background: linear-gradient(to right, #e74c3c, #c0392b); }
+        .logOutButton { background: linear-gradient(to right, #e74c3c, #c0392b); }
         .dashboardButton { background: linear-gradient(to right, #555, #333); }
 
         .content {
@@ -194,6 +205,7 @@ $totalNet = $totalIn - $totalOut;
         .pageHeader {
             display: flex;
             align-items: center;
+
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 10px;
@@ -209,8 +221,10 @@ $totalNet = $totalIn - $totalOut;
             background: #fff3cd;
             border: 1px solid #ffc107;
             color: #856404;
+
             padding: 6px 18px;
             border-radius: 20px;
+
             font-size: 16px;
             font-weight: 600;
         }
@@ -225,21 +239,24 @@ $totalNet = $totalIn - $totalOut;
             background: white;
             border-radius: 12px;
             padding: 24px 26px;
+
             box-shadow: 0 3px 10px rgba(0,0,0,0.07);
             display: flex;
             flex-direction: column;
+
             gap: 6px;
             border-top: 4px solid transparent;
         }
 
         .summaryCard.incoming { border-color: #28a745; }
         .summaryCard.outgoing { border-color: #dc3545; }
-        .summaryCard.net      { border-color: #f5a623; }
+        .summaryCard.net { border-color: #f5a623; }
 
         .summaryLabel {
             font-size: 14px;
             font-weight: 700;
             letter-spacing: 0.8px;
+
             text-transform: uppercase;
             color: #999;
         }
@@ -250,9 +267,9 @@ $totalNet = $totalIn - $totalOut;
             color: #2a2a2a;
         }
 
-        .summaryCard.incoming .summaryValue { color: #1e7e34; }
-        .summaryCard.outgoing .summaryValue { color: #bd2130; }
-        .summaryCard.net      .summaryValue { color: #b37200; }
+        .summaryCard.incoming.summaryValue { color: #1e7e34; }
+        .summaryCard.outgoing.summaryValue { color: #bd2130; }
+        .summaryCard.net.summaryValue { color: #b37200; }
 
         .summaryDesc {
             font-size: 14px;
@@ -270,6 +287,7 @@ $totalNet = $totalIn - $totalOut;
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             padding: 20px 26px 16px;
             border-bottom: 1px solid #f0f0f0;
             flex-wrap: wrap;
@@ -286,9 +304,11 @@ $totalNet = $totalIn - $totalOut;
             padding: 9px 16px;
             border: 1px solid #ddd;
             border-radius: 20px;
+
             font-size: 15px;
             font-family: "Segoe UI", Arial, sans-serif;
             width: 220px;
+
             transition: 0.2s ease;
             outline: none;
         }
@@ -308,10 +328,12 @@ $totalNet = $totalIn - $totalOut;
             padding: 14px 26px;
             text-align: left;
             font-size: 14px;
+
             font-weight: 700;
             letter-spacing: 0.7px;
             text-transform: uppercase;
             color: #999;
+
             border-bottom: 1px solid #efefef;
             cursor: pointer;
             user-select: none;
@@ -323,6 +345,7 @@ $totalNet = $totalIn - $totalOut;
         thead th .sortIcon {
             display: inline-block;
             margin-left: 4px;
+
             opacity: 0.4;
             font-size: 12px;
         }
@@ -335,7 +358,7 @@ $totalNet = $totalIn - $totalOut;
         }
 
         tbody tr:last-child { border-bottom: none; }
-        tbody tr:hover      { background: #fffbf2; }
+        tbody tr:hover { background: #fffbf2; }
 
         tbody td {
             padding: 15px 26px;
@@ -349,18 +372,20 @@ $totalNet = $totalIn - $totalOut;
             display: inline-block;
             padding: 4px 12px;
             border-radius: 20px;
+
             font-size: 15px;
             font-weight: 600;
+
             min-width: 44px;
             text-align: center;
         }
 
-        .pillIn  { background: #e8f5e9; color: #1e7e34; }
+        .pillIn { background: #e8f5e9; color: #1e7e34; }
         .pillOut { background: #ffebee; color: #bd2130; }
 
         .netPositive { color: #1e7e34; font-weight: 700; }
         .netNegative { color: #bd2130; font-weight: 700; }
-        .netZero     { color: #aaa;    font-weight: 600; }
+        .netZero { color: #aaa; font-weight: 600; }
 
         .noResults {
             text-align: center;
@@ -531,7 +556,7 @@ $totalNet = $totalIn - $totalOut;
         function sortTable(colIndex) {
 
             const tbody = document.getElementById('tableBody');
-            const rows  = Array.from(tbody.querySelectorAll('tr'));
+            const rows = Array.from(tbody.querySelectorAll('tr'));
 
             //Allows it to be changed between desc and asc
             if (sortCol === colIndex) {

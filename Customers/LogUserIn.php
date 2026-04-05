@@ -60,7 +60,7 @@ if ($user['Password'] !== $password) {
 session_regenerate_id(true);
 
 //Binding the users id to the session variable
-$_SESSION['customerID']   = $user['customerID'];
+$_SESSION['customerID'] = $user['customerID'];
 
 http_response_code(200);
 echo "success";
