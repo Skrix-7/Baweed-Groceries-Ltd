@@ -239,7 +239,7 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
 
                 <button class="featureBtn" onclick="window.location.href='inventoryManagement.php'">
                     <span class="featureIcon"></span>
-                    Inventory Management
+                    Monthly Inventory Report
                 </button>
 
                 <button class="featureBtn" onclick="window.location.href='listingManagement.php'">

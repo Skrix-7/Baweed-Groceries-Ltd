@@ -174,7 +174,7 @@ if ($showSuccess) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Order Processing (Online)</title>
+    <title>Online Payment</title>
     <link rel='icon' type='image/x-icon' href='../Images/LogoImages/favicon.ico'>
 
     <style>
@@ -328,7 +328,6 @@ if ($showSuccess) {
             </a>
 
         <?php else: ?>
-
             <?php if ($errorMessage): ?>
 
                 <div class="error-message">

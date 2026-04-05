@@ -459,7 +459,7 @@ $totalProducts = count($productSales);
             <p>Admin: <?= htmlspecialchars($_SESSION['adminUser'] ?? 'Admin') ?></p>
 
             <div class="bannerButtons">
-                <button onclick="window.location.href='adminHomePage.php'" class="shopButton dashboardButton">← Dashboard</button>
+                <button onclick="window.location.href='adminHomePage.php'" class="shopButton dashboardButton">Dashboard</button>
                 <button onclick="logOut()" class="shopButton logOutButton">Log Out</button>
             </div>
 

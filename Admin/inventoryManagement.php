@@ -86,7 +86,7 @@ $totalNet = $totalIn - $totalOut;
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Inventory Management</title>
+    <title>Monthly Inventory Report</title>
     <link rel='icon' type='image/x-icon' href='../Images/LogoImages/favicon.ico'>
 
     <style>
@@ -395,7 +395,7 @@ $totalNet = $totalIn - $totalOut;
                 <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="220">
             </a>
 
-            <h1>Inventory Management</h1>
+            <h1>Monthly Inventory Report</h1>
 
         </div>
 
@@ -404,7 +404,7 @@ $totalNet = $totalIn - $totalOut;
             <p>Admin: <?= htmlspecialchars($_SESSION['adminUser'] ?? 'Admin') ?></p>
 
             <div class="bannerButtons">
-                <button onclick="window.location.href='adminHomePage.php'" class="shopButton dashboardButton">← Dashboard</button>
+                <button onclick="window.location.href='adminHomePage.php'" class="shopButton dashboardButton">Dashboard</button>
                 <button onclick="logOut()" class="shopButton logOutButton">Log Out</button>
             </div>
 

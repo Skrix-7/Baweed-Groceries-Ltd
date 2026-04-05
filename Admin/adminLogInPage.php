@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="button" class="formButton secondaryButton" onclick="togglePassword()">Show Password</button>
         <button class="formButton loginButton" onclick="handleLogin()">Log In</button>
 
-        <a href="../MainPages/WelcomePage.html" class="skipLink">← Return to Store</a>
+        <a href="../MainPages/WelcomePage.html" class="skipLink">Return to Store</a>
 
         <div class="responseMessage">
             <p id="response"><?= htmlspecialchars($errorMessage) ?></p>

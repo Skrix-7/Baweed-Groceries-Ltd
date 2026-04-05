@@ -495,7 +495,7 @@ while ($row = $result->fetch_assoc()) {
                 <p>Admin: <?= htmlspecialchars($_SESSION['adminUser'] ?? 'Admin') ?></p>
 
                 <div class="bannerButtons">
-                    <button onclick="window.location.href='adminHomePage.php'" class="shopButton" style="background:linear-gradient(to right,#555,#333);">← Dashboard</button>
+                    <button onclick="window.location.href='adminHomePage.php'" class="shopButton" style="background:linear-gradient(to right,#555,#333);">Dashboard</button>
                     <button onclick="logOut()" class="shopButton logOutButton">Log Out</button>
                 </div>
 

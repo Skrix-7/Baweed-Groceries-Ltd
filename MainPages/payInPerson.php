@@ -138,7 +138,7 @@ if ($showSuccess) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Order Processing (In Person)</title>
+    <title>In Person Payment</title>
     <link rel='icon' type='image/x-icon' href='../Images/LogoImages/favicon.ico'>
 
     <style>
@@ -318,7 +318,7 @@ if ($showSuccess) {
             <?php endif; ?>
 
             <div class="backLink">
-                <a href="Checkout.php">← Back to Checkout</a>
+                <a href="Checkout.php">Back to Checkout</a>
             </div>
 
         <?php endif; ?>

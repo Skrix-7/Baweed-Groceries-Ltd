@@ -293,7 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="button" class="formButton secondaryButton" onclick="togglePassword()">Show Password</button>
             <button type="button" class="formButton submitButton"    onclick="submitForm()">Authorize Supplier</button>
 
-            <a href="adminHomePage.php" class="backLink">← Back to Dashboard</a>
+            <a href="adminHomePage.php" class="backLink">Back to Dashboard</a>
 
             <div class="responseMessage">
                 <p class="errorText" id="jsError"></p>
