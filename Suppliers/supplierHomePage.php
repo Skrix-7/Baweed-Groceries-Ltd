@@ -49,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $check->close();
 
         //Otherwsie create the listing
-        $stmt = $conn->prepare("INSERT INTO listings (productID, supplierID, Price, Quantity) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("iiid", $productID, $supplierID, $price, $quantity);
+        $stmt = $conn->prepare("INSERT INTO listings (productID, supplierID, Price, Quantity, ListingDate) VALUES (?, ?, ?, ?, NOW())");
+        $stmt->bind_param("iidi", $productID, $supplierID, $price, $quantity);
 
         //Execute it and get the listings id
         $stmt->execute();
@@ -854,7 +854,7 @@ $stmt->close();
                                     <td><strong><?= htmlspecialchars($ml['productName']) ?></strong></td>
                                     <td><?= htmlspecialchars($ml['supplierName']) ?></td>
                                     <td><span class="pill pillPrice">£<?= number_format((float)$ml['Price'], 2) ?></span></td>
-                                    <td><span class="pill <?= $stockClass ?>"><?= $stockLabel ?></span></td>
+<td><span class="pill <?= $stockClass ?>"><?= $stockLabel ?></span></td>
                                 </tr>
 
                             <?php endforeach; ?>
