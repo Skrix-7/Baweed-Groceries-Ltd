@@ -366,12 +366,14 @@ else {
 <body>
     <div class="mainDiv">
         <div class="shopBanner">
-
             <div class="bannerLeft">
+
                 <a href="../MainPages/WelcomePage.html">
                     <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="180" alt="Logo">
                 </a>
+
                 <h1>Store</h1>
+            
             </div>
 
             <div class="basketButtonDiv">

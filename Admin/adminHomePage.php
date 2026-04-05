@@ -296,6 +296,5 @@ $adminUsername = htmlspecialchars($_SESSION['adminUser'] ?? 'Admin');
         }
 
     </script>
-
 </body>
 </html>

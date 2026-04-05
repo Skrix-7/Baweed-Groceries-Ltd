@@ -54,12 +54,11 @@ if ($stmt = $conn->prepare($query)) {
     $stmt->close();
 }
 
-//Calculates total price
+//Calculates total basket price
 $totalPrice = 0;
 foreach ($basketItems as $item) {
     $totalPrice += $item['Price'] * $item['quantity'];
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -449,7 +448,7 @@ foreach ($basketItems as $item) {
                     </div>
 
                 <?php } ?>
-                </div>
+            </div>
         </div>
 
         <div class="content">
@@ -578,11 +577,14 @@ foreach ($basketItems as $item) {
         //This clears all items from the basket
         function clearBasket() {
 
+            //Sends a POST request to update basket
             fetch("UpdateBasket.php", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ clearAll: true })
             })
+
+            //Gets the response and checks if the clear was successful
             .then(res => res.json())
             .then(data => {
 
@@ -596,6 +598,8 @@ foreach ($basketItems as $item) {
                     const basketItems = document.querySelector('.basketItems');
                     if (!basketItems.querySelector('p')) {
                         const msg = document.createElement('p');
+
+                        //This shows the message that the basket is empty
                         msg.textContent = 'Your basket is empty.';
                         basketItems.appendChild(msg);
                     }

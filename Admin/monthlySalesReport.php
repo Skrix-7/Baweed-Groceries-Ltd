@@ -502,8 +502,8 @@ $totalProducts = count($productSales);
             <div class="paymentRow">
                 <?php foreach ($paymentBreakdown as $pm): ?>
 
-                    <?php $label   = str_replace('_', ' ', $pm['PaymentMethod']);
-                          $cssKey  = strtolower($pm['PaymentMethod']); ?>
+                    <?php $label = str_replace('_', ' ', $pm['PaymentMethod']);
+                          $cssKey = strtolower($pm['PaymentMethod']); ?>
 
                     <div class="paymentCard <?= htmlspecialchars($cssKey) ?>">
 
@@ -546,9 +546,9 @@ $totalProducts = count($productSales);
 
                     <thead>
                         <tr>
-                            <th onclick="sortTable(0)" id="th-0">Product      <span class="sortIcon">↕</span></th>
-                            <th onclick="sortTable(1)" id="th-1">Units Sold   <span class="sortIcon">↕</span></th>
-                            <th onclick="sortTable(2)" id="th-2">Revenue      <span class="sortIcon">↕</span></th>
+                            <th onclick="sortTable(0)" id="th-0">Product <span class="sortIcon">↕</span></th>
+                            <th onclick="sortTable(1)" id="th-1">Units Sold <span class="sortIcon">↕</span></th>
+                            <th onclick="sortTable(2)" id="th-2">Revenue <span class="sortIcon">↕</span></th>
                             <th onclick="sortTable(3)" id="th-3">% of Revenue <span class="sortIcon">↕</span></th>
                         </tr>
                     </thead>
@@ -558,7 +558,7 @@ $totalProducts = count($productSales);
                         <?php foreach ($productSales as $p): ?>
 
                             <?php
-                                $pct    = $totalRevenue > 0 ? round(($p['revenue'] / $totalRevenue) * 100, 1) : 0;
+                                $pct = $totalRevenue > 0 ? round(($p['revenue'] / $totalRevenue) * 100, 1) : 0;
                                 $barPct = $totalRevenue > 0 ? ($p['revenue'] / $totalRevenue) * 100 : 0;
                             ?>
 
@@ -599,9 +599,9 @@ $totalProducts = count($productSales);
         //Allows admins to search for specific products
         function filterTable(query) {
 
-            const rows    = document.querySelectorAll('#tableBody tr');
-            const q       = query.toLowerCase().trim();
-            let   visible = 0;
+            const rows = document.querySelectorAll('#tableBody tr');
+            const q = query.toLowerCase().trim();
+            let visible = 0;
 
             //Iterates through the rows to look for users item
             rows.forEach(row => {

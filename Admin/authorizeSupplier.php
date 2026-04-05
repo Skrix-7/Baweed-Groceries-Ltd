@@ -282,11 +282,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="entryFields">
 
-                <input type="text"     id="fullname"    placeholder="Full Name..."          maxlength="100">
-                <input type="text"     id="email"       placeholder="Email Address..."      maxlength="100">
-                <input type="password" id="password"    placeholder="Set a Password..."     maxlength="50">
-                <input type="text"     id="address"     placeholder="Business Address..."   maxlength="255">
-                <input type="text"     id="phoneNumber" placeholder="Phone Number (11 digits)..." maxlength="11">
+                <input type="text" id="fullname" placeholder="Full Name..." maxlength="100">
+                <input type="text" id="email" placeholder="Email Address..." maxlength="100">
+                <input type="password" id="password" placeholder="Set a Password..." maxlength="50">
+                <input type="text" id="address" placeholder="Business Address..." maxlength="255">
+                <input type="text" id="phoneNumber" placeholder="Phone Number (11 digits)..." maxlength="11">
 
             </div>
 
@@ -383,10 +383,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //Gets the entryes for each field
             Object.entries(fields).forEach(([name, value]) => {
-                const input   = document.createElement("input");
-                input.type    = "hidden";
-                input.name    = name;
-                input.value   = value;
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = name;
+                input.value = value;
                 form.appendChild(input);
             });
 
@@ -396,6 +396,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
     </script>
-
 </body>
 </html>

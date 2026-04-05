@@ -71,7 +71,6 @@ else {
             box-shadow: none;
             display: flex;
             flex-direction: column;
-            /* Fluid scaling: 1rem at ~720px wide, up to 1.6rem at ~1920px+, never below 0.85rem */
             font-size: clamp(0.85rem, 1.1vw, 1.6rem);
         }
 
@@ -94,7 +93,6 @@ else {
         .shopBanner img {
             transition: 0.25s ease;
             cursor: pointer;
-            /* Logo scales with font-size so it stays proportional */
             width: clamp(120px, 12vw, 220px);
             height: auto;
         }
@@ -377,12 +375,11 @@ else {
 <body>
     <div class="mainDiv">
         <div class="shopBanner">
-
             <div class="bannerLeft">
-                <a href="../MainPages/WelcomePage.html">
-                    <img src="../Images/LogoImages/baweedGroceriesLogo.png" alt="Logo">
-                </a>
+
+                <a href="../MainPages/WelcomePage.html"><img src="../Images/LogoImages/baweedGroceriesLogo.png" alt="Logo"></a>
                 <h1>Store</h1>
+
             </div>
 
             <div class="basketButtonDiv">

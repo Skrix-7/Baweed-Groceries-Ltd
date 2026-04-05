@@ -3,8 +3,8 @@ session_start();
 include "../dbConnector.local.php";
 
 //If the user is logged in use customerID, if not use sessionID
-$isLoggedIn   = isset($_SESSION['customerID']);
-$customerID   = $isLoggedIn ? $_SESSION['customerID'] : null;
+$isLoggedIn = isset($_SESSION['customerID']);
+$customerID = $isLoggedIn ? $_SESSION['customerID'] : null;
 $identifierField = $isLoggedIn ? "customerID" : "sessionID";
 $identifierValue = $isLoggedIn ? $customerID : session_id();
 
@@ -150,12 +150,15 @@ if ($showSuccess) {
             }
             $stmt->close();
 
-            //Clears basket
+            //This is a query to clear the basket
             $stmt = $conn->prepare("DELETE FROM basket WHERE $identifierField = ?");
             $stmt->bind_param("s", $identifierValue);
+
+            //Executing the query, then closes the statments
             $stmt->execute();
             $stmt->close();
 
+            //Closing the connection and showing the payment was succesful
             $conn->commit();
             $showSuccess = true;
 
@@ -355,9 +358,9 @@ if ($showSuccess) {
                 <form method="post" action="">
 
                     <div class="entryFields">
-                        <input type="text"     name="guestAddress"    placeholder="Enter Your Delivery Address" required>
-                        <input type="text"     name="guestCardNumber" placeholder="Enter Your Card Number" pattern="\d{16}" maxlength="16" required>
-                        <input type="password" name="guestPin"        placeholder="Enter Your PIN Number" pattern="\d{4}" maxlength="4" required>
+                        <input type="text" name="guestAddress" placeholder="Enter Your Delivery Address" required>
+                        <input type="text" name="guestCardNumber" placeholder="Enter Your Card Number" pattern="\d{16}" maxlength="16" required>
+                        <input type="password" name="guestPin" placeholder="Enter Your PIN Number" pattern="\d{4}" maxlength="4" required>
                     </div>
 
                     <button type="submit" class="confirmBtn">Confirm &amp; Pay</button>

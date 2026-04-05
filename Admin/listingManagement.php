@@ -11,6 +11,7 @@ if (!isset($_SESSION['adminID'])) {
 //Return listings for a given productID
 if (isset($_GET['getListings'])) {
 
+    //This gets the products id and returns the listing for it
     $productID = intval($_GET['getListings']);
     $stmt = $conn->prepare("
         SELECT l.listingID, l.Price, l.Quantity, s.Fullname AS supplier FROM listings l
@@ -68,10 +69,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     //This is the listing id
     $listingID = intval($_POST['listingID']);
+
+    //This is a query to delete the users listing
     $stmt = $conn->prepare("DELETE FROM listings WHERE listingID = ?");
     $stmt->bind_param("i", $listingID);
+
+    //Exeutes and closes statement
     $stmt->execute();
     $stmt->close();
+
+    //Returns script
     header('Content-Type: application/json');
     echo json_encode(['status' => 'success']);
     exit;
@@ -549,9 +556,14 @@ while ($row = $result->fetch_assoc()) {
             const panel = document.getElementById('listingsPanel');
             panel.innerHTML = '<div class="spinner">Loading listings…</div>';
 
+            //Fetches a request from the server with the product id to get the listings for that product
             fetch(`listingManagement.php?getListings=${activeProductID}`)
+
+                //Gets the response and analyses it
                 .then(r => r.json())
                 .then(listings => renderListings(listings))
+
+                //Catches any errors
                 .catch(() => {
                     panel.innerHTML = '<div class="emptyState"><span></span><p>Failed to load listings.</p></div>';
                 });
@@ -633,7 +645,7 @@ while ($row = $result->fetch_assoc()) {
         function savePrice(listingID) {
 
             //Accessing elements to be edited
-            const input    = document.getElementById(`price-${listingID}`);
+            const input = document.getElementById(`price-${listingID}`);
             const feedback = document.getElementById(`feedback-${listingID}`);
             const newPrice = parseFloat(input.value);
 
@@ -688,8 +700,8 @@ while ($row = $result->fetch_assoc()) {
 
                         //Card styling
                         card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                        card.style.opacity    = '0';
-                        card.style.transform  = 'scale(0.95)';
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.95)';
 
                         //This changes the css/html for it after removal
                         setTimeout(() => {
@@ -727,8 +739,8 @@ while ($row = $result->fetch_assoc()) {
 
         //Show feedback message on a card, fades after 3s
         function showFeedback(el, msg, success) {
-            el.textContent  = msg;
-            el.className    = `cardFeedback ${success ? 'feedbackOk' : 'feedbackErr'}`;
+            el.textContent = msg;
+            el.className = `cardFeedback ${success ? 'feedbackOk' : 'feedbackErr'}`;
             if (success) {
                 setTimeout(() => { el.textContent = ''; }, 3000);
             }

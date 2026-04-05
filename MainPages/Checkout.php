@@ -509,6 +509,5 @@ $basketIsEmpty = empty($basketItems);
         }
 
     </script>
-
 </body>
 </html>

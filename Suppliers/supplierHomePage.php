@@ -8,7 +8,7 @@ if (!isset($_SESSION['supplierID'])) {
     exit;
 }
 
-$supplierID   = (int)$_SESSION['supplierID'];
+$supplierID = (int)$_SESSION['supplierID'];
 $supplierName = htmlspecialchars($_SESSION['supplierName'] ?? 'Supplier');
 
 //Only allow POST requests
@@ -23,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         //Gets the users inputs
         $productID = (int)($_POST['productID'] ?? 0);
-        $price     = (float)($_POST['price']     ?? 0);
-        $quantity  = (int)($_POST['quantity']   ?? 0);
+        $price = (float)($_POST['price'] ?? 0);
+        $quantity = (int)($_POST['quantity'] ?? 0);
 
         //Server Side validation
         if ($productID <= 0 || $price <= 0 || $quantity <= 0) {
@@ -66,8 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         //Gets the users inputs
         $listingID = (int)($_POST['listingID'] ?? 0);
-        $price     = (float)($_POST['price']    ?? 0);
-        $quantity  = (int)($_POST['quantity'] ?? 0);
+        $price = (float)($_POST['price']    ?? 0);
+        $quantity = (int)($_POST['quantity'] ?? 0);
 
         //Server side validation
         if ($listingID <= 0 || $price <= 0 || $quantity < 0) {
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         //Getting the current date
         $monthStart = date('Y-m-01 00:00:00');
-        $monthEnd   = date('Y-m-t 23:59:59');
+        $monthEnd = date('Y-m-t 23:59:59');
         $monthLabel = date('F Y');
 
         //Get this supplier's listing details
@@ -691,9 +691,7 @@ $stmt->close();
 <body>
 
     <div class="mainDiv">
-
         <div class="shopBanner">
-
             <div class="bannerLeft">
 
                 <a href="../MainPages/WelcomePage.html">
@@ -707,7 +705,6 @@ $stmt->close();
             <div class="bannerRight">
 
                 <p>Status: Supplier</p>
-
                 <p>Welcome: <?= $supplierName ?></p>
 
                 <div class="bannerButtons">
@@ -782,7 +779,6 @@ $stmt->close();
 
                         <div id="createForm">
                             <div class="formRow">
-
                                 <div class="formGroup">
 
                                     <label>Product</label>
@@ -849,9 +845,9 @@ $stmt->close();
 
                                 <?php
                                     $qty = (int)$ml['Quantity'];
-                                    if ($qty === 0)      { $stockClass = 'pillOut'; $stockLabel = 'Out of Stock'; }
-                                    elseif ($qty < 10)   { $stockClass = 'pillLow'; $stockLabel = $qty . ' left'; }
-                                    else                 { $stockClass = 'pillStock'; $stockLabel = $qty . ' units'; }
+                                    if ($qty === 0) { $stockClass = 'pillOut'; $stockLabel = 'Out of Stock'; }
+                                    elseif ($qty < 10) { $stockClass = 'pillLow'; $stockLabel = $qty . ' left'; }
+                                    else { $stockClass = 'pillStock'; $stockLabel = $qty . ' units'; }
                                 ?>
 
                                 <tr>
@@ -862,12 +858,9 @@ $stmt->close();
                                 </tr>
 
                             <?php endforeach; ?>
-
                         </tbody>
                     </table>
-
                 <?php endif; ?>
-
             </div>
         </div>
 
@@ -883,7 +876,7 @@ $stmt->close();
 
             <div class="popupHeader">
                 <h2>Monthly Sales Report</h2>
-                <button class="popupClose" onclick="closeReport()">✕</button>
+                <button class="popupClose" onclick="closeReport()">X</button>
             </div>
 
             <div class="popupBody" id="reportBody">
@@ -972,10 +965,10 @@ $stmt->close();
 
             //Creating a form for the POST request
             const fd = new FormData();
-            fd.append('action',    'updateListing');
+            fd.append('action', 'updateListing');
             fd.append('listingID', listingID);
-            fd.append('price',     price);
-            fd.append('quantity',  qty);
+            fd.append('price', price);
+            fd.append('quantity', qty);
 
             //Sends a POST request to the server
             fetch('', { method: 'POST', body: fd })
@@ -989,7 +982,7 @@ $stmt->close();
 
                         //Updating elements to the new values
                         document.getElementById('dispPrice').textContent = '£' + parseFloat(price).toFixed(2);
-                        document.getElementById('dispQty').textContent   = parseInt(qty) + ' units';
+                        document.getElementById('dispQty').textContent = parseInt(qty) + ' units';
                         document.getElementById('editRow').style.display = 'none';
 
                         //Success message

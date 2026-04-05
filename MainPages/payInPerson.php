@@ -112,15 +112,17 @@ if ($showSuccess) {
                 $stmt->bind_param("ii", $item['quantity'], $item['listingID']);
                 $stmt->execute();
             }
-
             $stmt->close();
 
-            //Clear user's basket
+            //This is a query to clear the users basket
             $stmt = $conn->prepare("DELETE FROM basket WHERE $identifierField = ?");
             $stmt->bind_param("s", $identifierValue);
+
+            //This executes the query, then closes the statments
             $stmt->execute();
             $stmt->close();
 
+            //This closes the connection and shows the payment was succesful
             $conn->commit();
             $showSuccess = true;
         } 

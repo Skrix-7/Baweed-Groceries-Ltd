@@ -305,13 +305,8 @@ include "../dbConnector.local.php";
         <div class="shopBanner">
 
             <div class="bannerLeft">
-
-                <a href="WelcomePage.html">
-                    <img src="../Images/LogoImages/baweedGroceriesLogo.png" width="180">
-                </a>
-
+                <a href="WelcomePage.html"><img src="../Images/LogoImages/baweedGroceriesLogo.png" width="180"></a>
                 <h1>Store</h1>
-
             </div>
 
             <div class="bannerRight">
@@ -357,17 +352,12 @@ include "../dbConnector.local.php";
         </div>
 
         <div class="productMainDiv">
+            
             <div class="productsDiv">
-
-                <div class="mainText">
-
-                </div>
-
-                <div class="products">
-                            
-                </div>
-                
+                <div class="mainText"></div>
+                <div class="products"></div>
             </div>
+
         </div>
 
         <div class="footer">
@@ -545,6 +535,5 @@ include "../dbConnector.local.php";
         displayProducts(products);
 
     </script>
-
 </body>
 </html>

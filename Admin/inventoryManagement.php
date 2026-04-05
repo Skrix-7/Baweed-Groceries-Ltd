@@ -70,15 +70,15 @@ while ($row = $result->fetch_assoc()) {
 
     $allProducts[] = [
         'productID' => $pid,
-        'name'      => $name,
-        'in'        => $in,
-        'out'       => $out,
-        'net'       => $net,
+        'name' => $name,
+        'in' => $in,
+        'out' => $out,
+        'net' => $net,
     ];
 }
 
 //Gets the total amount incoming, outgoing and net flow
-$totalIn  = array_sum(array_column($allProducts, 'in'));
+$totalIn = array_sum(array_column($allProducts, 'in'));
 $totalOut = array_sum(array_column($allProducts, 'out'));
 $totalNet = $totalIn - $totalOut;
 ?>
