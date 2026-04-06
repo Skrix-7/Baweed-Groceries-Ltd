@@ -2,45 +2,46 @@
 session_start();
 include("../dbConnector.local.php");
 
-//Only suppliers can access this page
+//Ensures only suppliers can access this page
 if (!isset($_SESSION['supplierID'])) {
     header("Location: supplierLogInPage.php");
     exit;
 }
 
+//Sets the suppliers id from the session stored supplier id
 $supplierID = (int)$_SESSION['supplierID'];
 $supplierName = htmlspecialchars($_SESSION['supplierName'] ?? 'Supplier');
 
-//Only allow POST requests
+//Checks if the server receives a POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
+    //Sets the content to a JSON to return data to the JS
     header('Content-Type: application/json');
-
     $action = $_POST['action'];
 
-    //Create a new listing for this supplier
+    //If the user wants to create a listing does this
     if ($action === 'createListing') {
 
-        //Gets the users inputs
+        //Gets the listing values from the POST request
         $productID = (int)($_POST['productID'] ?? 0);
         $price = (float)($_POST['price'] ?? 0);
         $quantity = (int)($_POST['quantity'] ?? 0);
 
-        //Server Side validation
+        //Server side validation
         if ($productID <= 0 || $price <= 0 || $quantity <= 0) {
             echo json_encode(['status' => 'error', 'message' => 'Invalid values.']);
             exit;
         }
 
-        //Check they don't already have a listing
+        //Query to check if the user already has a listing
         $check = $conn->prepare("SELECT listingID FROM listings WHERE supplierID = ?");
         $check->bind_param("i", $supplierID);
 
-        //Executing query and getting results
+        //Executing the query and storing the results
         $check->execute();
         $check->store_result();
 
-        //If there is a result deny access
+        //If there is a result then the JSON returns an error message
         if ($check->num_rows > 0) {
             $check->close();
             echo json_encode(['status' => 'error', 'message' => 'You already have a listing.']);
@@ -48,23 +49,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
         $check->close();
 
-        //Otherwsie create the listing
+        //Otherwise, creates a query to create a new listing with the users values
         $stmt = $conn->prepare("INSERT INTO listings (productID, supplierID, Price, Quantity, ListingDate) VALUES (?, ?, ?, ?, NOW())");
         $stmt->bind_param("iidi", $productID, $supplierID, $price, $quantity);
 
-        //Execute it and get the listings id
+        //Executing the results, getting its listing id and then closing the statement
         $stmt->execute();
         $newID = $conn->insert_id;
         $stmt->close();
 
+        //Returns success then exits the server sided script
         echo json_encode(['status' => 'success', 'listingID' => $newID]);
         exit;
     }
 
-    //Update an existing listing
+    //If the user wants to update their listing then it does this
     if ($action === 'updateListing') {
 
-        //Gets the users inputs
+        //Gets the users listing values from the POST request
         $listingID = (int)($_POST['listingID'] ?? 0);
         $price = (float)($_POST['price'] ?? 0);
         $quantity = (int)($_POST['quantity'] ?? 0);
@@ -75,42 +77,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             exit;
         }
 
-        //Ensure this listing belongs to this supplier before updating
+        //Query to update the users listing with the new values
         $stmt = $conn->prepare("UPDATE listings SET Price = ?, Quantity = ? WHERE listingID = ? AND supplierID = ?");
         $stmt->bind_param("diii", $price, $quantity, $listingID, $supplierID);
 
-        //Executing the query and closing the connection
+        //Executing the query then closing the statement
         $stmt->execute();
         $stmt->close();
 
+        //Returns success then exits the script
         echo json_encode(['status' => 'success']);
         exit;
     }
 
-    //Delete this suppliers listing
+    //If the user wants to delete their listing then it does this
     if ($action === 'deleteListing') {
 
-        //This is the query to delete their query
+        //Query to delete the users listing
         $stmt = $conn->prepare("DELETE FROM listings WHERE supplierID = ?");
         $stmt->bind_param("i", $supplierID);
 
-        //Executing query and closing connection
+        //Executing the query then closing the statement
         $stmt->execute();
         $stmt->close();
 
+        //Returns success then exits the script
         echo json_encode(['status' => 'success']);
         exit;
     }
 
-    //Monthly sales report data for popup
+    //If the user wants to create a sales report then it does this
     if ($action === 'salesReport') {
 
-        //Getting the current date
+        //Gets the current month and creating variables for the start and end of the month
         $monthStart = date('Y-m-01 00:00:00');
         $monthEnd = date('Y-m-t 23:59:59');
         $monthLabel = date('F Y');
 
-        //Get this supplier's listing details
+        //Query to get the users listings, and the sales info for it
         $listingRow = null;
         $stmt = $conn->prepare("
             SELECT l.listingID, l.Price, l.Quantity, p.Name
@@ -118,22 +122,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             INNER JOIN products p ON l.productID = p.productID
             WHERE l.supplierID = ?
         ");
+
+        //Binding the suppliers id to the query then executing it
         $stmt->bind_param("i", $supplierID);
-
-        //Executing query and getting the results
         $stmt->execute();
-        $result = $stmt->get_result();
 
-        //Storing the results
+        //Getting the results and storing them within an array for analysis, then closing the statement
+        $result = $stmt->get_result();
         $listingRow = $result->fetch_assoc();
         $stmt->close();
 
-        //Get sales this month for this supplier's listing
+        //Variables to store the total sales data
         $unitsSold = 0;
         $revenue = 0.0;
 
-        //If their is data then it gets the figures
+        //If the user has sales data then it does this
         if ($listingRow) {
+
+            //Query to get the amount sold and how much they made from their listing
             $lid = (int)$listingRow['listingID'];
             $stmt = $conn->prepare("
                 SELECT SUM(Quantity) AS units, SUM(TotalPrice) AS revenue
@@ -141,23 +147,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 WHERE listingID = ? AND PurchaseDate BETWEEN ? AND ?
             ");
 
-            //Binding the current date to its variables
+            //Binding the listing id, and the time period for the monthly report and executing it
             $stmt->bind_param("iss", $lid, $monthStart, $monthEnd);
-
-            //Executing the query then getting the results
             $stmt->execute();
-            $result = $stmt->get_result();
 
-            //Fetching the results and storing them then closing the connection
+            //Getting the results, storing them within an array, then closing the statement
+            $result = $stmt->get_result();
             $row = $result->fetch_assoc();
             $stmt->close();
 
-            //Getting the data from the query
+            //Gets the total revenue and units sold
             $unitsSold = (int)($row['units'] ?? 0);
             $revenue = (float)($row['revenue'] ?? 0);
         }
 
-        //Returns the data
+        //Sends back a success message with the corresponding data for the report then exits the script
         echo json_encode([
             'status' => 'success',
             'monthLabel' => $monthLabel,
@@ -170,13 +174,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         exit;
     }
 
-    //If unsuccesful error message returned to the user
+    //If the user wants to view their receipts then it does this
+    if ($action === 'supplierReceipts') {
+
+        //Query to get the required sales data and binding the suppliers id to it
+        $stmt = $conn->prepare("
+            SELECT
+                r.receiptID,
+                r.createdAt,
+                t.transactionID,
+                t.Quantity,
+                t.TotalPrice,
+                t.PurchaseDate,
+                t.PaymentMethod,
+                p.Name AS productName
+            FROM receipts r
+            INNER JOIN transactions t ON r.transactionID = t.transactionID
+            INNER JOIN listings l ON t.listingID = l.listingID
+            INNER JOIN products p ON l.productID = p.productID
+            WHERE r.receiptType = 'SUPPLIER'
+            AND l.supplierID = ?
+            ORDER BY t.PurchaseDate DESC
+            LIMIT 50
+        ");
+        $stmt->bind_param("i", $supplierID);
+
+        //Executing the query and storing the results
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        //Storing the results within an array then closing the statement
+        $receipts = [];
+        while ($row = $result->fetch_assoc()) {
+            $receipts[] = $row;
+        }
+        $stmt->close();
+
+        //Returns a success JSON message, then closes the script
+        echo json_encode(['status' => 'success', 'receipts' => $receipts]);
+        exit;
+    }
+
+    //Otherwise, if the action is unknown a error message is returned.
     echo json_encode(['status' => 'error', 'message' => 'Unknown action.']);
     exit;
 }
 
-
-//Get this suppliers listing
+//Query to get the users listing and the product name for it, then binding the suppliers id to it
 $myListing = null;
 $stmt = $conn->prepare("
     SELECT l.listingID, l.Price, l.Quantity, l.productID, p.Name AS productName
@@ -186,25 +230,27 @@ $stmt = $conn->prepare("
 ");
 $stmt->bind_param("i", $supplierID);
 
-//Executing 
+//eXEcuting the query and getting the results
 $stmt->execute();
 $result = $stmt->get_result();
 
-//Getting the data and storing it before closing the connection
+//Stores the results in an array and closes the statement
 $myListing = $result->fetch_assoc();
 $stmt->close();
 
-//Get all products for the create listing dropdown
+//An array to store all the products
 $allProducts = [];
-$result = $conn->query("SELECT productID, Name FROM products ORDER BY Name ASC");
 
-//Places all the results in the array
+//Query that iterates through all products within the database and stores them into the array
+$result = $conn->query("SELECT productID, Name FROM products ORDER BY Name ASC");
 while ($row = $result->fetch_assoc()) {
     $allProducts[] = $row;
 }
 
-//Get all other listings on the market
+//An array to store all the products
 $marketListings = [];
+
+//Query that iterates through all products within the database and stores them into the array
 $stmt = $conn->prepare("
     SELECT l.listingID, l.Price, l.Quantity, p.Name AS productName, s.Fullname AS supplierName
     FROM listings l
@@ -213,13 +259,13 @@ $stmt = $conn->prepare("
     WHERE l.supplierID != ?
     ORDER BY p.Name ASC, l.Price ASC
 ");
+
+//Binding the users id to the query and executing it
 $stmt->bind_param("i", $supplierID);
-
-//Executing the query and getting the results
 $stmt->execute();
-$result = $stmt->get_result();
 
-//Inserting the results in the array
+//Getting the results and storing them within an array for display, then closing the statement
+$result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
     $marketListings[] = $row;
 }
@@ -246,6 +292,7 @@ $stmt->close();
 
             display: flex;
             justify-content: center;
+
             align-items: flex-start;
             min-height: 100vh;
         }
@@ -424,7 +471,9 @@ $stmt->close();
         .btnRed { background: linear-gradient(to right, #c0392b, #96281b); }
         .btnGrey { background: linear-gradient(to right, #636e72, #4a4a4a); }
         .btnGreen { background: linear-gradient(to right, #27ae60, #1e8449); }
+
         .btnReport { background: linear-gradient(to right, #8e44ad, #6c3483); }
+        .btnReceipts { background: linear-gradient(to right, #1c4693, #14356f); }
 
         .formRow {
             display: flex;
@@ -471,6 +520,7 @@ $stmt->close();
         .listingDisplay {
             display: flex;
             align-items: center;
+
             gap: calc(16px + 0.4vw);
             flex-wrap: wrap;
         }
@@ -478,6 +528,7 @@ $stmt->close();
         .listingInfo {
             flex: 1;
             display: flex;
+
             gap: calc(18px + 0.5vw);
             flex-wrap: wrap;
         }
@@ -491,6 +542,7 @@ $stmt->close();
         .listingFieldLabel {
             font-size: calc(9px + 0.15vw);
             font-weight: 700;
+
             text-transform: uppercase;
             letter-spacing: 0.6px;
             color: #aaa;
@@ -512,6 +564,7 @@ $stmt->close();
             display: flex;
             gap: calc(12px + 0.2vw);
             flex-wrap: wrap;
+
             align-items: flex-end;
             margin-top: calc(14px + 0.2vw);
         }
@@ -524,6 +577,7 @@ $stmt->close();
         thead th {
             background: #fafafa;
             padding: calc(9px + 0.2vw) calc(16px + 0.4vw);
+
             text-align: left;
             font-size: calc(10px + 0.15vw);
 
@@ -553,6 +607,7 @@ $stmt->close();
             display: inline-block;
             padding: calc(2px + 0.1vw) calc(8px + 0.2vw);
             border-radius: 20px;
+
             font-size: calc(11px + 0.15vw);
             font-weight: 600;
             text-align: center;
@@ -560,12 +615,14 @@ $stmt->close();
 
         .pillPrice { background: #fdecea; color: #c0392b; }
         .pillStock { background: #eafaf1; color: #1e8449; }
+
         .pillLow { background: #fef9e7; color: #b7950b; }
         .pillOut { background: #f9ebea; color: #922b21; }
 
         .emptyState {
             text-align: center;
             padding: calc(28px + 0.5vw);
+
             color: #bbb;
             font-size: calc(12px + 0.2vw);
         }
@@ -584,8 +641,10 @@ $stmt->close();
             display: none;
             position: fixed;
             inset: 0;
+
             background: rgba(0,0,0,0.55);
             z-index: 1000;
+
             justify-content: center;
             align-items: center;
         }
@@ -597,8 +656,10 @@ $stmt->close();
         .popupBox {
             background: white;
             border-radius: 16px;
+
             width: calc(360px + 8vw);
             max-width: 92vw;
+
             box-shadow: 0 16px 48px rgba(0,0,0,0.35);
             overflow: hidden;
             animation: popIn 0.2s ease;
@@ -606,7 +667,7 @@ $stmt->close();
 
         @keyframes popIn {
             from { transform: scale(0.93); opacity: 0; }
-            to   { transform: scale(1); opacity: 1; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .popupHeader {
@@ -704,6 +765,118 @@ $stmt->close();
             padding: 20px 0;
         }
 
+        .receiptsPopupBox {
+            background: white;
+            border-radius: 16px;
+            width: calc(480px + 10vw);
+
+            max-width: 94vw;
+            max-height: 88vh;
+            overflow-y: auto;
+            
+            box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+            overflow: hidden;
+            animation: popIn 0.2s ease;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .receiptsPopupHeader {
+            background: linear-gradient(to right, #1c4693, #14356f);
+            color: white;
+
+            padding: calc(14px + 0.3vw) calc(20px + 0.3vw);
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .receiptsPopupHeader h2 {
+            margin: 0;
+            font-size: calc(15px + 0.3vw);
+            font-weight: 700;
+        }
+
+        .receiptsPopupBody {
+            padding: calc(18px + 0.3vw) calc(20px + 0.3vw);
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .receiptBadge {
+            display: inline-block;
+            background: #fff8e6;
+            color: #854F0B;
+
+            border-radius: 20px;
+            padding: 3px 14px;
+            font-size: calc(10px + 0.1vw);
+            font-weight: 700;
+
+            margin-bottom: 14px;
+            border: 1px solid #EF9F27;
+            letter-spacing: 0.4px;
+        }
+
+        .receiptTable {
+            width: 100%;
+            border-collapse: collapse;
+
+            font-size: calc(11px + 0.15vw);
+            margin-bottom: 16px;
+        }
+
+        .receiptTable thead th {
+            background: #fafafa;
+            padding: calc(8px + 0.1vw) calc(10px + 0.15vw);
+            text-align: left;
+
+            font-size: calc(9px + 0.1vw);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #999;
+
+            border-bottom: 1px solid #eee;
+            font-weight: 700;
+        }
+
+        .receiptTable tbody td {
+            padding: calc(9px + 0.1vw) calc(10px + 0.15vw);
+            border-bottom: 1px solid #f5f5f5;
+            color: #333;
+        }
+
+        .receiptTable tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .receiptTable tbody tr:hover {
+            background: #f0f4ff;
+        }
+
+        .receiptTotal {
+            text-align: right;
+            font-size: calc(14px + 0.2vw);
+            font-weight: 700;
+
+            color: #2a2a2a;
+            padding-top: 12px;
+            border-top: 2px solid #eee;
+        }
+
+        .receiptIDTag {
+            font-size: calc(10px + 0.1vw);
+            color: #aaa;
+        }
+
+        .creditedAmount {
+            color: #1e8449;
+            font-weight: 700;
+        }
+
         .footer {
             background-color: #1e1e1e;
             color: #ccc;
@@ -750,10 +923,15 @@ $stmt->close();
 
         <div class="content">
             <div class="sectionCard">
-
                 <div class="sectionHeader">
+
                     <div class="sectionTitle">My Listing</div>
-                    <button class="actionBtn btnReport" onclick="openReport()">Monthly Sales Report</button>
+
+                    <div style="display:flex; gap:calc(8px + 0.2vw); flex-wrap:wrap;">
+                        <button class="actionBtn btnReceipts" onclick="openReceipts()">My Receipts</button>
+                        <button class="actionBtn btnReport" onclick="openReport()">Monthly Sales Report</button>
+                    </div>
+
                 </div>
 
                 <div class="sectionBody">
@@ -888,7 +1066,7 @@ $stmt->close();
                                     <td><strong><?= htmlspecialchars($ml['productName']) ?></strong></td>
                                     <td><?= htmlspecialchars($ml['supplierName']) ?></td>
                                     <td><span class="pill pillPrice">£<?= number_format((float)$ml['Price'], 2) ?></span></td>
-<td><span class="pill <?= $stockClass ?>"><?= $stockLabel ?></span></td>
+                                    <td><span class="pill <?= $stockClass ?>"><?= $stockLabel ?></span></td>
                                 </tr>
 
                             <?php endforeach; ?>
@@ -920,60 +1098,76 @@ $stmt->close();
         </div>
     </div>
 
+    <div class="popupOverlay" id="receiptsOverlay" onclick="closeReceiptsOnOverlay(event)">
+
+        <div class="receiptsPopupBox">
+
+            <div class="receiptsPopupHeader">
+                <h2>My Receipts</h2>
+                <button class="popupClose" onclick="closeReceipts()">X</button>
+            </div>
+
+            <div class="receiptsPopupBody" id="receiptsBody">
+                <div style="text-align:center; color:#aaa; padding:20px;">Loading…</div>
+            </div>
+
+        </div>
+    </div>
+
     <script>
 
-        //Toggle edit row visibility
+        //Changes the edit button if the user clicks it
         function showEdit() {
             document.getElementById('editRow').style.display = 'block';
         }
 
-        //Hides the edit row
+        //Cancels the editing mode
         function cancelEdit() {
             document.getElementById('editRow').style.display = 'none';
             setMsg('', '');
         }
 
-        //Sets the response message below the listing section
+        //Sets the message text and color for the listing form
         function setMsg(text, type) {
-            const el = document.getElementById('listingMsg');
-            el.textContent = text;
-            el.className = 'responseMsg ' + type;
+            const element = document.getElementById('listingMsg');
+            element.textContent = text;
+            element.className = 'responseMsg ' + type;
         }
 
-        //Sends a create listing request to the server
+        //Function to handle creating new listings
         function createListing() {
 
-            //Getting the inputs from the user
+            //Gets the user listing values
             const productID = document.getElementById('newProduct').value;
             const price = document.getElementById('newPrice').value;
             const qty = document.getElementById('newQty').value;
 
-            //Client side validation
+            //Server side validation
             if (!productID || !price || !qty) {
                 setMsg('Please fill in all fields.', 'msgError');
                 return;
             }
 
-            //Creating the request for the POST request
+            //Creating a form to send to the server
             const fd = new FormData();
             fd.append('action', 'createListing');
             fd.append('productID', productID);
             fd.append('price', price);
             fd.append('quantity', qty);
 
-            //Sends a POST request 
+            //Sending the request to the server through a POST request
             fetch('', { method: 'POST', body: fd })
 
-                //Gets response from server and then analyses it
+                //Gets the response and analyses it
                 .then(r => r.json())
                 .then(data => {
 
-                    //If the create listing was succesful then the page is reloaded
+                    //If the creation was successful then the page is reloaded to update the new listing
                     if (data.status === 'success') {
                         location.reload();
                     } 
                     
-                    //Otherwise an error message appears
+                    //Otherwise an error message is shown to the user with the reason for failure if provided
                     else {
                         setMsg(data.message || 'Error creating listing.', 'msgError');
                     }
@@ -983,47 +1177,47 @@ $stmt->close();
                 .catch(() => setMsg('Network error.', 'msgError'));
         }
 
-        //Sends a update listing request 
+        //Function to handle saving listing edits
         function saveListing() {
 
-            //Getting the users inputs
+            //Gets the users new listing values
             const price = document.getElementById('editPrice').value;
             const qty = document.getElementById('editQty').value;
             const listingID = document.getElementById('editRow').dataset.listingId;
 
-            //Client side validation
+            //Server side validation
             if (!price || qty === '') {
                 setMsg('Please fill in all fields.', 'msgError');
                 return;
             }
 
-            //Creating a form for the POST request
+            //Building a form for the serv
             const fd = new FormData();
             fd.append('action', 'updateListing');
             fd.append('listingID', listingID);
             fd.append('price', price);
             fd.append('quantity', qty);
 
-            //Sends a POST request to the server
+            //Sending the form to the server through a POST requsest
             fetch('', { method: 'POST', body: fd })
 
                 //Gets the response and analyses it
                 .then(r => r.json())
                 .then(data => {
 
-                    //If the update was successful then the update values are displayed
+                    //If the update was successful then the listing details are updated
                     if (data.status === 'success') {
 
-                        //Updating elements to the new values
+                        //Updating the listing details with the new values and hiding the edit row
                         document.getElementById('dispPrice').textContent = '£' + parseFloat(price).toFixed(2);
                         document.getElementById('dispQty').textContent = parseInt(qty) + ' units';
                         document.getElementById('editRow').style.display = 'none';
 
-                        //Success message
+                        //Success message shown to the user
                         setMsg('Listing updated successfully.', 'msgSuccess');
                     } 
                     
-                    //If it failed then the user is told so
+                    //Otherwise an error message is shown to the user
                     else {
                         setMsg(data.message || 'Error updating listing.', 'msgError');
                     }
@@ -1033,29 +1227,27 @@ $stmt->close();
                 .catch(() => setMsg('Network error.', 'msgError'));
         }
 
-        //Sends a delete listing request to the server
+        //Function that handles deleting the listing
         function deleteListing() {
 
-            //Confirmation messaa=ge
+            //Asks for confirmation before deleting the listing
             if (!confirm('Are you sure you want to remove your listing?')) return;
 
-            //Creates a form for the POST
+            //Builds a form to send to the server
             const fd = new FormData();
             fd.append('action', 'deleteListing');
 
-            //Fetches a POST request to the server
+            //Sends a request to the server then analyses its response
             fetch('', { method: 'POST', body: fd })
-
-                //Gets the response and analyses it
                 .then(r => r.json())
                 .then(data => {
 
-                    //If the deletion was successful the page is reloaded
+                    //If the request was successful then the page is reloaded to display the changes
                     if (data.status === 'success') {
                         location.reload();
                     } 
                     
-                    //Otherwise the user is told it failed
+                    //Otherwise an error message is displayed to the user
                     else {
                         setMsg(data.message || 'Error removing listing.', 'msgError');
                     }
@@ -1065,34 +1257,33 @@ $stmt->close();
                 .catch(() => setMsg('Network error.', 'msgError'));
         }
 
-        //Opens the sales report popup and fetches the data
+        //Function that opens the report popup
         function openReport() {
 
-            //Accesses the report elements
+            //Creates the inital report popup
             document.getElementById('reportOverlay').classList.add('active');
             document.getElementById('reportBody').innerHTML = '<div style="text-align:center;color:#aaa;padding:20px;">Loading…</div>';
 
-            //Builds the form for the POST request
+            //Builds a form to send to the server
             const fd = new FormData();
             fd.append('action', 'salesReport');
 
-            //Sends a POST request to the server
+            //Sends a request to the server then analyses its response
             fetch('', { method: 'POST', body: fd })
-
-                //Gets the servers response
                 .then(r => r.json())
                 .then(data => {
 
-                    //If it failed than the user is told it couldnt load it
+                    //If the request failed then an error message is displayed
                     if (data.status !== 'success') {
                         document.getElementById('reportBody').innerHTML = '<div class="popupNoListing">Could not load report.</div>';
                         return;
                     }
 
-                    //Builds and injects the report HTML into the popup
+                    //HTML to display the report data
                     document.getElementById('reportBody').innerHTML = `
                         <div class="popupMonth">${data.monthLabel}</div>
 
+                        
                         ${data.productName === 'N/A' ? '<div class="popupNoListing">You have no active listing this month.</div>' : `
                             <div class="reportGrid">
                                 <div class="reportCard">
@@ -1120,45 +1311,137 @@ $stmt->close();
                     `;
                 })
 
-                //This catches any errors
+                //Catches any errors
                 .catch(() => {
                     document.getElementById('reportBody').innerHTML = '<div class="popupNoListing">Network error.</div>';
                 });
         }
 
-        //Closes the sales report popup
+        //Closes the report popup
         function closeReport() {
             document.getElementById('reportOverlay').classList.remove('active');
         }
 
-        //This closes the monthly sales report
+        //Closes the report if they click off of it
         function closeReportOnOverlay(event) {
-
-            //If the report is open, it closes it
             if (event.target === document.getElementById('reportOverlay')) {
                 closeReport();
             }
         }
 
-        //This logs the supplier out
+        //Function that opens the receipt popup
+        function openReceipts() {
+
+            //Creates the receipt popup box
+            document.getElementById('receiptsOverlay').classList.add('active');
+            document.getElementById('receiptsBody').innerHTML = '<div style="text-align:center;color:#aaa;padding:20px;">Loading…</div>';
+
+            //Builds a form to send to the server
+            const fd = new FormData();
+            fd.append('action', 'supplierReceipts');
+
+            //Sends a request to the server then anaylses its response
+            fetch('', { method: 'POST', body: fd })
+                .then(r => r.json())
+                .then(data => {
+
+                    //If the request was not successful then an error message is shown to the user
+                    if (data.status !== 'success') {
+                        document.getElementById('receiptsBody').innerHTML = '<div class="popupNoListing">Could not load receipts.</div>';
+                        return;
+                    }
+
+                    //If the receipt array is empty then a message is shown to the user
+                    if (data.receipts.length === 0) {
+                        document.getElementById('receiptsBody').innerHTML = '<div class="popupNoListing">No receipts found for your listing.</div>';
+                        return;
+                    }
+
+                    //Variables to handle the data from the server
+                    let grandTotal = 0;
+                    let rows = '';
+
+                    //Adding the data from the server to the receipt
+                    data.receipts.forEach(r => {
+
+                        //Calculates the total price of the transactions
+                        const lineTotal = parseFloat(r.TotalPrice);
+                        grandTotal += lineTotal;
+
+                        //Gets the date of the transaction and formats it to a readable format
+                        const date = new Date(r.PurchaseDate).toLocaleString('en-GB', {
+                            day: '2-digit', month: '2-digit', year: 'numeric',
+                            hour: '2-digit', minute: '2-digit'
+                        });
+
+                        //Adding a row to the receipt for each transaction with the data from the server
+                        rows += `
+                            <tr>
+                                <td>${date}</td>
+                                <td>${r.productName}</td>
+                                <td>${r.Quantity}</td>
+                                <td><span class="creditedAmount">+£${lineTotal.toFixed(2)}</span></td>
+                                <td>${r.PaymentMethod.replace('_', ' ')}</td>
+                                <td class="receiptIDTag">#${r.receiptID}</td>
+                            </tr>
+                        `;
+                    });
+
+                    //Html to add the receipts table to the popup body with the data from the server
+                    document.getElementById('receiptsBody').innerHTML = `
+                        <div class="receiptBadge">SUPPLIER RECEIPT</div>
+                        <table class="receiptTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Credited</th>
+                                    <th>Payment</th>
+                                    <th>Receipt ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>${rows}</tbody>
+                        </table>
+                        <div class="receiptTotal">Total Credited: £${grandTotal.toFixed(2)}</div>
+                    `;
+                })
+
+                //Catches any errors
+                .catch(() => {
+                    document.getElementById('receiptsBody').innerHTML = '<div class="popupNoListing">Network error.</div>';
+                });
+        }
+
+        //Closes the receipt if they click the close button
+        function closeReceipts() {
+            document.getElementById('receiptsOverlay').classList.remove('active');
+        }
+
+        //Closes the receipts popup if they click off of it
+        function closeReceiptsOnOverlay(event) {
+            if (event.target === document.getElementById('receiptsOverlay')) {
+                closeReceipts();
+            }
+        }
+
+        //Handles logging the user out
         function logOut() {
 
-            //Clears local and server storage
+            //Clearing session and server storage of the user
             sessionStorage.clear();
             localStorage.clear();
 
-            //POST request to supplier log out
+            //Sends request to the server
             fetch("supplierLogOut.php", { method: "POST" })
 
-                //Gets the response
+                //Anaylses the response then sends them to the welcome page
                 .then(r => r.json())
                 .then(() => {
-
-                    //Redirects them to the welcome page
                     window.location.href = "../MainPages/WelcomePage.html";
                 })
 
-                //Redirects to home page even if error occurs 
+                //Catches any erros and still sends them to the home page regardless
                 .catch(() => {
                     window.location.href = "../MainPages/WelcomePage.html";
                 });
