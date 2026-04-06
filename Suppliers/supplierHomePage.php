@@ -12,6 +12,10 @@ if (!isset($_SESSION['supplierID'])) {
 $supplierID = (int)$_SESSION['supplierID'];
 $supplierName = htmlspecialchars($_SESSION['supplierName'] ?? 'Supplier');
 
+//Query to display the suppliers balance
+$balanceRow = $conn->query("SELECT Balance FROM suppliers WHERE supplierID = $supplierID")->fetch_assoc();
+$supplierBalance = number_format((float)($balanceRow['Balance'] ?? 0), 2);
+
 //Checks if the server receives a POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
@@ -913,6 +917,7 @@ $stmt->close();
 
                 <p>Status: Supplier</p>
                 <p>Welcome: <?= $supplierName ?></p>
+                <p>Balance: £<?= $supplierBalance ?></p>
 
                 <div class="bannerButtons">
                     <button onclick="logOut()" class="shopButton logOutButton">Log Out</button>
