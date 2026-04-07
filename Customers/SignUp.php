@@ -234,7 +234,7 @@ include "../dbConnector.local.php";
             //Ensures Username is not Ridiculously Long
             var username = document.getElementById("username").value.trim();
             if (username.length >40) {
-                response.textContent = "Username Too Long.";
+                response.textContent = "Username Cannot Be Longer Than 40 Characters.";
                 response.classList.add("show");
                 isValid=false;
             }
@@ -250,7 +250,7 @@ include "../dbConnector.local.php";
             //Email Validation
             var email = document.getElementById("email").value.trim();
             if (validateEmail(email)==false) {
-                response.textContent = "Invalid Email.";
+                response.textContent = "Invalid Email, must contain @ and a valid domain.";
                 response.classList.add("show");
                 isValid=false;
             }
@@ -306,6 +306,8 @@ include "../dbConnector.local.php";
             //Checks if the email has a space, @ and a correct domain name
             if (email.includes(" ")) return false;
 
+            if (email.length>35) return false;
+
             //Ensures the email contains the @ symbol and a valid domain
             if (email.includes("@") && (email.includes(".com") || email.includes(".co.uk") || email.includes(".org"))) {
                 return true;
@@ -342,7 +344,7 @@ include "../dbConnector.local.php";
 
                 //This is the message displayed if the user tried to create an account that already exists
                 else if (trimmed === "duplicate") {
-                        document.getElementById("response").textContent = "Account details in use, please try again.";
+                        document.getElementById("response").textContent = "Username, Email or Phone Number In Use,";
                         document.getElementById("response").classList.add("show");
                 }
                 

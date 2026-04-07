@@ -26,11 +26,15 @@ $pinNum = intval($pin);
 $phoneNum = $phone;
 $cardNum = $card;
 
-//Checks for any duplicate accounts before inserting
-$dupStmt = $conn->prepare("SELECT customerID FROM customers WHERE FullName = ? OR Email = ? OR PhoneNumber = ? OR CardNumber = ? LIMIT 1");
-$dupStmt->bind_param("ssss", $username, $email, $phoneNum, $cardNum);
+//Parameter to check if the account details are in use
+$dupStmt = $conn->prepare("SELECT customerID FROM customers WHERE FullName = ? OR Email = ? OR PhoneNumber = ? LIMIT 1");
+$dupStmt->bind_param("ssss", $username, $email, $phoneNum);
+
+//Executing the query and storing the results
 $dupStmt->execute();
 $dupStmt->store_result();
+
+//If the details are in use then returns a duplicate message and exits the script
 if ($dupStmt->num_rows > 0) {
     echo "duplicate";
     $dupStmt->close();

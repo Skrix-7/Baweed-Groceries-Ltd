@@ -896,6 +896,12 @@ $stmt->close();
 
         .footer p { margin: 0; }
 
+        .salesButtons {
+            display:flex; 
+            gap:calc(8px + 0.2vw); 
+            flex-wrap:wrap;
+        }
+
     </style>
 </head>
 
@@ -932,7 +938,7 @@ $stmt->close();
 
                     <div class="sectionTitle">My Listing</div>
 
-                    <div style="display:flex; gap:calc(8px + 0.2vw); flex-wrap:wrap;">
+                    <div class="salesButtons">
                         <button class="actionBtn btnReceipts" onclick="openReceipts()">My Receipts</button>
                         <button class="actionBtn btnReport" onclick="openReport()">Monthly Sales Report</button>
                     </div>
@@ -1186,13 +1192,48 @@ $stmt->close();
         function saveListing() {
 
             //Gets the users new listing values
-            const price = document.getElementById('editPrice').value;
-            const qty = document.getElementById('editQty').value;
+            const price = document.getElementById('editPrice').value.trim();
+            const qty = document.getElementById('editQty').value.trim();
             const listingID = document.getElementById('editRow').dataset.listingId;
 
             //Server side validation
-            if (!price || qty === '') {
-                setMsg('Please fill in all fields.', 'msgError');
+            if (price === '' || qty === '') {
+                setMsg('Please fill in all fields.');
+                return;
+            }
+
+            if (isNaN(price)) {
+                showFeedback(feedback, 'Price must be a valid number', false);
+                return;
+            }
+
+            if (qty.length > 8) {
+                showFeedback(feedback, 'Quantity must be less than 8 digits.', false);
+                return;
+            }
+
+            //Value to split the price in 2 elements of an array
+            const parts = price.split(".");
+
+            // Prevent multiple decimal points
+            if (parts.length > 2) {
+                showFeedback(feedback, 'Invalid price format', false);
+                return;
+            }
+
+            //Getting the integer and decimal part
+            const integerPart = parts[0];
+            const decimalPart = parts[1] || "";
+
+            //Ensures theres no more than 2 dp of the number
+            if (decimalPart.length > 2) {
+                showFeedback(feedback, 'Price can have at most 2 decimal places', false);
+                return;
+            }
+
+            //Ensures theres no more than 8 digits to the left of the decimal place
+            if (integerPart.length > 8) {
+                showFeedback(feedback, 'Price is too large', false);
                 return;
             }
 

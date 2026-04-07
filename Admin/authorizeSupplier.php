@@ -23,27 +23,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //Server side validation
     if (empty($fullname) || empty($email) || empty($password) || empty($address) || empty($phoneNumber)) {
         $errorMessage = "All fields must be filled in.";
-
-    } elseif (strlen($fullname) > 100) {
-        $errorMessage = "Full name must be under 100 characters.";
-
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 100) {
-        $errorMessage = "Please enter a valid email address.";
-
-    } elseif (strlen($password) < 8 || strlen($password) > 50) {
-        $errorMessage = "Password must be between 8 and 50 characters.";
-
-    } elseif (!preg_match('/^\d{11}$/', $phoneNumber)) {
+    } 
+    
+    elseif (strlen($fullname) > 50) {
+        $errorMessage = "Full name must be under 50 characters.";
+    } 
+    
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 50) {
+        $errorMessage = "Email must be under 50 characters, and have an @ and valid domain.";
+    } 
+    
+    elseif (strlen($password) < 8 || strlen($password) > 16) {
+        $errorMessage = "Password must be between 8 and 16 characters.";
+    } 
+    
+    elseif (!preg_match('/^\d{11}$/', $phoneNumber)) {
         $errorMessage = "Phone number must be exactly 11 digits.";
-
-    } elseif (strlen($address) > 255) {
-        $errorMessage = "Address must be under 255 characters.";
-
-    } else {
+    } 
+    
+    elseif (strlen($address) > 80) {
+        $errorMessage = "Address must be under 80 characters.";
+    } 
+    
+    else {
 
         //Check if email is already registered
-        $stmt = $conn->prepare("SELECT supplierID FROM suppliers WHERE Email = ?");
-        $stmt->bind_param("s", $email);
+        $stmt = $conn->prepare("SELECT supplierID FROM suppliers WHERE Email = ? OR Fullname = ? LIMIT 1");
+        $stmt->bind_param("ss", $email, $fullname);
 
         //Executes and gets the results of the statement
         $stmt->execute();
@@ -51,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         //If there is a result denies creation
         if ($stmt->num_rows > 0) {
-            $errorMessage = "A supplier with this email already exists.";
+            $errorMessage = "A supplier with this email or full name already exists.";
             $stmt->close();
         } 
         
@@ -219,7 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .backLink {
             margin-top: 10px;
-            font-size: 14px;
+            font-size: 17px;
             color: #6b6b6b;
 
             text-decoration: none;
@@ -275,7 +281,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <button class="formButton submitButton" onclick="window.location.href='authorizeSupplier.php'">Add Another Supplier</button>
 
-                <a href="adminHomePage.php" class="backLink">← Back to Dashboard</a>
+                <a href="adminHomePage.php" class="backLink">Back to Dashboard</a>
 
             </div>
 
@@ -335,7 +341,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        //Client side validation
+        //Client side validation function
         function submitForm() {
 
             const errorEl = document.getElementById("jsError");
@@ -355,32 +361,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             //Full name length
-            if (fullname.length > 100) {
-                errorEl.textContent = "Full name must be under 100 characters.";
+            if (fullname.length > 50) {
+                errorEl.textContent = "Full name must be under 50 characters.";
                 return;
             }
 
             //Basic email check
             if (!email.includes("@") || (!email.includes(".com") && !email.includes(".co.uk") && !email.includes(".org"))) {
-                errorEl.textContent = "Please enter a valid email address.";
+                errorEl.textContent = "Email must have an @ and a valid domain.";
+                return;
+            }
+
+            if (email.length > 50) {
+                errorEl.textContent = "Email must be under 50 characters.";
                 return;
             }
 
             //Password length
-            if (password.length < 8 || password.length > 50) {
-                errorEl.textContent = "Password must be between 8 and 50 characters.";
+            if (password.length < 8 || password.length > 16) {
+                errorEl.textContent = "Password must be between 8 and 16 characters.";
                 return;
             }
 
-            //Phone number, 11 digits only
+            //Phone number 11 digits
             if (!/^\d{11}$/.test(phoneNumber)) {
                 errorEl.textContent = "Phone number must be exactly 11 digits.";
                 return;
             }
 
             //Address length
-            if (address.length > 255) {
-                errorEl.textContent = "Address must be under 255 characters.";
+            if (address.length > 80) {
+                errorEl.textContent = "Address must be under 80 characters.";
                 return;
             }
 

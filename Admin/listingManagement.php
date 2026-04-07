@@ -453,6 +453,7 @@ while ($row = $result->fetch_assoc()) {
         .deleteBtn {
             width: 100%;
             padding: 10px;
+
             background: none;
             border: 1px solid #f5c6c6;
             border-radius: 6px;
@@ -473,6 +474,7 @@ while ($row = $result->fetch_assoc()) {
         .cardFeedback {
             font-size: 14px;
             font-weight: 600;
+
             text-align: center;
             min-height: 16px;
         }
@@ -620,7 +622,7 @@ while ($row = $result->fetch_assoc()) {
                 return;
             }
 
-            // Grid of cards
+            //Grid of cards
             const grid = document.createElement('div');
             grid.className = 'listingsGrid';
 
@@ -668,17 +670,39 @@ while ($row = $result->fetch_assoc()) {
             panel.appendChild(grid);
         }
 
-        // Save updated price for a listing
+        //Save updated price for a listing
         function savePrice(listingID) {
 
             //Accessing elements to be edited
             const input = document.getElementById(`price-${listingID}`);
             const feedback = document.getElementById(`feedback-${listingID}`);
-            const newPrice = parseFloat(input.value);
+
+            //Price validation variables
+            const value = input.value.trim();
+            const newPrice = parseFloat(value);
 
             //Client side price validation
             if (isNaN(newPrice) || newPrice <= 0) {
                 showFeedback(feedback, 'Price must be greater than £0.00', false);
+                return;
+            }
+
+            //Value to split the price in 2 elements of an array
+            const parts = value.split(".");
+
+            //Getting the integer and decimal part
+            const integerPart = parts[0];
+            const decimalPart = parts[1] || "";
+
+            //Ensures theres no more than 2 dp of the number
+            if (decimalPart.length > 2) {
+                showFeedback(feedback, 'Price can have at most 2 decimal places', false);
+                return;
+            }
+
+            //Ensures theres no more than 8 digits to the left of the decimal place
+            if (integerPart.length > 8) {
+                showFeedback(feedback, 'Price is too large', false);
                 return;
             }
 
