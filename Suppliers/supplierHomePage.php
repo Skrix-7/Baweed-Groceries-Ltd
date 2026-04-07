@@ -1150,12 +1150,49 @@ $stmt->close();
 
             //Gets the user listing values
             const productID = document.getElementById('newProduct').value;
-            const price = document.getElementById('newPrice').value;
-            const qty = document.getElementById('newQty').value;
+            const price = document.getElementById('newPrice').value.trim();
+            const qty = document.getElementById('newQty').value.trim();
 
             //Server side validation
             if (!productID || !price || !qty) {
                 setMsg('Please fill in all fields.', 'msgError');
+                return;
+            }
+
+            //Ensures price is a number
+            if (isNaN(price)) {
+                setMsg('Price must be a valid number.', 'msgError');
+                return;
+            }
+
+            //Ensures quantity doesnt exceed 8
+            if (qty.length > 8) {
+                setMsg('Quantity must be less than 8 digits.', 'msgError');
+                return;
+            }
+
+            //Splits the price at the decimal point
+            const parts = price.split(".");
+
+            //Ensures theres no more than 2 decimal points
+            if (parts.length > 2) {
+                setMsg('Invalid price format.', 'msgError');
+                return;
+            }
+
+            //Accessing the integer and decimal part of the price
+            const integerPart = parts[0];
+            const decimalPart = parts[1] || "";
+
+            //Ensures theres no more than 2 dp of the price
+            if (decimalPart.length > 2) {
+                setMsg('Price can have at most 2 decimal places.', 'msgError');
+                return;
+            }
+
+            //Ensures theres no more than 8 digits to the left of the decimal place
+            if (integerPart.length > 8) {
+                setMsg('Price is cannot be bigger than 99999999.99.', 'msgError');
                 return;
             }
 
@@ -1203,12 +1240,12 @@ $stmt->close();
             }
 
             if (isNaN(price)) {
-                showFeedback(feedback, 'Price must be a valid number', false);
+                setMsg('Price must be a valid number', 'msgError');
                 return;
             }
 
             if (qty.length > 8) {
-                showFeedback(feedback, 'Quantity must be less than 8 digits.', false);
+                setMsg('Quantity must be less than 8 digits.', 'msgError');
                 return;
             }
 
@@ -1217,7 +1254,7 @@ $stmt->close();
 
             // Prevent multiple decimal points
             if (parts.length > 2) {
-                showFeedback(feedback, 'Invalid price format', false);
+                setMsg('Invalid price format', 'msgError');
                 return;
             }
 
@@ -1227,13 +1264,13 @@ $stmt->close();
 
             //Ensures theres no more than 2 dp of the number
             if (decimalPart.length > 2) {
-                showFeedback(feedback, 'Price can have at most 2 decimal places', false);
+                setMsg('Price can have at most 2 decimal places', 'msgError');
                 return;
             }
 
             //Ensures theres no more than 8 digits to the left of the decimal place
             if (integerPart.length > 8) {
-                showFeedback(feedback, 'Price is too large', false);
+                setMsg('Price is cannot be bigger than 99999999.99', 'msgError');
                 return;
             }
 
